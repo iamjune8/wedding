@@ -1,0 +1,57 @@
+@layer base {
+  html {
+    color-scheme: light;
+    background-color: var(--ivory);
+    color: var(--charcoal);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: 1rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    min-height: 100svh;
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    background-color: var(--ivory);
+    background-image: var(--paper-grain);
+    background-size: 180px 180px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: rgb(198 166 107 / 0.32);
+    color: var(--charcoal);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--gold-ink);
+    outline-offset: 3px;
+  }
+
+  a {
+    color: inherit;
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}

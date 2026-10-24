@@ -1,0 +1,222 @@
+@layer components {
+  /* ── Arch ─────────────────────────────────────────────────────────────── */
+  .arch {
+    --arch-stroke: var(--gold-rich);
+    /* Arches over the geometric pattern are filled, so they read as clear windows in it. */
+    --arch-fill: transparent;
+    position: relative;
+    display: grid;
+  }
+
+  .arch--hero,
+  .arch--mini {
+    --arch-fill: var(--ivory);
+  }
+
+  .arch__fill {
+    fill: var(--arch-fill);
+  }
+
+  .arch > * {
+    grid-area: 1 / 1;
+  }
+
+  .arch__frame {
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+  }
+
+  .arch__crown {
+    display: block;
+    flex: none;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 300 / 180;
+    overflow: visible;
+  }
+
+  .arch__jambs {
+    position: relative;
+    flex: 1 1 auto;
+    background-color: var(--arch-fill);
+  }
+
+  .arch__jambs > svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .arch__line {
+    stroke: var(--arch-stroke);
+    stroke-width: 1.25px;
+  }
+
+  .arch__line--inner {
+    opacity: 0.5;
+  }
+
+  .arch__finial {
+    fill: var(--arch-stroke);
+  }
+
+  .arch__content {
+    position: relative;
+    min-width: 0;
+  }
+
+  /* Capped by height too, so the whole opening fits on short laptop screens. */
+  .arch--hero {
+    width: min(100%, 34rem);
+    width: min(100%, 34rem, 62svh);
+    margin-inline: auto;
+  }
+
+  /* The side lines fade away at the bottom; the ivory window behind them stays solid. */
+  .arch--hero .arch__jambs > svg {
+    -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 40%, transparent 100%);
+  }
+
+  .arch--hero .arch__content {
+    /* Type inside the arch scales with the arch itself (cqi units, see sections.css). */
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 30% calc(3% + 0.75rem) clamp(1rem, 3svh, 2.25rem);
+  }
+
+  .arch--window {
+    width: min(100%, 21rem);
+    margin-inline: auto;
+  }
+
+  @media (min-width: 1024px) {
+    .arch--window {
+      width: min(100%, 25rem);
+    }
+  }
+
+  .arch--window .arch__content {
+    padding: 35% calc(3% + 1.25rem) 2.25rem;
+    text-align: center;
+  }
+
+  .arch--mini {
+    width: min(100%, 15.5rem);
+    margin-inline: auto;
+  }
+
+  .arch--mini .arch__content {
+    padding: 37% calc(3% + 1rem) 1.75rem;
+    text-align: center;
+  }
+
+  /* ── Geometric pattern behind the opening ────────────────────────────── */
+  .hero__pattern {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: var(--geometric-pattern);
+    background-size: 56px 56px;
+    background-position: 50% 0;
+    opacity: 0.24;
+    /* The arch itself hides the pattern inside it; this only softens it towards the bottom. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  }
+
+  @media (min-width: 768px) {
+    .hero__pattern {
+      opacity: 0.3;
+      -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 45%, transparent 25%, #000 90%);
+      mask-image: radial-gradient(ellipse 60% 70% at 50% 45%, transparent 25%, #000 90%);
+    }
+  }
+
+  /* ── Star and divider ────────────────────────────────────────────────── */
+  .star-motif {
+    width: 1.25rem;
+    height: 1.25rem;
+    overflow: visible;
+    color: var(--gold);
+  }
+
+  .star-motif__outline {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1px;
+    stroke-linejoin: miter;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .star-motif__centre {
+    fill: currentColor;
+  }
+
+  .ornament-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .ornament-divider__line {
+    display: block;
+    width: clamp(2.75rem, 12vw, 5.5rem);
+    height: 1px;
+  }
+
+  .ornament-divider__line--start {
+    background: linear-gradient(to left, var(--champagne), transparent);
+    transform-origin: 100% 50%;
+  }
+
+  .ornament-divider__line--end {
+    background: linear-gradient(to right, var(--champagne), transparent);
+    transform-origin: 0 50%;
+  }
+
+  .ornament-divider__star {
+    flex: none;
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  /* ── Haldi rosette ───────────────────────────────────────────────────── */
+  .rosette {
+    display: block;
+    width: clamp(5.5rem, 4rem + 6vw, 7.5rem);
+    height: auto;
+    aspect-ratio: 1;
+    margin-inline: auto;
+    overflow: visible;
+  }
+
+  .rosette__petals path,
+  .rosette__ring {
+    fill: none;
+    stroke: var(--marigold);
+    stroke-width: 1px;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .rosette__petals--short path {
+    stroke: var(--gold);
+    opacity: 0.6;
+  }
+
+  .rosette__ring--soft {
+    opacity: 0.45;
+  }
+
+  .rosette__centre {
+    fill: var(--marigold);
+  }
+}

@@ -1,0 +1,315 @@
+/*
+ * Opening envelope, one continuous movement (ms):
+ *   0 arrives · 550 seal lifts · 700 flap swings open · 1050 card starts rising
+ *   1450 envelope drops away beneath it · 1950 card dissolves just as the couple's names rise
+ *   in the same place · 2050 the plum backdrop melts into the identical plum of the opening
+ *   · 2650 gone.
+ * The opening's text starts at --envelope-time, while the card is still fading, so there is
+ * no pause or cut between the two. Hidden for reduced motion and on repeat visits.
+ */
+
+.envelope {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-intro='skip']) {
+    --envelope-time: 800ms; /* the opening's names rise exactly as the card dissolves */
+  }
+
+  html:not([data-intro='skip']) .envelope {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    display: grid;
+    place-items: center;
+    padding: var(--gutter);
+    pointer-events: none;
+    animation: envelope-leave 150ms linear 2550ms both;
+  }
+
+  /* Same plum and lattice as the opening behind it, so dissolving it shows no seam. */
+  html:not([data-intro='skip']) .envelope::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(rgb(47 26 61 / 0.45), rgb(47 26 61 / 0.45)), var(--geometric-pattern),
+      radial-gradient(
+        ellipse 85% 65% at 50% 32%,
+        var(--plum-mid) 0%,
+        var(--plum) 55%,
+        var(--plum-deep) 100%
+      );
+    background-size:
+      auto,
+      56px 56px,
+      auto;
+    background-position:
+      0 0,
+      50% 0,
+      0 0;
+    animation: backdrop-melt 600ms var(--ease-in-out-soft) 2050ms both;
+  }
+
+  /* The arch is already standing where the card lands: no second "drawing" moment. */
+  html:not([data-intro='skip']) .intro-arch .arch__jambs,
+  html:not([data-intro='skip']) .intro-arch .arch__crown,
+  html:not([data-intro='skip']) .hero__pattern {
+    animation: none;
+  }
+}
+
+.envelope__stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  width: min(84vw, 25rem);
+  animation: envelope-arrive 650ms var(--ease-out-soft) both;
+}
+
+.envelope__body {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 10 / 7;
+  perspective: 1000px;
+}
+
+/* Inside of the envelope, lined with the gold lattice. */
+.envelope__back {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--gold-rich);
+  background-image: var(--geometric-pattern), linear-gradient(180deg, #3d2350, #2a1736);
+  background-size:
+    40px 40px,
+    auto;
+  box-shadow: 0 1.5rem 3rem rgb(10 4 16 / 0.45);
+  animation: envelope-sink 600ms cubic-bezier(0.55, 0, 0.8, 0.3) 1450ms both;
+}
+
+.envelope__card {
+  position: absolute;
+  inset: 7% 7% 6%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 1rem;
+  border: 1px solid var(--gold-rich);
+  background: linear-gradient(180deg, #fffcf5, #f3ebf8);
+  box-shadow:
+    inset 0 0 0 4px #fffcf5,
+    inset 0 0 0 5px rgb(181 138 69 / 0.6);
+  text-align: center;
+  animation:
+    card-lift 1200ms cubic-bezier(0.33, 0, 0.2, 1) 1050ms both,
+    card-dissolve 550ms var(--ease-in-out-soft) 1950ms both;
+}
+
+.envelope__card-kicker {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--gold-ink);
+}
+
+.envelope__card-names {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(1.9rem, 8vw, 2.6rem);
+  line-height: 1.1;
+  color: var(--charcoal);
+}
+
+.envelope__card-amp {
+  margin-inline: 0.3em;
+  font-style: italic;
+  color: var(--gold);
+}
+
+.envelope__card-date {
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+.envelope__front {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  animation: envelope-sink 600ms cubic-bezier(0.55, 0, 0.8, 0.3) 1450ms both;
+}
+
+.envelope__pocket {
+  fill: #4a2a5e;
+}
+
+.envelope__fold {
+  fill: none;
+  stroke: rgb(214 178 107 / 0.55);
+  stroke-width: 1px;
+}
+
+.envelope__edge {
+  fill: none;
+  stroke: #d6b26b;
+  stroke-width: 1.25px;
+}
+
+/* Hinged on its top edge; drops behind the card once it has swung open. */
+.envelope__flap {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 4;
+  height: 58%;
+  transform-origin: 50% 0;
+  animation:
+    flap-open 650ms var(--ease-in-out-soft) 700ms both,
+    envelope-sink 600ms cubic-bezier(0.55, 0, 0.8, 0.3) 1450ms both;
+}
+
+.envelope__flap svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.envelope__flap-face {
+  fill: #5a3470;
+}
+
+.envelope__seal {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  z-index: 5;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  margin: -1.8rem 0 0 -1.8rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #b8405f, #8a2140 55%, #5e1129 100%);
+  box-shadow:
+    inset 0 0 0 2px rgb(226 196 135 / 0.7),
+    inset 0 0 0 5px #7a1c37,
+    inset 0 0 0 6px rgb(226 196 135 / 0.45),
+    0 0.4rem 0.9rem rgb(20 4 12 / 0.45);
+  padding-top: 0.95rem;
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--gold-light);
+  animation: seal-lift 450ms var(--ease-out-soft) 550ms both;
+}
+
+.envelope__seal-amp {
+  margin-inline: 0.06em;
+  font-style: italic;
+  font-size: 0.75em;
+}
+
+.envelope__caption {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  color: var(--lilac);
+  animation: caption-fade 400ms var(--ease-out-soft) 1100ms both;
+}
+
+@keyframes envelope-arrive {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes seal-lift {
+  to {
+    opacity: 0;
+    transform: scale(1.3);
+  }
+}
+
+@keyframes flap-open {
+  0% {
+    z-index: 4;
+    transform: rotateX(0deg);
+  }
+  49% {
+    z-index: 4;
+  }
+  50% {
+    z-index: 1;
+  }
+  100% {
+    z-index: 1;
+    transform: rotateX(180deg);
+  }
+}
+
+/* `translate` and `scale` are separate from `transform`, so these combine smoothly. */
+@keyframes card-lift {
+  to {
+    translate: 0 -55%;
+  }
+}
+
+@keyframes card-dissolve {
+  to {
+    opacity: 0;
+    scale: 1.22;
+  }
+}
+
+@keyframes envelope-sink {
+  to {
+    opacity: 0;
+    translate: 0 60vh;
+  }
+}
+
+@keyframes caption-fade {
+  to {
+    opacity: 0;
+    translate: 0 1rem;
+  }
+}
+
+@keyframes backdrop-melt {
+  to {
+    opacity: 0;
+  }
+}
+
+/* Fades the last trace, then collapses the overlay so it is truly gone (some browsers keep
+   an animated `visibility` reporting as visible). */
+@keyframes envelope-leave {
+  from {
+    visibility: visible;
+  }
+  99% {
+    opacity: 0;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 0;
+    visibility: hidden;
+  }
+}

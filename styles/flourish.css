@@ -1,0 +1,337 @@
+/*
+ * Colour and gilding: warm glows, gold-foil accents and the saffron Haldi chapter.
+ * Everything here is static; the motion that brings it to life lives in motion-rich.css.
+ */
+@layer components {
+  /* ── Opening: a warm halo around the arch ───────────────────────────── */
+  .hero__glow {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 48% at 50% 36%, var(--gold-glow), transparent 72%),
+      radial-gradient(ellipse 130% 55% at 50% 112%, rgb(233 169 59 / 0.14), transparent 62%);
+  }
+
+  .arch--hero,
+  .arch--mini {
+    --arch-fill: #fdf9f0;
+  }
+
+  .arch--window {
+    --arch-fill: #fdf6e6;
+  }
+
+  .hero__pattern {
+    opacity: 0.32;
+  }
+
+  @media (min-width: 768px) {
+    .hero__pattern {
+      opacity: 0.38;
+    }
+  }
+
+  /* ── Sparkles ───────────────────────────────────────────────────────── */
+  .sparkles {
+    position: relative;
+    pointer-events: none;
+  }
+
+  .sparkle {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: var(--size);
+    height: var(--size);
+    overflow: visible;
+    fill: var(--gold-rich);
+    opacity: 0.55;
+    transform: translate(-50%, -50%);
+  }
+
+  /* ── Gold-foil accents (fall back to plain gold where clipping text is unsupported) ── */
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .names__amp,
+    .closing__amp {
+      background-image: var(--gold-foil);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .countdown__digit {
+      background-image: linear-gradient(180deg, #3f2d14 0%, #7a5a2b 52%, #3f2d14 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  .ornament-divider__line--start {
+    background: linear-gradient(to left, var(--gold-rich), transparent);
+  }
+
+  .ornament-divider__line--end {
+    background: linear-gradient(to right, var(--gold-rich), transparent);
+  }
+
+  .ornament-divider__star,
+  .message__star,
+  .closing__star {
+    color: var(--gold-rich);
+  }
+
+  /* A short gilded rule beneath every chapter title. */
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 4.5rem;
+    height: 1px;
+    margin: 1.1rem auto 0;
+    background: linear-gradient(90deg, transparent, var(--gold-rich), transparent);
+  }
+
+  /* ── Invitation letter ──────────────────────────────────────────────── */
+  .message-section {
+    background: radial-gradient(
+      ellipse 70% 55% at 50% 50%,
+      rgb(214 176 104 / 0.13),
+      transparent 75%
+    );
+  }
+
+  .message__lead::first-letter {
+    font-size: 1.55em;
+    line-height: 1;
+    color: var(--gold-deep);
+  }
+
+  /* ── Countdown band: deeper champagne ───────────────────────────────── */
+  .countdown-section {
+    background-image:
+      var(--paper-grain),
+      radial-gradient(ellipse 60% 50% at 50% 55%, rgb(255 248 230 / 0.55), transparent 70%),
+      linear-gradient(
+        180deg,
+        var(--ivory) 0%,
+        #f2e2bd 22%,
+        #eed7a8 50%,
+        #f2e2bd 78%,
+        var(--ivory) 100%
+      );
+    background-size:
+      180px 180px,
+      auto,
+      auto;
+  }
+
+  .countdown-section__when {
+    color: var(--gold-deep);
+  }
+
+  .countdown-section .countdown {
+    --countdown-rule: var(--gold-rich);
+  }
+
+  /* ── Nikah venue: a soft glow behind the arch window ─────────────────── */
+  .venue-section {
+    background: radial-gradient(
+      ellipse 45% 50% at 30% 50%,
+      rgb(214 176 104 / 0.14),
+      transparent 72%
+    );
+  }
+
+  @media (max-width: 1023px) {
+    .venue-section {
+      background: radial-gradient(
+        ellipse 80% 40% at 50% 48%,
+        rgb(214 176 104 / 0.14),
+        transparent 72%
+      );
+    }
+  }
+
+  /* ── Haldi: saffron, marigold and rose ──────────────────────────────── */
+  .haldi-section {
+    isolation: isolate;
+    overflow: hidden;
+    background-image:
+      var(--paper-grain),
+      radial-gradient(ellipse 55% 30% at 50% 22%, rgb(255 236 176 / 0.7), transparent 70%),
+      linear-gradient(
+        180deg,
+        var(--ivory) 0%,
+        var(--haldi-wash) 14%,
+        var(--haldi-deep) 55%,
+        var(--haldi-wash) 100%
+      );
+    background-size:
+      180px 180px,
+      auto,
+      auto;
+  }
+
+  .haldi-layout {
+    position: relative;
+    z-index: 1;
+  }
+
+  .haldi-section .venue__fact {
+    border-bottom-color: rgb(181 138 69 / 0.45);
+  }
+
+  .haldi-section .section-title::after {
+    background: linear-gradient(90deg, transparent, var(--saffron), transparent);
+  }
+
+  .haldi-section .countdown {
+    --countdown-rule: var(--saffron);
+  }
+
+  .rosette__petals path {
+    stroke: var(--saffron);
+    stroke-width: 1.15;
+    vector-effect: none;
+  }
+
+  .rosette__petals--short path {
+    stroke: var(--rose);
+    opacity: 0.85;
+  }
+
+  .rosette__centre {
+    fill: var(--saffron);
+  }
+
+  .petals {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    container-type: size;
+  }
+
+  .petal {
+    position: absolute;
+    top: -1.5rem;
+    left: var(--left);
+    width: var(--size);
+    height: var(--size);
+    opacity: 0;
+  }
+
+  .petal svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .petal__body {
+    stroke: rgb(181 138 69 / 0.35);
+    stroke-width: 0.6;
+  }
+
+  .petal__vein {
+    fill: none;
+    stroke: rgb(255 255 255 / 0.45);
+    stroke-width: 0.7;
+    stroke-linecap: round;
+  }
+
+  .petal--rose .petal__body {
+    fill: #c95f78;
+  }
+
+  .petal--blush .petal__body {
+    fill: #f1b3c0;
+  }
+
+  .petal--marigold .petal__body {
+    fill: #f0a52c;
+  }
+
+  .petal--jasmine .petal__body {
+    fill: #fffaf0;
+  }
+
+  .petal--lilac .petal__body {
+    fill: #c6a4e0;
+  }
+
+  /* ── Closing: gilded names ──────────────────────────────────────────── */
+  .closing {
+    background-image:
+      var(--paper-grain),
+      radial-gradient(ellipse 50% 35% at 50% 78%, var(--gold-glow), transparent 70%),
+      linear-gradient(180deg, var(--haldi-wash) 0%, var(--ivory) 48%);
+    background-size:
+      180px 180px,
+      auto,
+      auto;
+  }
+
+  /* ── Buttons: a little more gilding ─────────────────────────────────── */
+  .btn-primary {
+    overflow: hidden;
+    background: linear-gradient(135deg, #2b241b 0%, #4a3a25 100%);
+    border-color: var(--gold-rich);
+    box-shadow: inset 0 0 0 1px rgb(214 176 104 / 0.22);
+  }
+
+  .btn-secondary {
+    overflow: hidden;
+    background: rgb(255 252 245 / 0.6);
+  }
+
+  .btn-primary::after,
+  .btn-secondary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      105deg,
+      transparent 35%,
+      rgb(255 236 190 / 0.35) 50%,
+      transparent 65%
+    );
+    transform: translateX(-120%);
+  }
+
+  @media print {
+    .sparkles,
+    .petals,
+    .hero__glow {
+      display: none;
+    }
+  }
+}
+
+/* ── Arch inlay and depth (appended) ──────────────────────────────────── */
+@layer components {
+  .arch__beads {
+    stroke: var(--gold-rich);
+    stroke-width: 2.2px;
+    stroke-linecap: round;
+    stroke-dasharray: 0 7px;
+    opacity: 0.75;
+  }
+
+  .arch--mini .arch__beads {
+    stroke-dasharray: 0 6px;
+    stroke-width: 1.8px;
+  }
+
+  /* The opening window warms gently towards the bottom. */
+  .arch--hero .arch__jambs {
+    background-image: linear-gradient(180deg, transparent 0%, rgb(246 228 190 / 0.55) 100%);
+  }
+
+  .hero__sparkles .sparkle {
+    fill: #c79a4f;
+  }
+}

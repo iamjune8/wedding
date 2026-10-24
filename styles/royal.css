@@ -1,0 +1,223 @@
+/*
+ * Royal palette: deep plum chapters (opening, countdown, closing) framed by gold beading,
+ * ivory arch windows for the invitation text, lavender tints between, saffron for the Haldi.
+ * Text colours on plum: ivory, --lilac and --gold-light all exceed 9:1 contrast.
+ */
+@layer components {
+  /* A gold rule with beads, used where a plum chapter meets a light one. */
+  .hero::after,
+  .countdown-section::before,
+  .countdown-section::after,
+  .closing::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    height: 7px;
+    pointer-events: none;
+    background:
+      linear-gradient(var(--gold-rich), var(--gold-rich)) 0 50% / 100% 1px no-repeat,
+      radial-gradient(circle, var(--gold-light) 1.4px, transparent 1.9px) 0 50% / 12px 7px repeat-x;
+  }
+
+  .hero::after,
+  .countdown-section::after {
+    bottom: -3px;
+  }
+
+  .countdown-section::before,
+  .closing::before {
+    top: -3px;
+  }
+
+  /* ── Opening ────────────────────────────────────────────────────────── */
+  .hero {
+    background-image:
+      var(--paper-grain),
+      radial-gradient(
+        ellipse 85% 65% at 50% 32%,
+        var(--plum-mid) 0%,
+        var(--plum) 55%,
+        var(--plum-deep) 100%
+      );
+    background-size:
+      180px 180px,
+      auto;
+  }
+
+  .hero__pattern {
+    opacity: 0.55;
+  }
+
+  @media (min-width: 768px) {
+    .hero__pattern {
+      opacity: 0.6;
+    }
+  }
+
+  .hero__glow {
+    background: radial-gradient(
+      ellipse 55% 50% at 50% 40%,
+      rgb(226 196 135 / 0.22),
+      transparent 70%
+    );
+  }
+
+  .arch--hero {
+    --arch-stroke: #d6b26b;
+  }
+
+  /* The ivory window deepens to a whisper of lavender near the bottom. */
+  .arch--hero .arch__jambs {
+    background-image: linear-gradient(180deg, transparent 0%, rgb(233 222 243 / 0.75) 100%);
+  }
+
+  .hero__sparkles .sparkle {
+    fill: var(--gold-light);
+  }
+
+  /* Petals fall over the window but behind the lettering, so they never hide the text. */
+  .hero__petals {
+    z-index: 2;
+  }
+
+  .arch--hero .arch__content {
+    z-index: 3;
+  }
+
+  .skip-intro {
+    color: var(--lilac);
+    text-decoration-color: var(--gold-light);
+  }
+
+  .skip-intro:focus-visible {
+    outline-color: var(--gold-light);
+  }
+
+  /* ── Invitation letter: a lavender bloom ────────────────────────────── */
+  .message-section {
+    background: radial-gradient(
+      ellipse 75% 60% at 50% 50%,
+      rgb(214 196 230 / 0.4),
+      transparent 76%
+    );
+  }
+
+  .message__lead::first-letter {
+    color: var(--plum-mid);
+  }
+
+  /* ── Countdown band: plum and gold ──────────────────────────────────── */
+  .countdown-section {
+    isolation: isolate;
+    background-image:
+      var(--paper-grain),
+      radial-gradient(
+        ellipse 70% 80% at 50% 50%,
+        var(--plum-mid) 0%,
+        var(--plum) 60%,
+        var(--plum-deep) 100%
+      );
+    background-size:
+      180px 180px,
+      auto;
+  }
+
+  .countdown-section .section-subtitle {
+    color: var(--ivory);
+  }
+
+  .countdown-section .countdown-section__when,
+  .countdown-section .countdown__message {
+    color: var(--gold-light);
+  }
+
+  .countdown-section .countdown {
+    --countdown-rule: var(--gold-light);
+  }
+
+  .countdown-section .countdown__value {
+    color: var(--gold-light);
+  }
+
+  .countdown-section .countdown__label,
+  .countdown-section .countdown-section__noscript {
+    color: var(--lilac);
+  }
+
+  .countdown-section .countdown__placeholder {
+    background: var(--gold-light);
+  }
+
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .countdown-section .countdown__digit {
+      background-image: linear-gradient(180deg, #fbebc3 0%, #d8b36a 55%, #f4dfaa 100%);
+    }
+  }
+
+  /* ── Nikah venue ────────────────────────────────────────────────────── */
+  .venue-section {
+    background: radial-gradient(
+      ellipse 60% 55% at 50% 50%,
+      rgb(214 196 230 / 0.32),
+      transparent 76%
+    );
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--plum) 0%, var(--plum-mid) 100%);
+    border-color: var(--gold-rich);
+  }
+
+  @media (hover: hover) {
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--plum-mid) 0%, #5d3775 100%);
+    }
+  }
+
+  .disclosure[open] > .disclosure__summary {
+    background: rgb(214 196 230 / 0.3);
+  }
+
+  /* ── Closing: back to plum, the names in an ivory window ─────────────── */
+  .closing {
+    background-image:
+      var(--paper-grain),
+      radial-gradient(
+        ellipse 80% 60% at 50% 70%,
+        var(--plum-mid) 0%,
+        var(--plum) 55%,
+        var(--plum-deep) 100%
+      );
+    background-size:
+      180px 180px,
+      auto;
+  }
+
+  .closing::after {
+    opacity: 0.5;
+  }
+
+  .closing__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .closing__dua {
+    color: var(--ivory);
+  }
+
+  .closing__request,
+  .closing__star {
+    color: var(--gold-light);
+  }
+
+  .arch--mini {
+    --arch-stroke: #d6b26b;
+  }
+
+  .closing .sparkle {
+    fill: var(--gold-light);
+  }
+}

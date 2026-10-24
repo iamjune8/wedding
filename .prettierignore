@@ -1,0 +1,11 @@
+.next
+.next-e2e
+.next.nosync
+.next-e2e.nosync
+node_modules
+coverage
+playwright-report
+test-results
+package-lock.json
+assets/fonts
+.next*

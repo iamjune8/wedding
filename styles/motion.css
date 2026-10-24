@@ -1,0 +1,243 @@
+/*
+ * Motion. Only opacity, transform and clip-path are animated; nothing loops; and everything is
+ * switched off for visitors who prefer reduced motion. The opening runs once, can be skipped,
+ * and is replaced by a still page if the guest has already seen it this session.
+ */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.9rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes mask-rise {
+  from {
+    transform: translate3d(0, 112%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes crown-draw {
+  from {
+    clip-path: inset(100% -6% -6% -6%);
+  }
+  to {
+    clip-path: inset(-6% -6% -6% -6%);
+  }
+}
+
+@keyframes rise-from-base {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes extend {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes panel-open {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -0.4rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-drift {
+  to {
+    opacity: 0.35;
+    transform: translate3d(0, -6vh, 0);
+  }
+}
+
+/* Names rise from behind a hairline mask; padding keeps descenders from being clipped. */
+.intro-mask {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.06em 0.18em;
+  margin-block: -0.06em -0.18em;
+}
+
+.intro-mask > span {
+  display: block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* ── Opening sequence ─────────────────────────────────────────────────── */
+  html:not([data-intro='skip']) .intro-step {
+    animation: rise-in 1100ms var(--ease-out-soft)
+      calc(var(--intro-delay, 0ms) + var(--envelope-time, 0ms)) both;
+  }
+
+  html:not([data-intro='skip']) .intro-fade {
+    animation: fade-in 1400ms var(--ease-out-soft)
+      calc(var(--intro-delay, 0ms) + var(--envelope-time, 0ms)) both;
+  }
+
+  html:not([data-intro='skip']) .intro-mask > span {
+    animation:
+      mask-rise 1500ms var(--ease-out-soft)
+        calc(var(--intro-delay, 0ms) + var(--envelope-time, 0ms)) both,
+      name-glint 9s ease-in-out calc(4200ms + var(--envelope-time, 0ms)) infinite;
+  }
+
+  html:not([data-intro='skip']) .intro-arch .arch__jambs {
+    transform-origin: 50% 100%;
+    animation: rise-from-base 1000ms var(--ease-in-out-soft) var(--envelope-time, 0ms) both;
+  }
+
+  html:not([data-intro='skip']) .intro-arch .arch__crown {
+    animation: crown-draw 1200ms var(--ease-in-out-soft) calc(450ms + var(--envelope-time, 0ms))
+      both;
+  }
+
+  html:not([data-intro='skip']) .intro-divider .ornament-divider__line {
+    animation: extend 1200ms var(--ease-out-soft)
+      calc(var(--intro-delay, 0ms) + var(--envelope-time, 0ms)) both;
+  }
+
+  html:not([data-intro='skip']) .intro-divider .ornament-divider__star {
+    animation: fade-in 900ms var(--ease-out-soft)
+      calc(var(--intro-delay, 0ms) + var(--envelope-time, 0ms)) both;
+  }
+
+  .skip-intro {
+    animation: fade-in 600ms var(--ease-out-soft) both;
+  }
+
+  /* ── Scroll reveals (enabled by RevealObserver) ─────────────────────── */
+  html[data-reveal-ready] [data-reveal] {
+    transition:
+      opacity 1000ms var(--ease-out-soft) var(--reveal-delay, 0ms),
+      transform 1200ms var(--ease-out-soft) var(--reveal-delay, 0ms);
+  }
+
+  html[data-reveal-ready] [data-reveal]:not([data-revealed]):not(:focus-within) {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+  }
+
+  html[data-reveal-ready] [data-reveal='ornament']:not([data-revealed]) {
+    transform: scale(0.92);
+  }
+
+  /* Dividers: the hairlines extend outwards from the star. */
+  html[data-reveal-ready] [data-reveal='divider'] .ornament-divider__line {
+    transition: transform 1300ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + 200ms);
+  }
+
+  html[data-reveal-ready] [data-reveal='divider']:not([data-revealed]) {
+    transform: none;
+  }
+
+  html[data-reveal-ready] [data-reveal='divider']:not([data-revealed]) .ornament-divider__line {
+    transform: scaleX(0);
+  }
+
+  /* Arch windows draw themselves: walls rise from the base, then the crown closes. */
+  html[data-reveal-ready] [data-reveal='arch']:not([data-revealed]) {
+    opacity: 1;
+    transform: none;
+  }
+
+  html[data-reveal-ready] [data-reveal='arch'] .arch__jambs {
+    transform-origin: 50% 100%;
+    transition: transform 1000ms var(--ease-in-out-soft) var(--reveal-delay, 0ms);
+  }
+
+  html[data-reveal-ready] [data-reveal='arch'] .arch__crown {
+    clip-path: inset(-6% -6% -6% -6%);
+    transition: clip-path 1200ms var(--ease-in-out-soft) calc(var(--reveal-delay, 0ms) + 500ms);
+  }
+
+  html[data-reveal-ready] [data-reveal='arch'] .arch__content {
+    transition:
+      opacity 1000ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + 650ms),
+      transform 1200ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + 650ms);
+  }
+
+  html[data-reveal-ready] [data-reveal='arch']:not([data-revealed]) .arch__jambs {
+    transform: scaleY(0);
+  }
+
+  html[data-reveal-ready] [data-reveal='arch']:not([data-revealed]) .arch__crown {
+    clip-path: inset(100% -6% -6% -6%);
+  }
+
+  html[data-reveal-ready]
+    [data-reveal='arch']:not([data-revealed]):not(:focus-within)
+    .arch__content {
+    opacity: 0;
+    transform: translate3d(0, 0.75rem, 0);
+  }
+
+  /* ── Disclosures ─────────────────────────────────────────────────────── */
+  .disclosure[open] > .disclosure__panel {
+    animation: panel-open 320ms var(--ease-out-soft);
+  }
+
+  .disclosure__chevron {
+    transition: transform 300ms var(--ease-out-soft);
+  }
+}
+
+/* Desktop only: the opening drifts gently upward as the guest scrolls on (no JS involved). */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+    .hero > .arch {
+      animation: hero-drift linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 90vh;
+    }
+  }
+}
+
+/* Printing or saving as PDF always shows the complete invitation, whatever was scrolled. */
+@media print {
+  [data-reveal],
+  [data-reveal] *,
+  .intro-step,
+  .intro-fade:not(.hero__pattern),
+  .intro-mask > span,
+  .arch__crown,
+  .arch__jambs {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .skip-intro,
+  .skip-link {
+    display: none !important;
+  }
+}

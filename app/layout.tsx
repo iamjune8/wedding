@@ -1,0 +1,57 @@
+import type { Metadata, Viewport } from 'next';
+import { Cormorant_Garamond, Inter } from 'next/font/google';
+import localFont from 'next/font/local';
+import type { ReactNode } from 'react';
+import { INTRO_HEAD_SCRIPT } from '@/lib/intro';
+import { buildMetadata } from '@/lib/metadata';
+import { resolveSiteUrl } from '@/lib/site-url';
+import { weddingConfig } from '@/lib/wedding-config';
+import './globals.css';
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-cormorant',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+// Amiri, subset to the Bismillah alone (≈22 KB); see assets/fonts/OFL-Amiri.txt.
+const amiri = localFont({
+  src: '../assets/fonts/amiri-basmala.woff2',
+  display: 'swap',
+  variable: '--font-amiri',
+  fallback: ['Geeza Pro', 'Noto Naskh Arabic', 'serif'],
+});
+
+export const metadata: Metadata = buildMetadata(weddingConfig, resolveSiteUrl(process.env));
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#fbf8f1',
+  colorScheme: 'light',
+};
+
+export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+  return (
+    <html
+      lang="en-IN"
+      className={`${cormorant.variable} ${inter.variable} ${amiri.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        {/* Decides before first paint whether to skip the opening sequence. */}
+        <script dangerouslySetInnerHTML={{ __html: INTRO_HEAD_SCRIPT }} />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}

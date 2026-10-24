@@ -1,0 +1,84 @@
+/*
+ * Design tokens. Colours come from the brief; two darker golds were added so small gold text
+ * meets WCAG AA contrast (4.5:1) on ivory and beige.
+ */
+:root {
+  --ivory: #fbf8f1;
+  --beige: #f2ebdd;
+  --champagne: #c39c5c; /* hairlines and ornaments */
+  --gold: #a98a52; /* large display accents only (3:1) */
+  --gold-line: #8a6d3b; /* button borders (≥3:1 on every background) */
+  --gold-ink: #7a5e2f; /* small gold text (≥4.9:1) */
+  --charcoal: #29251f;
+  --ink-soft: #5a5247; /* secondary text (≥6:1) */
+  --hairline: #e5d8bf;
+  --marigold: #d9a441; /* Haldi ornament */
+  --turmeric-ink: #74480b; /* small Haldi accent text (≥5:1 even on saffron) */
+  --haldi-wash: #fbecc8;
+  --haldi-deep: #f5d68f; /* saffron */
+  --saffron: #e9a93b;
+  --rose: #c9806f; /* dusty rose, Haldi petals only */
+
+  /* Royal purple chapters and soft lavender/blush tints. */
+  --plum: #2f1a3d;
+  --plum-deep: #1f1029;
+  --plum-mid: #4a2a5e;
+  --lavender: #efe7f5;
+  --lilac: #d6c4e6; /* text on plum (≥10:1) */
+  --blush: #e9a7b4;
+  --gold-light: #e2c487; /* gold text on plum (≥8:1) */
+
+  /* Richer gold for linework, glints and foil accents. */
+  --gold-rich: #b58a45;
+  --gold-deep: #5f4520;
+  --gold-glow: rgb(214 176 104 / 0.3);
+  --gold-foil: linear-gradient(
+    115deg,
+    #6b4e22 0%,
+    #a07a3c 28%,
+    #d2b06c 46%,
+    #9a7438 64%,
+    #6b4e22 100%
+  );
+
+  --serif:
+    var(--font-cormorant), 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', Palatino,
+    Georgia, serif;
+  --sans:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --arabic: var(--font-amiri), 'Geeza Pro', 'Noto Naskh Arabic', 'Arabic Typesetting', serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --gutter: 1rem;
+  --section-space: clamp(5.5rem, 3.5rem + 8vw, 10rem);
+
+  /* A whisper of paper grain (rendered once as a tile, never animated). */
+  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .16 0 0 0 0 .14 0 0 0 0 .11 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+
+  /* Eight-point stars joined into a lattice, drawn in hairline gold. */
+  --geometric-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23a98a52' stroke-width='.7'%3E%3Cpath d='M45 32l-3.81 3.81v5.38h-5.38L32 45l-3.81-3.81h-5.38v-5.38L19 32l3.81-3.81v-5.38h5.38L32 19l3.81 3.81h5.38v5.38z'/%3E%3Cpath d='M45 32h19M0 32h19M32 0v19M32 45v19M41.19 41.19 61 61M22.81 41.19 3 61M22.81 22.81 3 3M41.19 22.81 61 3M58 64l6-6M0 58l6 6M0 6l6-6M58 0l6 6'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+@media (min-width: 640px) {
+  :root {
+    --gutter: 1.5rem;
+  }
+}
+
+/* Expose the palette and fonts to Tailwind utilities (bg-ivory, font-serif, …). */
+@theme inline {
+  --color-ivory: var(--ivory);
+  --color-beige: var(--beige);
+  --color-champagne: var(--champagne);
+  --color-gold: var(--gold);
+  --color-gold-ink: var(--gold-ink);
+  --color-charcoal: var(--charcoal);
+  --color-ink-soft: var(--ink-soft);
+  --color-hairline: var(--hairline);
+  --color-marigold: var(--marigold);
+  --font-serif: var(--serif);
+  --font-sans: var(--sans);
+}

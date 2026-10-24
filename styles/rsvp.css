@@ -1,0 +1,353 @@
+@layer components {
+  /* ── Section: saffron of the Haldi melting into lavender ─────────────── */
+  .rsvp-section {
+    background-image:
+      var(--paper-grain),
+      linear-gradient(180deg, var(--haldi-wash) 0%, #f8f1ec 28%, var(--lavender) 100%);
+    background-size:
+      180px 180px,
+      auto;
+  }
+
+  /* ── The reply card ─────────────────────────────────────────────────── */
+  .rsvp-card {
+    position: relative;
+    max-width: 32rem;
+    margin-inline: auto;
+    padding: clamp(2.25rem, 6vw, 3.5rem) clamp(1.25rem, 6vw, 3rem) clamp(1.75rem, 5vw, 2.75rem);
+    border: 1px solid var(--gold-rich);
+    background: linear-gradient(180deg, #fffdf8 0%, #fbf6fc 100%);
+    box-shadow:
+      inset 0 0 0 7px #fffdf8,
+      inset 0 0 0 8px rgb(181 138 69 / 0.55),
+      0 1.75rem 3.5rem -1.25rem rgb(74 42 94 / 0.28);
+    text-align: center;
+  }
+
+  .rsvp-card__corner {
+    position: absolute;
+    width: 1.1rem;
+    height: 1.1rem;
+    color: var(--gold-rich);
+    background: var(--lavender);
+    border-radius: 50%;
+  }
+
+  .rsvp-card__corner .star-motif {
+    width: 100%;
+    height: 100%;
+    color: var(--gold-rich);
+  }
+
+  .rsvp-card__corner--tl {
+    top: -0.55rem;
+    left: -0.55rem;
+  }
+
+  .rsvp-card__corner--tr {
+    top: -0.55rem;
+    right: -0.55rem;
+  }
+
+  .rsvp-card__corner--bl {
+    bottom: -0.55rem;
+    left: -0.55rem;
+  }
+
+  .rsvp-card__corner--br {
+    bottom: -0.55rem;
+    right: -0.55rem;
+  }
+
+  .rsvp-card__kicker {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--gold-ink);
+  }
+
+  .rsvp-card__title {
+    margin-top: 0.25rem;
+    padding-left: 0.28em; /* balances the letter-spacing */
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 2rem + 3vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: 0.28em;
+    color: var(--plum-mid);
+  }
+
+  .rsvp-card__title::after {
+    content: '';
+    display: block;
+    width: 4.5rem;
+    height: 1px;
+    margin: 1rem auto 0;
+    background: linear-gradient(90deg, transparent, var(--gold-rich), transparent);
+  }
+
+  .rsvp-card__intro {
+    margin-top: 1rem;
+    font-family: var(--serif);
+    font-size: clamp(1.15rem, 1.05rem + 0.5vw, 1.35rem);
+    line-height: 1.45;
+    color: var(--ink-soft);
+  }
+
+  /* ── Fields ─────────────────────────────────────────────────────────── */
+  .rsvp-form {
+    display: grid;
+    gap: 1.75rem;
+    margin-top: 2rem;
+  }
+
+  .rsvp-field__label {
+    display: block;
+    margin-inline: auto;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+  }
+
+  .rsvp-field__input {
+    width: 100%;
+    margin-top: 0.35rem;
+    padding: 0.5rem 0.25rem 0.45rem;
+    border: 0;
+    border-bottom: 1px solid var(--gold-line);
+    border-radius: 0;
+    background: transparent;
+    font-family: var(--serif);
+    font-size: 1.55rem;
+    text-align: center;
+    color: var(--charcoal);
+    transition: border-color 250ms ease;
+  }
+
+  .rsvp-field__input:focus {
+    border-bottom-color: var(--plum-mid);
+  }
+
+  .rsvp-field__input[aria-invalid='true'] {
+    border-bottom-color: #9b1c3a;
+  }
+
+  .rsvp-field__error {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #9b1c3a;
+  }
+
+  .rsvp-choices {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .rsvp-choices__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .rsvp-choice {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* The real radio stays focusable and readable by screen readers, just invisible. */
+  .rsvp-choice__input {
+    position: absolute;
+    inset: 0;
+    z-index: 2; /* always on top, so a tap anywhere on the card selects it */
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .rsvp-choice__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    min-height: 7rem;
+    padding: 2.25rem 0.6rem 1rem;
+    border: 1px solid var(--hairline);
+    background: rgb(255 255 255 / 0.55);
+    transition:
+      border-color 250ms ease,
+      background-color 250ms ease,
+      box-shadow 250ms ease,
+      transform 120ms ease;
+  }
+
+  .rsvp-choice:active .rsvp-choice__card {
+    transform: translateY(1px);
+  }
+
+  .rsvp-choice__input:checked + .rsvp-choice__card {
+    border-color: var(--gold-rich);
+    background: #f3ebf8;
+    box-shadow: 0 0 0 3px rgb(198 166 107 / 0.28);
+  }
+
+  .rsvp-choice__input:focus-visible + .rsvp-choice__card {
+    outline: 2px solid var(--gold-ink);
+    outline-offset: 3px;
+  }
+
+  .rsvp-choice__tick {
+    position: absolute;
+    top: 0.55rem;
+    left: 50%;
+    display: grid;
+    place-items: center;
+    width: 1.35rem;
+    height: 1.35rem;
+    margin-left: -0.675rem;
+    border-radius: 50%;
+    background: var(--plum-mid);
+    color: var(--gold-light);
+    opacity: 0;
+    transform: scale(0.4);
+    transition:
+      opacity 250ms ease,
+      transform 350ms var(--ease-out-soft);
+  }
+
+  .rsvp-choice__tick svg {
+    width: 0.8rem;
+    height: 0.8rem;
+  }
+
+  .rsvp-choice__input:checked + .rsvp-choice__card .rsvp-choice__tick {
+    opacity: 1;
+    transform: none;
+  }
+
+  .rsvp-choice__title {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    line-height: 1.15;
+    color: var(--charcoal);
+  }
+
+  .rsvp-choice__note {
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    color: var(--ink-soft);
+  }
+
+  .rsvp-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .rsvp-form__send {
+    max-width: 22rem;
+    margin-inline: auto;
+  }
+
+  .rsvp-form__send:disabled {
+    cursor: progress;
+    opacity: 0.75;
+  }
+
+  .rsvp-form__status {
+    min-height: 1.4rem;
+    margin-top: -0.75rem;
+    font-size: 0.9375rem;
+    color: #9b1c3a;
+  }
+
+  /* ── Thank-you ──────────────────────────────────────────────────────── */
+  .rsvp-thanks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 2rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .rsvp-thanks__star {
+    width: 2.75rem;
+    height: 2.75rem;
+    color: var(--gold-rich);
+  }
+
+  .rsvp-thanks__title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.7rem, 1.4rem + 1.4vw, 2.2rem);
+    line-height: 1.2;
+    color: var(--plum-mid);
+  }
+
+  .rsvp-thanks__message {
+    max-width: 24rem;
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .rsvp-thanks__change {
+    min-height: 2.75rem;
+    padding: 0.5rem 1rem;
+    border: 0;
+    background: none;
+    font-size: 0.9375rem;
+    color: var(--gold-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--gold-rich);
+    text-underline-offset: 0.3em;
+    cursor: pointer;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rsvp-thanks__star {
+    animation: thanks-star 1100ms var(--ease-out-soft) both;
+  }
+
+  .rsvp-thanks__title,
+  .rsvp-thanks__message,
+  .rsvp-thanks__change {
+    animation: rise-in 900ms var(--ease-out-soft) both;
+  }
+
+  .rsvp-thanks__title {
+    animation-delay: 250ms;
+  }
+
+  .rsvp-thanks__message {
+    animation-delay: 400ms;
+  }
+
+  .rsvp-thanks__change {
+    animation-delay: 650ms;
+  }
+}
+
+@keyframes thanks-star {
+  from {
+    opacity: 0;
+    transform: scale(0.3) rotate(-120deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

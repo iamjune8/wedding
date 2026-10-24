@@ -1,0 +1,239 @@
+/*
+ * Richer motion. Only transform, opacity, background-position (a small glint on the names)
+ * and stroke offsets are animated. Looping decorations pause while off screen
+ * (data-in-view="false", set by InViewObserver) and nothing here runs for visitors who
+ * prefer reduced motion.
+ */
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3) rotate(0deg);
+  }
+  45% {
+    opacity: 0.95;
+    transform: translate(-50%, -50%) scale(1) rotate(45deg);
+  }
+  70% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5) rotate(90deg);
+  }
+}
+
+@keyframes name-glint {
+  0% {
+    background-position: 120% 0;
+  }
+  24%,
+  100% {
+    background-position: -20% 0;
+  }
+}
+
+@keyframes glow-breathe {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes cue-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+  }
+  20%,
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(var(--cue-length));
+  }
+}
+
+@keyframes digit-flip {
+  from {
+    opacity: 0;
+    transform: translateY(-0.3em) rotateX(75deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes petal-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg) rotateY(0deg);
+  }
+  6%,
+  90% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate3d(var(--sway), 52cqh, 0) rotate(calc(var(--spin) * 0.5)) rotateY(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(calc(var(--sway) * -0.5), 104cqh, 0) rotate(var(--spin)) rotateY(360deg);
+  }
+}
+
+@keyframes rosette-turn {
+  from {
+    rotate: -24deg;
+  }
+  to {
+    rotate: 24deg;
+  }
+}
+
+@keyframes window-depth {
+  from {
+    transform: translate3d(0, 2.5rem, 0);
+  }
+  to {
+    transform: translate3d(0, -2.5rem, 0);
+  }
+}
+
+/* The scroll cue's hairline carries a small travelling light. */
+.scroll-cue__line {
+  --cue-length: clamp(1.25rem, 4svh, 2.5rem);
+  position: relative;
+  overflow: visible;
+}
+
+.scroll-cue__dot {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 50%;
+  background: var(--gold-rich);
+  opacity: 0;
+}
+
+.countdown__value {
+  perspective: 400px;
+}
+
+.countdown__digit {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* ── Opening: glints, glow and the travelling light ─────────────────── */
+  .sparkle {
+    animation: twinkle var(--duration) ease-in-out var(--delay) infinite both;
+  }
+
+  .hero__glow {
+    animation: glow-breathe 7s ease-in-out infinite;
+  }
+
+  .scroll-cue__dot {
+    animation: cue-drop 2.6s var(--ease-in-out-soft) calc(4600ms + var(--envelope-time, 0ms))
+      infinite;
+  }
+
+  /* Names catch a sweep of gold light every few seconds. */
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .names__line > span {
+      background-image: linear-gradient(
+        100deg,
+        var(--charcoal) 0 42%,
+        #c9a35e 50%,
+        var(--charcoal) 58% 100%
+      );
+      background-size: 250% 100%;
+      background-position: -20% 0;
+      /* Room for overhanging glyphs (the tail of the J), which text clipping would cut off. */
+      padding: 0 0.18em 0.22em;
+      margin: 0 -0.18em -0.22em;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: name-glint 9s ease-in-out 1.2s infinite;
+    }
+  }
+
+  /* ── Countdown digits flip in as they change ─────────────────────────── */
+  .countdown__digit {
+    animation: digit-flip 520ms var(--ease-out-soft);
+  }
+
+  /* ── Haldi: drifting petals ─────────────────────────────────────────── */
+  .petal {
+    animation: petal-fall var(--duration) linear calc(var(--delay) * -1) infinite;
+  }
+
+  /* Decorations rest while their chapter is off screen. */
+  [data-in-view='false'] .sparkle,
+  [data-in-view='false'] .hero__glow,
+  [data-in-view='false'] .scroll-cue__dot,
+  [data-in-view='false'] .petal {
+    animation-play-state: paused;
+  }
+
+  /* ── Scroll reveals: titles gain their gilded rule, the rosette draws itself ── */
+  html[data-reveal-ready] .section-title::after {
+    transition: transform 1200ms var(--ease-out-soft) 450ms;
+  }
+
+  html[data-reveal-ready] [data-reveal]:not([data-revealed]) .section-title::after {
+    transform: scaleX(0);
+  }
+
+  html[data-reveal-ready] [data-reveal='ornament'] .rosette__petals path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 2200ms var(--ease-in-out-soft) 200ms;
+  }
+
+  html[data-reveal-ready] [data-reveal='ornament'] .rosette__petals--short path {
+    transition-delay: 700ms;
+  }
+
+  html[data-reveal-ready] [data-reveal='ornament']:not([data-revealed]) .rosette__petals path {
+    stroke-dashoffset: 1;
+  }
+
+  /* Hover sheen on buttons (devices with a real pointer only). */
+  @media (hover: hover) {
+    .btn-primary::after,
+    .btn-secondary::after {
+      transition: transform 700ms var(--ease-out-soft);
+    }
+
+    .btn-primary:hover::after,
+    .btn-secondary:hover::after {
+      transform: translateX(120%);
+    }
+  }
+}
+
+/* Scroll-linked depth where supported (no JavaScript, nothing runs while not scrolling). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .rosette {
+      animation: rosette-turn linear both;
+      animation-timeline: view();
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+    .venue-layout__place .arch {
+      animation: window-depth linear both;
+      animation-timeline: view();
+    }
+  }
+}

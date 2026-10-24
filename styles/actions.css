@@ -1,0 +1,217 @@
+@layer components {
+  /* ── Skip controls ───────────────────────────────────────────────────── */
+  .skip-link {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 30;
+    padding: 0.75rem 1rem;
+    background: var(--charcoal);
+    color: var(--ivory);
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transform: translateY(-160%);
+  }
+
+  .skip-link:focus {
+    transform: none;
+  }
+
+  .skip-intro {
+    position: absolute;
+    top: max(0.5rem, env(safe-area-inset-top));
+    right: max(0.5rem, env(safe-area-inset-right));
+    z-index: 50; /* above the opening envelope */
+    min-height: 2.75rem;
+    padding: 0.5rem 0.875rem;
+    border: 0;
+    background: transparent;
+    color: var(--ink-soft);
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    text-decoration: underline;
+    text-decoration-color: var(--champagne);
+    text-underline-offset: 0.35em;
+    cursor: pointer;
+  }
+
+  /* ── Buttons ─────────────────────────────────────────────────────────── */
+  .action-stack {
+    display: grid;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 22rem;
+    margin-inline: auto;
+  }
+
+  .btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.75rem 2.75rem;
+    border: 1px solid transparent;
+    border-radius: 0;
+    font-family: var(--sans);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1.25;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    transition:
+      background-color 250ms ease,
+      border-color 250ms ease,
+      color 250ms ease,
+      transform 120ms ease;
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn svg {
+    flex: none;
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .btn-primary {
+    background: var(--charcoal);
+    border-color: var(--charcoal);
+    color: var(--ivory);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border-color: var(--gold-line);
+    color: var(--charcoal);
+  }
+
+  @media (hover: hover) {
+    .btn-primary:hover {
+      background: #3b352c;
+      border-color: #3b352c;
+    }
+
+    .btn-secondary:hover {
+      background: rgb(198 166 107 / 0.14);
+    }
+  }
+
+  /* ── Disclosures (Add to Calendar, Share Invitation) ─────────────────── */
+  .disclosure {
+    width: 100%;
+  }
+
+  .disclosure__summary {
+    list-style: none;
+  }
+
+  .disclosure__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .disclosure__summary::marker {
+    content: '';
+  }
+
+  .disclosure__summary > .disclosure__chevron {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    width: 1rem;
+    height: 1rem;
+    margin-top: -0.5rem;
+  }
+
+  .disclosure[open] > .disclosure__summary {
+    background: rgb(198 166 107 / 0.12);
+  }
+
+  .disclosure[open] > .disclosure__summary > .disclosure__chevron {
+    transform: rotate(180deg);
+  }
+
+  .disclosure__panel {
+    display: grid;
+    padding: 0.25rem 0.25rem 0.5rem;
+    text-align: left;
+  }
+
+  .option-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    min-height: 3.5rem;
+    padding: 0.75rem 0.25rem;
+    border: 0;
+    border-bottom: 1px solid var(--hairline);
+    background: transparent;
+    color: var(--charcoal);
+    font: inherit;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .option-link__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
+  }
+
+  .option-link__title {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .option-link__hint {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--ink-soft);
+  }
+
+  .option-link > svg {
+    flex: none;
+    width: 1.125rem;
+    height: 1.125rem;
+    color: var(--gold-ink);
+  }
+
+  @media (hover: hover) {
+    .option-link:hover .option-link__title {
+      text-decoration: underline;
+      text-decoration-color: var(--champagne);
+    }
+  }
+
+  .disclosure__note {
+    margin-top: 0.875rem;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .share-options {
+    display: grid;
+  }
+
+  .share-options__status {
+    min-height: 1.4rem;
+    margin-top: 0.625rem;
+    font-size: 0.875rem;
+    color: var(--gold-ink);
+  }
+}
