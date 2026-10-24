@@ -5,15 +5,15 @@ describe('resolveSiteUrl', () => {
   it('prefers an explicitly configured public URL and trims the trailing slash', () => {
     expect(
       resolveSiteUrl({
-        NEXT_PUBLIC_SITE_URL: 'https://nida-juned.vercel.app/',
+        NEXT_PUBLIC_SITE_URL: 'https://nida-junaid.vercel.app/',
         VERCEL_PROJECT_PRODUCTION_URL: 'something-else.vercel.app',
       }),
-    ).toBe('https://nida-juned.vercel.app');
+    ).toBe('https://nida-junaid.vercel.app');
   });
 
   it("falls back to Vercel's production domain", () => {
-    expect(resolveSiteUrl({ VERCEL_PROJECT_PRODUCTION_URL: 'nida-juned.vercel.app' })).toBe(
-      'https://nida-juned.vercel.app',
+    expect(resolveSiteUrl({ VERCEL_PROJECT_PRODUCTION_URL: 'nida-junaid.vercel.app' })).toBe(
+      'https://nida-junaid.vercel.app',
     );
   });
 

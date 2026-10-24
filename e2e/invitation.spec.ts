@@ -6,7 +6,7 @@ test.describe('the invitation page', () => {
     const problems = collectProblems(page);
     await page.goto('/');
     await expect(page.getByRole('heading', { level: 1 })).toHaveAccessibleName(
-      'Nida Khatib and Juned Shaikh',
+      'Nida Khatib and Junaid Shaikh',
     );
     await page.waitForTimeout(5000); // let the opening sequence and hydration finish
     await scrollThrough(page);
@@ -15,12 +15,12 @@ test.describe('the invitation page', () => {
 
   test('plays the opening and shows every line of it', async ({ page }) => {
     await page.goto('/');
-    const hero = page.getByRole('region', { name: 'Nida Khatib and Juned Shaikh' });
+    const hero = page.getByRole('region', { name: 'Nida Khatib and Junaid Shaikh' });
     for (const text of [
       'Bismillahir Rahmanir Rahim',
       'Together with our families',
       'Nida Khatib',
-      'Juned Shaikh',
+      'Junaid Shaikh',
       'Cordially invite you to celebrate their Nikah',
       'Friday, 30 April 2027',
       'After Asr Namaaz · 5:30 PM IST',

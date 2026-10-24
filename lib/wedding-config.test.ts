@@ -15,7 +15,7 @@ const withOverride = (path: readonly string[], value: unknown) =>
 describe('weddingConfig (confirmed details)', () => {
   it('spells the couple’s names exactly', () => {
     expect(weddingConfig.couple.bride.fullName).toBe('Nida Khatib');
-    expect(weddingConfig.couple.groom.fullName).toBe('Juned Shaikh');
+    expect(weddingConfig.couple.groom.fullName).toBe('Junaid Shaikh');
   });
 
   it('uses India Standard Time for every event', () => {
@@ -33,7 +33,7 @@ describe('weddingConfig (confirmed details)', () => {
       address: 'Plot No. 144, Sector New 50, Seawoods, Nerul, Navi Mumbai, Maharashtra, India',
       shortAddress: 'Plot No. 144, Sector New 50, Seawoods, Nerul, Navi Mumbai',
     });
-    expect(nikah.calendar.fileName).toBe('nida-juned-nikah.ics');
+    expect(nikah.calendar.fileName).toBe('nida-junaid-nikah.ics');
   });
 
   it('holds the confirmed Haldi date and time with the venue still to be announced', () => {
@@ -41,7 +41,7 @@ describe('weddingConfig (confirmed details)', () => {
     expect(haldi.date).toBe('2027-04-28');
     expect(haldi.startTime).toBe('16:00');
     expect(haldi.venue).toBeNull();
-    expect(haldi.calendar.fileName).toBe('nida-juned-haldi.ics');
+    expect(haldi.calendar.fileName).toBe('nida-junaid-haldi.ics');
   });
 
   it('defaults calendar entries to 60 minutes because no end time was provided', () => {
@@ -81,7 +81,7 @@ describe('parseWeddingConfig', () => {
   });
 
   it('rejects two events that would share a calendar file', () => {
-    const clash = withOverride(['events', 'haldi', 'calendar', 'fileName'], 'nida-juned-nikah.ics');
+    const clash = withOverride(['events', 'haldi', 'calendar', 'fileName'], 'nida-junaid-nikah.ics');
     expect(() => parseWeddingConfig(clash)).toThrow(/unique/i);
   });
 

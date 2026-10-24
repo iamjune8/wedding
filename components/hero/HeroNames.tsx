@@ -7,7 +7,7 @@ interface HeroNamesProps {
 
 /**
  * The couple's names, the focal point of the opening. Screen readers hear
- * "Nida Khatib and Juned Shaikh"; the decorative ampersand is hidden from them.
+ * "Nida Khatib and Junaid Shaikh"; the decorative ampersand is hidden from them.
  */
 export function HeroNames({ brideName, groomName }: HeroNamesProps) {
   return (

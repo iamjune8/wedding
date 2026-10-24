@@ -4,7 +4,7 @@ import { openStill, SITE_URL } from './helpers';
 const EXPECTED_MESSAGE = [
   'Assalamu Alaikum,',
   '',
-  'With the blessings of Allah, you are warmly invited to the Nikah of Nida Khatib & Juned Shaikh.',
+  'With the blessings of Allah, you are warmly invited to the Nikah of Nida Khatib & Junaid Shaikh.',
   '',
   'Nikah:',
   'Friday, 30 April 2027',
@@ -53,7 +53,7 @@ test.describe('sharing', () => {
       () => (window as unknown as { __shareCalls: unknown[] }).__shareCalls,
     );
     expect(calls).toEqual([
-      { title: 'Nida & Juned | Nikah & Haldi Invitation', text: EXPECTED_MESSAGE, url: SITE_URL },
+      { title: 'Nida & Junaid | Nikah & Haldi Invitation', text: EXPECTED_MESSAGE, url: SITE_URL },
     ]);
   });
 

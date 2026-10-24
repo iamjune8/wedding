@@ -3,14 +3,14 @@ import { describe, expect, it } from 'vitest';
 import { buildGoogleCalendarUrl, buildIcsCalendar, type CalendarEventInput } from './calendar';
 
 const nikahInput: CalendarEventInput = {
-  uid: 'nikah-2027-04-30@nida-juned.invitation',
+  uid: 'nikah-2027-04-30@nida-junaid.invitation',
   sequence: 0,
-  title: 'Nikah Ceremony — Nida Khatib & Juned Shaikh',
+  title: 'Nikah Ceremony — Nida Khatib & Junaid Shaikh',
   description:
-    'You are warmly invited to the Nikah of Nida Khatib & Juned Shaikh.\n\nSeawood Jama Masjid',
+    'You are warmly invited to the Nikah of Nida Khatib & Junaid Shaikh.\n\nSeawood Jama Masjid',
   location:
     'Seawood Jama Masjid, Plot No. 144, Sector New 50, Seawoods, Nerul, Navi Mumbai, Maharashtra, India',
-  url: 'https://nida-juned.example',
+  url: 'https://nida-junaid.example',
   timeZone: 'Asia/Kolkata',
   timeZoneLabel: 'IST',
   utcOffsetMinutes: 330,
@@ -26,8 +26,8 @@ const nikahInput: CalendarEventInput = {
 
 const haldiInput: CalendarEventInput = {
   ...nikahInput,
-  uid: 'haldi-2027-04-28@nida-juned.invitation',
-  title: 'Haldi Ceremony — Nida Khatib & Juned Shaikh',
+  uid: 'haldi-2027-04-28@nida-junaid.invitation',
+  title: 'Haldi Ceremony — Nida Khatib & Junaid Shaikh',
   description: 'Venue: To be announced (not yet confirmed).',
   location: 'Venue to be announced',
   startLocal: { date: '2027-04-28', time: '16:00' },
@@ -75,14 +75,14 @@ describe('buildIcsCalendar', () => {
       'TZOFFSETFROM:+0530',
       'TZOFFSETTO:+0530',
       'TZNAME:IST',
-      'UID:nikah-2027-04-30@nida-juned.invitation',
+      'UID:nikah-2027-04-30@nida-junaid.invitation',
       'SEQUENCE:0',
       'DTSTAMP:20261024T081530Z',
       'DTSTART;TZID=Asia/Kolkata:20270430T173000',
       'DTEND;TZID=Asia/Kolkata:20270430T183000',
-      'SUMMARY:Nikah Ceremony — Nida Khatib & Juned Shaikh',
+      'SUMMARY:Nikah Ceremony — Nida Khatib & Junaid Shaikh',
       'LOCATION:Seawood Jama Masjid\\, Plot No. 144\\, Sector New 50\\, Seawoods\\, Nerul\\, Navi Mumbai\\, Maharashtra\\, India',
-      'URL:https://nida-juned.example',
+      'URL:https://nida-junaid.example',
       'BEGIN:VALARM',
       'ACTION:DISPLAY',
       'TRIGGER:-P1D',
@@ -98,7 +98,7 @@ describe('buildIcsCalendar', () => {
   it('parses with a standards-based iCalendar parser and resolves the correct instant', () => {
     const { root, event } = parseEvent(ics);
     expect(root.getFirstPropertyValue('version')).toBe('2.0');
-    expect(event.summary).toBe('Nikah Ceremony — Nida Khatib & Juned Shaikh');
+    expect(event.summary).toBe('Nikah Ceremony — Nida Khatib & Junaid Shaikh');
     expect(event.location).toBe(nikahInput.location);
     expect(event.description).toBe(nikahInput.description);
     expect(event.startDate.toJSDate().toISOString()).toBe('2027-04-30T12:00:00.000Z');
@@ -127,7 +127,7 @@ describe('buildIcsCalendar', () => {
     const { event } = parseEvent(haldi);
     expect(event.location).toBe('Venue to be announced');
     expect(event.description).toContain('not yet confirmed');
-    expect(event.uid).not.toBe('nikah-2027-04-30@nida-juned.invitation');
+    expect(event.uid).not.toBe('nikah-2027-04-30@nida-junaid.invitation');
     expect(event.startDate.toJSDate().toISOString()).toBe('2027-04-28T10:30:00.000Z');
   });
 
@@ -144,7 +144,7 @@ describe('buildGoogleCalendarUrl', () => {
     expect(url.origin).toBe('https://calendar.google.com');
     expect(url.pathname).toBe('/calendar/render');
     expect(url.searchParams.get('action')).toBe('TEMPLATE');
-    expect(url.searchParams.get('text')).toBe('Nikah Ceremony — Nida Khatib & Juned Shaikh');
+    expect(url.searchParams.get('text')).toBe('Nikah Ceremony — Nida Khatib & Junaid Shaikh');
     expect(url.searchParams.get('dates')).toBe('20270430T120000Z/20270430T130000Z');
     expect(url.searchParams.get('ctz')).toBe('Asia/Kolkata');
     expect(url.searchParams.get('location')).toBe(nikahInput.location);

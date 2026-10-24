@@ -35,7 +35,7 @@ export interface CalendarEventInput {
   readonly reminder?: CalendarReminder;
 }
 
-const PRODUCT_ID = '-//Nida Khatib and Juned Shaikh//Wedding Invitation//EN';
+const PRODUCT_ID = '-//Nida Khatib and Junaid Shaikh//Wedding Invitation//EN';
 const GOOGLE_CALENDAR_TEMPLATE = 'https://calendar.google.com/calendar/render';
 
 /**

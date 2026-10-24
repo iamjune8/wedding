@@ -1,6 +1,6 @@
 import { expect, type Page } from '@playwright/test';
 
-export const SITE_URL = 'https://nida-juned.example';
+export const SITE_URL = 'https://nida-junaid.example';
 
 /** Opens the invitation with the opening sequence already marked as seen (instant, still page). */
 export async function openWithoutIntro(page: Page, path = '/') {

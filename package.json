@@ -1,8 +1,8 @@
 {
-  "name": "nida-juned-wedding",
+  "name": "nida-junaid-wedding",
   "version": "1.0.0",
   "private": true,
-  "description": "Digital Nikah and Haldi invitation for Nida Khatib and Juned Shaikh.",
+  "description": "Digital Nikah and Haldi invitation for Nida Khatib and Junaid Shaikh.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

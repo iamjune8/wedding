@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { buildCalendarInput, buildEventView, buildEventViews } from './events';
 import { weddingConfig } from './wedding-config';
 
-const SITE = 'https://nida-juned.example';
+const SITE = 'https://nida-junaid.example';
 
 describe('buildEventViews', () => {
   const { nikah, haldi } = buildEventViews(weddingConfig, SITE);
@@ -34,7 +34,7 @@ describe('buildEventViews', () => {
 
   it('links Nikah directions and calendar actions', () => {
     expect(nikah.directionsUrl).toContain('https://www.google.com/maps/dir/?api=1&destination=');
-    expect(nikah.calendar.path).toBe('/calendar/nida-juned-nikah.ics');
+    expect(nikah.calendar.path).toBe('/calendar/nida-junaid-nikah.ics');
     expect(new URL(nikah.calendar.googleUrl).searchParams.get('dates')).toBe(
       '20270430T120000Z/20270430T130000Z',
     );
@@ -43,7 +43,7 @@ describe('buildEventViews', () => {
   it('offers no directions while the Haldi venue is unconfirmed', () => {
     expect(haldi.venue).toBeNull();
     expect(haldi.directionsUrl).toBeNull();
-    expect(haldi.calendar.path).toBe('/calendar/nida-juned-haldi.ics');
+    expect(haldi.calendar.path).toBe('/calendar/nida-junaid-haldi.ics');
     expect(new URL(haldi.calendar.googleUrl).searchParams.get('dates')).toBe(
       '20270428T103000Z/20270428T113000Z',
     );
@@ -67,7 +67,7 @@ describe('buildEventViews', () => {
 describe('buildCalendarInput', () => {
   it('describes the Nikah with its venue and the invitation link', () => {
     const input = buildCalendarInput(weddingConfig.events.nikah, weddingConfig, SITE);
-    expect(input.title).toBe('Nikah Ceremony — Nida Khatib & Juned Shaikh');
+    expect(input.title).toBe('Nikah Ceremony — Nida Khatib & Junaid Shaikh');
     expect(input.location).toBe(
       'Seawood Jama Masjid, Plot No. 144, Sector New 50, Seawoods, Nerul, Navi Mumbai, Maharashtra, India',
     );
@@ -75,7 +75,7 @@ describe('buildCalendarInput', () => {
     expect(input.description).toContain('5:30 PM IST · After Asr Namaaz');
     expect(input.description).toContain(`Invitation: ${SITE}`);
     expect(input.url).toBe(SITE);
-    expect(input.uid).toBe('nikah@nida-juned.invitation');
+    expect(input.uid).toBe('nikah@nida-junaid.invitation');
     expect(input.reminder?.minutesBefore).toBe(1440);
     expect(input.endUtc.toISOString()).toBe('2027-04-30T13:00:00.000Z');
     expect(input.endLocal).toEqual({ date: '2027-04-30', time: '18:30' });
@@ -83,7 +83,7 @@ describe('buildCalendarInput', () => {
 
   it('clearly marks the Haldi venue as not yet confirmed', () => {
     const input = buildCalendarInput(weddingConfig.events.haldi, weddingConfig, null);
-    expect(input.title).toBe('Haldi Ceremony — Nida Khatib & Juned Shaikh');
+    expect(input.title).toBe('Haldi Ceremony — Nida Khatib & Junaid Shaikh');
     expect(input.location).toBe('Venue to be announced');
     expect(input.description).toContain('To be announced (not yet confirmed)');
     expect(input.description).not.toContain('Invitation:');

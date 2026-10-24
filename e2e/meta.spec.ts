@@ -4,13 +4,13 @@ import { SITE_URL } from './helpers';
 test.describe('link previews and metadata', () => {
   test('uses the public address for previews and keeps search engines out', async ({ page }) => {
     await page.goto('/');
-    await expect(page).toHaveTitle('Nida & Juned | Nikah & Haldi Invitation');
+    await expect(page).toHaveTitle('Nida & Junaid | Nikah & Haldi Invitation');
 
     const meta = (selector: string) => page.locator(selector).getAttribute('content');
     expect(await meta('meta[name="description"]')).toBe(
-      'You are warmly invited to the Nikah of Nida Khatib and Juned Shaikh on Friday, 30 April 2027, and their Haldi celebration on Wednesday, 28 April 2027.',
+      'You are warmly invited to the Nikah of Nida Khatib and Junaid Shaikh on Friday, 30 April 2027, and their Haldi celebration on Wednesday, 28 April 2027.',
     );
-    expect(await meta('meta[property="og:title"]')).toBe('Nida & Juned | Nikah & Haldi Invitation');
+    expect(await meta('meta[property="og:title"]')).toBe('Nida & Junaid | Nikah & Haldi Invitation');
     expect(await meta('meta[property="og:url"]')).toBe(SITE_URL);
     expect(await meta('meta[property="og:image"]')).toMatch(
       new RegExp(`^${SITE_URL}/opengraph-image`),

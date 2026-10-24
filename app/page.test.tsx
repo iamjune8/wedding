@@ -3,7 +3,7 @@ import { render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import InvitationPage from './page';
 
-const SITE = 'https://nida-juned.example';
+const SITE = 'https://nida-junaid.example';
 
 beforeEach(() => {
   vi.stubEnv('NEXT_PUBLIC_SITE_URL', SITE);
@@ -22,13 +22,13 @@ describe('Invitation page', () => {
   it('names the couple exactly in the main heading', () => {
     render(<InvitationPage />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveAccessibleName(
-      'Nida Khatib and Juned Shaikh',
+      'Nida Khatib and Junaid Shaikh',
     );
   });
 
   it('opens with the agreed invitation wording', () => {
     render(<InvitationPage />);
-    const hero = section(/nida khatib and juned shaikh/i);
+    const hero = section(/nida khatib and junaid shaikh/i);
     for (const text of [
       'Bismillahir Rahmanir Rahim',
       'Together with our families',
@@ -68,7 +68,7 @@ describe('Invitation page', () => {
 
     expect(within(nikah).getByRole('link', { name: /apple calendar/i })).toHaveAttribute(
       'href',
-      '/calendar/nida-juned-nikah.ics',
+      '/calendar/nida-junaid-nikah.ics',
     );
     expect(within(nikah).getByRole('link', { name: /google calendar/i })).toHaveAttribute(
       'target',
@@ -87,7 +87,7 @@ describe('Invitation page', () => {
     expect(within(haldi).queryByRole('link', { name: /directions/i })).not.toBeInTheDocument();
     expect(within(haldi).getByRole('link', { name: /apple calendar/i })).toHaveAttribute(
       'href',
-      '/calendar/nida-juned-haldi.ics',
+      '/calendar/nida-junaid-haldi.ics',
     );
   });
 
@@ -105,6 +105,6 @@ describe('Invitation page', () => {
     expect(footer).toHaveTextContent(
       'May Allah bless this beautiful journey with love, barakah, understanding, and lifelong happiness.',
     );
-    expect(footer).toHaveTextContent(/Nida Khatib.*Juned Shaikh/);
+    expect(footer).toHaveTextContent(/Nida Khatib.*Junaid Shaikh/);
   });
 });

@@ -27,7 +27,7 @@ const haldi: ShareEventSummary = {
 const expectedMessage = [
   'Assalamu Alaikum,',
   '',
-  'With the blessings of Allah, you are warmly invited to the Nikah of Nida Khatib & Juned Shaikh.',
+  'With the blessings of Allah, you are warmly invited to the Nikah of Nida Khatib & Junaid Shaikh.',
   '',
   'Nikah:',
   'Friday, 30 April 2027',
@@ -48,13 +48,13 @@ const expectedMessage = [
 describe('buildInvitationMessage', () => {
   it('produces the agreed invitation wording', () => {
     expect(
-      buildInvitationMessage({ coupleNames: 'Nida Khatib & Juned Shaikh', nikah, haldi }),
+      buildInvitationMessage({ coupleNames: 'Nida Khatib & Junaid Shaikh', nikah, haldi }),
     ).toBe(expectedMessage);
   });
 
   it('includes the Haldi venue automatically once it is confirmed', () => {
     const message = buildInvitationMessage({
-      coupleNames: 'Nida Khatib & Juned Shaikh',
+      coupleNames: 'Nida Khatib & Junaid Shaikh',
       nikah,
       haldi: { ...haldi, venue: { name: 'Example Hall', shortAddress: 'Example Road, Mumbai' } },
     });
@@ -67,8 +67,8 @@ describe('buildInvitationMessage', () => {
 
 describe('withInvitationUrl', () => {
   it('appends the public link on its own paragraph', () => {
-    expect(withInvitationUrl('Hello', 'https://nida-juned.example')).toBe(
-      'Hello\n\nhttps://nida-juned.example',
+    expect(withInvitationUrl('Hello', 'https://nida-junaid.example')).toBe(
+      'Hello\n\nhttps://nida-junaid.example',
     );
   });
 
@@ -79,7 +79,7 @@ describe('withInvitationUrl', () => {
 
 describe('buildWhatsAppShareUrl', () => {
   it('encodes the full message for wa.me', () => {
-    const text = withInvitationUrl(expectedMessage, 'https://nida-juned.example');
+    const text = withInvitationUrl(expectedMessage, 'https://nida-junaid.example');
     const url = buildWhatsAppShareUrl(text);
     expect(url.startsWith('https://wa.me/?text=')).toBe(true);
     expect(url).not.toMatch(/\s/);

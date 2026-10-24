@@ -13,15 +13,15 @@ function parse(ics: string) {
 
 const files = [
   {
-    file: 'nida-juned-nikah.ics',
-    summary: 'Nikah Ceremony — Nida Khatib & Juned Shaikh',
+    file: 'nida-junaid-nikah.ics',
+    summary: 'Nikah Ceremony — Nida Khatib & Junaid Shaikh',
     start: '2027-04-30T12:00:00.000Z',
     location:
       'Seawood Jama Masjid, Plot No. 144, Sector New 50, Seawoods, Nerul, Navi Mumbai, Maharashtra, India',
   },
   {
-    file: 'nida-juned-haldi.ics',
-    summary: 'Haldi Ceremony — Nida Khatib & Juned Shaikh',
+    file: 'nida-junaid-haldi.ics',
+    summary: 'Haldi Ceremony — Nida Khatib & Junaid Shaikh',
     start: '2027-04-28T10:30:00.000Z',
     location: 'Venue to be announced',
   },
@@ -81,13 +81,13 @@ test.describe('Add to Calendar', () => {
     const google = nikah.getByRole('link', { name: /google calendar/i });
     await expect(apple).toBeVisible();
     await expect(google).toBeVisible();
-    await expect(apple).toHaveAttribute('href', '/calendar/nida-juned-nikah.ics');
+    await expect(apple).toHaveAttribute('href', '/calendar/nida-junaid-nikah.ics');
     await expect(nikah.getByText(/Reminders depend on your calendar app/)).toBeVisible();
 
     const url = new URL((await google.getAttribute('href')) ?? '');
     expect(url.origin + url.pathname).toBe('https://calendar.google.com/calendar/render');
     expect(url.searchParams.get('action')).toBe('TEMPLATE');
-    expect(url.searchParams.get('text')).toBe('Nikah Ceremony — Nida Khatib & Juned Shaikh');
+    expect(url.searchParams.get('text')).toBe('Nikah Ceremony — Nida Khatib & Junaid Shaikh');
     expect(url.searchParams.get('dates')).toBe('20270430T120000Z/20270430T130000Z');
     expect(url.searchParams.get('ctz')).toBe('Asia/Kolkata');
     await expect(google).toHaveAttribute('rel', 'noopener noreferrer');
@@ -118,6 +118,6 @@ test.describe('Add to Calendar', () => {
       page.waitForEvent('download'),
       nikah.getByRole('link', { name: /apple calendar/i }).click(),
     ]);
-    expect(download.suggestedFilename()).toBe('nida-juned-nikah.ics');
+    expect(download.suggestedFilename()).toBe('nida-junaid-nikah.ics');
   });
 });

@@ -47,7 +47,7 @@ describe('foldIcsLine', () => {
   });
 
   it('never splits a multi-byte character across lines', () => {
-    const line = `SUMMARY:${'Nikah — Nida & Juned · '.repeat(8)}بِسْمِ ٱللَّهِ`;
+    const line = `SUMMARY:${'Nikah — Nida & Junaid · '.repeat(8)}بِسْمِ ٱللَّهِ`;
     const folded = foldIcsLine(line);
     for (const physical of folded.split('\r\n')) {
       expect(octets(physical)).toBeLessThanOrEqual(75);

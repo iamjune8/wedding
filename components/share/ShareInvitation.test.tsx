@@ -5,8 +5,8 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ShareInvitation } from './ShareInvitation';
 
 const message =
-  'Assalamu Alaikum,\n\nYou are warmly invited to the Nikah of Nida Khatib & Juned Shaikh.';
-const props = { message, siteUrl: 'https://nida-juned.example', shareTitle: 'Nida & Juned' };
+  'Assalamu Alaikum,\n\nYou are warmly invited to the Nikah of Nida Khatib & Junaid Shaikh.';
+const props = { message, siteUrl: 'https://nida-junaid.example', shareTitle: 'Nida & Junaid' };
 
 function stubNavigator(overrides: Partial<Navigator>) {
   for (const [key, value] of Object.entries(overrides)) {
@@ -24,7 +24,7 @@ describe('ShareInvitation', () => {
     const link = screen.getByRole('link', { name: /share on whatsapp/i });
     const url = new URL(link.getAttribute('href') ?? '');
     expect(url.origin).toBe('https://wa.me');
-    expect(url.searchParams.get('text')).toBe(`${message}\n\nhttps://nida-juned.example`);
+    expect(url.searchParams.get('text')).toBe(`${message}\n\nhttps://nida-junaid.example`);
     expect(link).toHaveAttribute('target', '_blank');
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   });
@@ -41,9 +41,9 @@ describe('ShareInvitation', () => {
     render(<ShareInvitation {...props} />);
     await userEvent.click(screen.getByRole('button', { name: /more ways to share/i }));
     expect(share).toHaveBeenCalledWith({
-      title: 'Nida & Juned',
+      title: 'Nida & Junaid',
       text: message,
-      url: 'https://nida-juned.example',
+      url: 'https://nida-junaid.example',
     });
   });
 
@@ -62,7 +62,7 @@ describe('ShareInvitation', () => {
     stubNavigator({ share, clipboard: { writeText } as unknown as Clipboard });
     render(<ShareInvitation {...props} />);
     await userEvent.click(screen.getByRole('button', { name: /more ways to share/i }));
-    await waitFor(() => expect(writeText).toHaveBeenCalledWith('https://nida-juned.example'));
+    await waitFor(() => expect(writeText).toHaveBeenCalledWith('https://nida-junaid.example'));
   });
 
   it('offers copy-link where the share menu is unavailable and confirms success', async () => {
@@ -70,7 +70,7 @@ describe('ShareInvitation', () => {
     stubNavigator({ clipboard: { writeText } as unknown as Clipboard });
     render(<ShareInvitation {...props} />);
     await userEvent.click(screen.getByRole('button', { name: /copy invitation link/i }));
-    expect(writeText).toHaveBeenCalledWith('https://nida-juned.example');
+    expect(writeText).toHaveBeenCalledWith('https://nida-junaid.example');
     expect(await screen.findByRole('status')).toHaveTextContent('Invitation link copied.');
   });
 

@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 const PORT = 3100;
 
 /** A placeholder public address (.example never resolves) so share links can be checked. */
-export const E2E_SITE_URL = 'https://nida-juned.example';
+export const E2E_SITE_URL = 'https://nida-junaid.example';
 
 export default defineConfig({
   testDir: './e2e',

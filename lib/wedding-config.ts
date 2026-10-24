@@ -17,18 +17,18 @@ import { isValidTimeZone, parseIsoDate, zonedDateTimeToUtc } from './time';
 export const rawWeddingConfig = {
   couple: {
     bride: { firstName: 'Nida', fullName: 'Nida Khatib' },
-    groom: { firstName: 'Juned', fullName: 'Juned Shaikh' },
+    groom: { firstName: 'Junaid', fullName: 'Junaid Shaikh' },
   },
   timeZone: 'Asia/Kolkata',
   timeZoneLabel: 'IST',
   site: {
-    title: 'Nida & Juned | Nikah & Haldi Invitation',
+    title: 'Nida & Junaid | Nikah & Haldi Invitation',
     description:
-      'You are warmly invited to the Nikah of Nida Khatib and Juned Shaikh on Friday, 30 April 2027, and their Haldi celebration on Wednesday, 28 April 2027.',
+      'You are warmly invited to the Nikah of Nida Khatib and Junaid Shaikh on Friday, 30 April 2027, and their Haldi celebration on Wednesday, 28 April 2027.',
     // Keeps the invitation out of search results; link previews on WhatsApp still work.
     allowSearchIndexing: false,
     // Stable identifier suffix for calendar entries (not a real web address).
-    calendarUidDomain: 'nida-juned.invitation',
+    calendarUidDomain: 'nida-junaid.invitation',
   },
   copy: {
     // Al-Fatihah 1:1 in Uthmani orthography: بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
@@ -38,7 +38,7 @@ export const rawWeddingConfig = {
     inviteLine: 'Cordially invite you to celebrate their Nikah',
     scrollCue: 'Discover the celebration',
     message: [
-      'With the blessings of Allah and the love and duas of our families, we warmly invite you to join us as Nida Khatib and Juned Shaikh begin their journey together in Nikah.',
+      'With the blessings of Allah and the love and duas of our families, we warmly invite you to join us as Nida Khatib and Junaid Shaikh begin their journey together in Nikah.',
       'Your presence and duas will make this blessed occasion even more special.',
     ],
     closing: [
@@ -64,7 +64,7 @@ export const rawWeddingConfig = {
         address: 'Plot No. 144, Sector New 50, Seawoods, Nerul, Navi Mumbai, Maharashtra, India',
         shortAddress: 'Plot No. 144, Sector New 50, Seawoods, Nerul, Navi Mumbai',
       },
-      calendar: { fileName: 'nida-juned-nikah.ics', sequence: 0, reminderMinutesBefore: 1440 },
+      calendar: { fileName: 'nida-junaid-nikah.ics', sequence: 0, reminderMinutesBefore: 1440 },
       countdown: {
         heading: 'Counting down to the Nikah',
         reachedMessage: 'The blessed day is here',
@@ -81,7 +81,7 @@ export const rawWeddingConfig = {
       durationMinutes: 60,
       timingNote: null,
       venue: null, // To be announced — see the note at the top of this file.
-      calendar: { fileName: 'nida-juned-haldi.ics', sequence: 0, reminderMinutesBefore: 1440 },
+      calendar: { fileName: 'nida-junaid-haldi.ics', sequence: 0, reminderMinutesBefore: 1440 },
       countdown: {
         heading: 'Counting down to the Haldi',
         reachedMessage: 'The Haldi celebration is here',

@@ -4,14 +4,14 @@ import { POST, resetRsvpRateLimit } from './route';
 const SHEET = 'https://script.google.com/macros/s/test/exec';
 
 const jsonRequest = (body: unknown, ip = '9.9.9.9') =>
-  new Request('https://nida-juned.example/api/rsvp', {
+  new Request('https://nida-junaid.example/api/rsvp', {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-forwarded-for': ip },
     body: JSON.stringify(body),
   });
 
 const formRequest = (fields: Record<string, string>) =>
-  new Request('https://nida-juned.example/api/rsvp', {
+  new Request('https://nida-junaid.example/api/rsvp', {
     method: 'POST',
     headers: { 'content-type': 'application/x-www-form-urlencoded', 'x-forwarded-for': '7.7.7.7' },
     body: new URLSearchParams(fields).toString(),

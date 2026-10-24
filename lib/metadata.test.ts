@@ -5,20 +5,20 @@ import { weddingConfig } from './wedding-config';
 describe('buildMetadata', () => {
   it('uses the agreed title and description', () => {
     const metadata = buildMetadata(weddingConfig, null);
-    expect(metadata.title).toBe('Nida & Juned | Nikah & Haldi Invitation');
+    expect(metadata.title).toBe('Nida & Junaid | Nikah & Haldi Invitation');
     expect(metadata.description).toBe(
-      'You are warmly invited to the Nikah of Nida Khatib and Juned Shaikh on Friday, 30 April 2027, and their Haldi celebration on Wednesday, 28 April 2027.',
+      'You are warmly invited to the Nikah of Nida Khatib and Junaid Shaikh on Friday, 30 April 2027, and their Haldi celebration on Wednesday, 28 April 2027.',
     );
   });
 
   it('points previews and the canonical link at the public address', () => {
-    const metadata = buildMetadata(weddingConfig, 'https://nida-juned.vercel.app');
-    expect(metadata.metadataBase?.toString()).toBe('https://nida-juned.vercel.app/');
+    const metadata = buildMetadata(weddingConfig, 'https://nida-junaid.vercel.app');
+    expect(metadata.metadataBase?.toString()).toBe('https://nida-junaid.vercel.app/');
     expect(metadata.alternates?.canonical).toBe('/');
     expect(metadata.openGraph).toMatchObject({
       type: 'website',
-      url: 'https://nida-juned.vercel.app',
-      siteName: 'Nida & Juned',
+      url: 'https://nida-junaid.vercel.app',
+      siteName: 'Nida & Junaid',
       locale: 'en_IN',
     });
   });

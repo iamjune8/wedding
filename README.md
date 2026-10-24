@@ -1,6 +1,6 @@
-# Nida & Juned · Nikah & Haldi invitation
+# Nida & Junaid · Nikah & Haldi invitation
 
-A digital wedding invitation for the Nikah of **Nida Khatib & Juned Shaikh**, with their Haldi
+A digital wedding invitation for the Nikah of **Nida Khatib & Junaid Shaikh**, with their Haldi
 celebration. Built with Next.js 16, React 19, TypeScript and Tailwind CSS 4. The site is fully
 static: no database, no login, no paid services and no secrets.
 
@@ -57,7 +57,7 @@ npx playwright install chromium webkit
 ```
 
 The end-to-end tests build the site into `.next-e2e/` with a placeholder address
-(`https://nida-juned.example`) so they never overwrite your normal build.
+(`https://nida-junaid.example`) so they never overwrite your normal build.
 
 ## Change event details or announce the Haldi venue
 
@@ -96,7 +96,7 @@ Replies go into a Google Sheet that only you can see. Until this is set up, the 
 politely tells guests that replies are not open yet. Setup takes about 5 minutes, once.
 
 1. Create a new sheet at [sheets.new](https://sheets.new) and name it, for example,
-   "Nida & Juned RSVPs".
+   "Nida & Junaid RSVPs".
 2. In the sheet, open **Extensions → Apps Script**. Delete the sample code, paste in everything
    from [`google-apps-script/rsvp.gs`](google-apps-script/rsvp.gs), and click **Save**.
 3. Click **Deploy → New deployment**, choose the type **Web app**, set **Execute as: Me** and
@@ -171,13 +171,13 @@ git push -u origin main
    public address automatically. For RSVPs, add the two values from
    [RSVP: connect your Google Sheet](#rsvp-connect-your-google-sheet) (you can also add them
    later and redeploy). If you add a custom domain, also add `NEXT_PUBLIC_SITE_URL` with the
-   full address (for example `https://nidajuned.com`). See `.env.example`.
+   full address (for example `https://nidajunaid.com`). See `.env.example`.
 5. Click **Deploy** and wait about a minute.
 
 ### 3. Get the public address
 
 When the deployment finishes, Vercel shows the production address, for example
-`https://nida-juned-wedding.vercel.app`. **Share that address.** The long addresses Vercel shows
+`https://nida-junaid-wedding.vercel.app`. **Share that address.** The long addresses Vercel shows
 for individual deployments (with random letters) are protected previews that ask for a Vercel
 login, so guests can't open them.
 

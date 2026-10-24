@@ -1,5 +1,5 @@
 /**
- * RSVP receiver for the Nida & Juned invitation.
+ * RSVP receiver for the Nida & Junaid invitation.
  *
  * Paste this into Extensions → Apps Script of the Google Sheet that should collect replies,
  * then follow "RSVP: connect your Google Sheet" in README.md. It appends one row per reply to
