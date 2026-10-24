@@ -141,8 +141,7 @@
   }
 
   .scroll-cue__dot {
-    animation: cue-drop 2.6s var(--ease-in-out-soft) calc(4600ms + var(--envelope-time, 0ms))
-      infinite;
+    animation: cue-drop 2.6s var(--ease-in-out-soft) 7200ms infinite;
   }
 
   /* Names catch a sweep of gold light every few seconds. */
@@ -231,7 +230,7 @@
   }
 
   @media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
-    .venue-layout__place .arch {
+    .venue-layout__place .mughal {
       animation: window-depth linear both;
       animation-timeline: view();
     }

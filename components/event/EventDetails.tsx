@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import type { EventView } from '@/lib/events';
 import { revealDelay } from '@/lib/style';
-import { ArchFrame } from '../ornaments/ArchFrame';
+import { MughalArch } from '../ornaments/MughalArch';
 import { EventActions } from './EventActions';
 import { VenueBlock } from './VenueBlock';
 
@@ -29,9 +29,9 @@ export function EventDetails({ event, calendarNote, pendingMessage, share }: Eve
           <p className="event-time">{timeLine}</p>
         </header>
         <div className="venue-layout__place" data-reveal="arch" style={revealDelay(120)}>
-          <ArchFrame variant="window">
+          <MughalArch id={`${event.id}-arch`} variant="window">
             <VenueBlock venue={event.venue} pendingMessage={pendingMessage} />
-          </ArchFrame>
+          </MughalArch>
         </div>
         <div className="venue-layout__actions" data-reveal style={revealDelay(220)}>
           <EventActions event={event} calendarNote={calendarNote} share={share} />

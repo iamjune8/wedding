@@ -1,0 +1,405 @@
+/*
+ * The Mughal arch frame, the floral sprite, lanterns, fairy lights, crescent and jasmine
+ * strings. Static styling only; their motion lives in palace.css.
+ */
+@layer components {
+  /* ── Mughal arch (components/ornaments/MughalArch.tsx) ──────────────── */
+  .mughal {
+    --stone-hi: #f0dde2;
+    --stone: #d6b3bd;
+    --stone-lo: #b48c99;
+    --stone-carve: #9b7383;
+    --shaft: #f5e7ea;
+    --moulding: #fdf6f1;
+    --deep: var(--mauve);
+    position: relative;
+    display: grid;
+    margin-inline: auto;
+    /* Everything inside is sized in cqi (percent of the arch's width) so it scales as one. */
+    container-type: inline-size;
+  }
+
+  .mughal--sage {
+    --stone-hi: #e8ece1;
+    --stone: #c5cdb9;
+    --stone-lo: #9aa58e;
+    --stone-carve: #7d8a73;
+    --shaft: #f0f3ea;
+    --moulding: #fbfcf7;
+    --deep: #66735d;
+  }
+
+  .mughal > * {
+    grid-area: 1 / 1;
+  }
+
+  .mughal__interior {
+    /* Fills the opening; the carved stone hides the corners above it. */
+    margin-top: 4.5cqi;
+    margin-inline: 2cqi;
+    background: var(--paper);
+  }
+
+  .mughal--window .mughal__interior,
+  .mughal--mini .mughal__interior {
+    background:
+      radial-gradient(ellipse 90% 60% at 50% 30%, #fffdf9 0%, transparent 70%),
+      linear-gradient(180deg, var(--paper) 0%, var(--blush-wash) 100%);
+  }
+
+  .mughal--sage.mughal--window .mughal__interior {
+    background:
+      radial-gradient(ellipse 90% 60% at 50% 30%, #fffef9 0%, transparent 70%),
+      linear-gradient(180deg, var(--paper) 0%, var(--mehndi-wash) 100%);
+  }
+
+  .mughal__frame {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+    filter: drop-shadow(0 0.8cqi 1.6cqi rgb(23 24 39 / 0.22));
+  }
+
+  .mughal__crown,
+  .mughal__base {
+    display: block;
+    flex: none;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .mughal__crown {
+    aspect-ratio: 400 / 318;
+  }
+
+  .mughal__base {
+    aspect-ratio: 400 / 64;
+  }
+
+  .mughal__sides {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 2rem;
+  }
+
+  .mughal__sides > svg {
+    position: absolute;
+    inset: -1px 0;
+    width: 100%;
+    height: calc(100% + 2px);
+  }
+
+  .mughal__stop-hi {
+    stop-color: var(--stone-hi);
+  }
+
+  .mughal__stop {
+    stop-color: var(--stone);
+  }
+
+  .mughal__stop-lo {
+    stop-color: var(--stone-lo);
+  }
+
+  .mughal__carving {
+    fill: var(--stone-carve);
+  }
+
+  .mughal__carved {
+    opacity: 0.15;
+  }
+
+  .mughal__side-stone,
+  .mughal__plinth {
+    fill: var(--stone);
+  }
+
+  .mughal__shaft {
+    fill: var(--shaft);
+  }
+
+  .mughal__capital {
+    fill: var(--shaft);
+    stroke: var(--gold-rich);
+    stroke-width: 1;
+  }
+
+  .mughal__gilt,
+  .mughal__ivory-line,
+  .mughal__deep-line,
+  .mughal__beads,
+  .mughal__edge,
+  .mughal__edge-shadow,
+  .mughal__flute {
+    fill: none;
+  }
+
+  .mughal__gilt {
+    stroke: var(--gold-rich);
+    stroke-width: 1.4px;
+  }
+
+  .mughal__gilt--fine {
+    stroke-width: 0.8px;
+  }
+
+  .mughal__ivory-line {
+    stroke: var(--moulding);
+    stroke-width: 1.7px;
+  }
+
+  .mughal__ivory-line--fine {
+    stroke-width: 0.9px;
+  }
+
+  .mughal__deep-line {
+    stroke: var(--deep);
+    stroke-width: 1.3px;
+    opacity: 0.8;
+  }
+
+  .mughal__flute {
+    stroke: var(--stone-lo);
+    stroke-width: 1px;
+    opacity: 0.75;
+  }
+
+  .mughal__beads {
+    stroke: var(--warm-gold);
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-dasharray: 0 7;
+  }
+
+  .mughal__edge-shadow {
+    stroke: var(--deep);
+    stroke-width: 5;
+    opacity: 0.35;
+  }
+
+  .mughal__edge {
+    stroke: var(--moulding);
+    stroke-width: 1.8px;
+  }
+
+  .mughal__rosette path {
+    fill: var(--stone-hi);
+    stroke: var(--deep);
+    stroke-width: 0.8;
+  }
+
+  .mughal__rosette-ring {
+    fill: none;
+    stroke: var(--deep);
+    stroke-width: 0.9;
+    opacity: 0.7;
+  }
+
+  .mughal__rosette-heart {
+    fill: var(--gold-rich);
+  }
+
+  /* Gold beading down the sides, matching the beads around the crown. */
+  .mughal__bead-column {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1.6cqi;
+    margin-left: -0.8cqi;
+    background: radial-gradient(circle, var(--warm-gold) 0 0.4cqi, transparent 0.5cqi) 50% 0 /
+      1.6cqi 1.75cqi repeat-y;
+  }
+
+  .mughal__bead-column--start {
+    left: 10.25%;
+  }
+
+  .mughal__bead-column--end {
+    left: 89.75%;
+  }
+
+  .mughal__decoration {
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .mughal__content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    padding: 46cqi 16cqi 20cqi;
+    text-align: center;
+  }
+
+  .mughal--window {
+    width: min(100%, 22rem);
+  }
+
+  .mughal--mini {
+    width: min(100%, 17rem);
+  }
+
+  .mughal--mini .mughal__content {
+    padding: 44cqi 15cqi 19cqi;
+  }
+
+  /* ── Flowers (components/flora) ─────────────────────────────────────── */
+  .flora-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .flora {
+    display: block;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  /* ── Crescent ───────────────────────────────────────────────────────── */
+  .crescent {
+    position: absolute;
+    display: grid;
+    place-items: center;
+  }
+
+  .crescent > * {
+    grid-area: 1 / 1;
+  }
+
+  .crescent__halo {
+    width: 230%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(255 233 170 / 0.4) 0%, transparent 62%);
+  }
+
+  .crescent__moon {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    fill: #f5dfa0;
+    filter: drop-shadow(0 0 0.35rem rgb(255 223 140 / 0.7));
+  }
+
+  .crescent__star {
+    fill: #fff7e2;
+  }
+
+  /* ── Fairy lights ───────────────────────────────────────────────────── */
+  .fairy-lights {
+    display: block;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .fairy-lights__wire {
+    fill: none;
+    stroke: rgb(233 207 131 / 0.35);
+    stroke-width: 0.6;
+  }
+
+  .fairy-lights__bulb {
+    fill: #ffe9b0;
+    filter: drop-shadow(0 0 2px rgb(255 214 120 / 0.95));
+  }
+
+  /* ── Lanterns ───────────────────────────────────────────────────────── */
+  .lantern {
+    --lantern-width: 3rem;
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: var(--lantern-width);
+    transform-origin: 50% 0;
+  }
+
+  .lantern__chain {
+    width: 1px;
+    height: var(--drop);
+    background: linear-gradient(180deg, rgb(214 178 107 / 0.25), #d6b26b);
+  }
+
+  .lantern__body {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    filter: drop-shadow(0 0 0.6rem rgb(255 205 130 / 0.55));
+  }
+
+  .lantern__metal {
+    fill: #c9a25a;
+  }
+
+  .lantern__ring,
+  .lantern__frame,
+  .lantern__wire {
+    fill: none;
+    stroke: #dcbc78;
+    stroke-width: 1.4;
+  }
+
+  .lantern__wire {
+    stroke-width: 0.8;
+    opacity: 0.7;
+  }
+
+  .lantern__glass {
+    fill: rgb(255 214 150 / 0.22);
+  }
+
+  .lantern__flame {
+    fill: #ffdc96;
+    opacity: 0.95;
+  }
+
+  /* ── Jasmine and rose strings ───────────────────────────────────────── */
+  .jasmine__strand {
+    position: absolute;
+    top: 0;
+    left: var(--x);
+    width: 12px;
+    height: var(--length);
+    margin-left: -6px;
+    background:
+      radial-gradient(circle, #f3c3cd 0 4.2px, #d68f9f 4.6px, transparent 5.2px) 50% 30px / 12px
+        78px repeat-y,
+      radial-gradient(circle, #fffdf6 0 3px, #eadfc6 3.5px, transparent 4.1px) 50% 0 / 12px 13px
+        repeat-y,
+      linear-gradient(#cfae6c, #cfae6c) 50% 0 / 1px 100% no-repeat;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 4rem);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 4rem);
+  }
+
+  .jasmine__strand::after {
+    content: '';
+    position: absolute;
+    bottom: -9px;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #fbe3e8 0%, #e7a9b7 45%, #b85f78 100%);
+    box-shadow: 0 2px 6px rgb(23 24 39 / 0.45);
+    transform: translateX(-50%);
+  }
+
+  @media print {
+    .fairy-lights,
+    .lantern,
+    .jasmine {
+      display: none;
+    }
+  }
+}

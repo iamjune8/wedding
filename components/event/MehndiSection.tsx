@@ -3,6 +3,7 @@ import { revealDelay } from '@/lib/style';
 import { Countdown } from '../countdown/Countdown';
 import { CountdownNoscript } from '../countdown/CountdownNoscript';
 import { Petals } from '../ornaments/Petals';
+import { MughalArch } from '../ornaments/MughalArch';
 import { Rosette } from '../ornaments/Rosette';
 import { EventActions } from './EventActions';
 import { VenueBlock } from './VenueBlock';
@@ -40,12 +41,14 @@ export function MehndiSection({ event, calendarNote, pendingMessage }: MehndiSec
           </p>
           <p className="event-time">{event.timeLabel}</p>
         </header>
-        <div className="mehndi-layout__venue" data-reveal style={revealDelay(180)}>
-          <VenueBlock
-            venue={event.venue}
-            hostedAt={event.hostedAt}
-            pendingMessage={pendingMessage}
-          />
+        <div className="mehndi-layout__venue" data-reveal="arch" style={revealDelay(180)}>
+          <MughalArch id={`${event.id}-arch`} variant="window" tone="sage">
+            <VenueBlock
+              venue={event.venue}
+              hostedAt={event.hostedAt}
+              pendingMessage={pendingMessage}
+            />
+          </MughalArch>
         </div>
         <div className="mehndi-layout__countdown" data-reveal style={revealDelay(120)}>
           <h3 className="mehndi-layout__countdown-title">{event.countdown.heading}</h3>

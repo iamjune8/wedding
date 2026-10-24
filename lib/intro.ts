@@ -2,11 +2,8 @@
 
 export const INTRO_STORAGE_KEY = 'nj-intro-seen';
 
-/** The envelope opens first (styles/envelope.css); the arch sequence follows. */
-export const ENVELOPE_MS = 800;
-
-/** When the last opening step has finished (envelope offset + latest delay + its duration). */
-export const INTRO_DURATION_MS = ENVELOPE_MS + 4600;
+/** When the last opening scene has settled (latest delay in the hero + its duration). */
+export const INTRO_DURATION_MS = 7800;
 
 /**
  * Runs in <head> before first paint. Skips the opening sequence when the guest has already

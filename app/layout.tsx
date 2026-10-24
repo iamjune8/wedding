@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Cormorant_Garamond, Inter } from 'next/font/google';
+import { Cormorant_Garamond, Great_Vibes, Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import type { ReactNode } from 'react';
 import { INTRO_HEAD_SCRIPT } from '@/lib/intro';
@@ -14,6 +14,14 @@ const cormorant = Cormorant_Garamond({
   style: ['normal', 'italic'],
   display: 'swap',
   variable: '--font-cormorant',
+});
+
+// Great Vibes (SIL Open Font License) for the single word "Nikah" in the opening.
+const greatVibes = Great_Vibes({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-great-vibes',
 });
 
 const inter = Inter({
@@ -36,7 +44,7 @@ export const metadata: Metadata = buildMetadata(weddingConfig, resolveSiteUrl(pr
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#fbf8f1',
+  themeColor: '#1d1a37',
   // "only light" stops Android Chrome / Samsung Internet from auto-darkening the design.
   colorScheme: 'only light',
 };
@@ -45,7 +53,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html
       lang="en-IN"
-      className={`${cormorant.variable} ${inter.variable} ${amiri.variable}`}
+      className={`${cormorant.variable} ${greatVibes.variable} ${inter.variable} ${amiri.variable}`}
       suppressHydrationWarning
     >
       <head>

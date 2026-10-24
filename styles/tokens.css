@@ -1,45 +1,65 @@
 /*
- * Design tokens. Colours come from the brief; two darker golds were added so small gold text
- * meets WCAG AA contrast (4.5:1) on ivory and beige.
+ * Design tokens: a Mughal palace at night. Midnight navy and dusty-rose stone carry the opening;
+ * ivory and warm paper hold the reading sections; gold is an accent, never a background.
+ * Darker golds (--gold-ink, --gold-line) exist so small gold text passes WCAG AA on paper.
  */
 :root {
-  --ivory: #fbf8f1;
-  --beige: #f2ebdd;
-  --champagne: #c39c5c; /* hairlines and ornaments */
+  /* Brief palette */
+  --midnight: #171827;
+  --indigo: #3a2c58; /* deep dusk violet (was midnight indigo) */
+  --dusty-rose: #c6a0ac;
+  --blush: #e7c9d0;
+  --warm-gold: #e9cf83;
+  --antique-brass: #a97a2b;
+  --ivory: #f8f1e9;
+  --paper: #fbf9f5;
+  --floral-pink: #e7a9b7;
+  --sage: #84927a;
+
+  /* Roles */
+  /* Evening: twilight violet above, a setting sun of amber, coral and rose below. */
+  --twilight: #1d1a37;
+  --dusk: #2c2347; /* dark chapters (countdown, closing) and primary buttons */
+  --dusk-violet: #43305f;
+  --dusk-mauve: #6b4166;
+  --sunset-rose: #b9637a;
+  --sunset-coral: #e58f6e;
+  --sunset-amber: #f5c27c;
+  --sun-core: #fff2cf;
+
+  --night: var(--dusk);
+  --night-deep: var(--twilight);
+  --blush-wash: #f6ebe8; /* faint blush tint between sections */
+  --blush-light: #e7c9d0; /* text on navy (≥11:1) */
+  --gold-light: var(--warm-gold); /* gold text on navy (≥10:1) */
+  --beige: #f2e8df;
+  --champagne: #c9a868; /* hairlines and ornaments */
   --gold: #a98a52; /* large display accents only (3:1) */
   --gold-line: #8a6d3b; /* button borders (≥3:1 on every background) */
-  --gold-ink: #7a5e2f; /* small gold text (≥4.9:1) */
-  --charcoal: #29251f;
-  --ink-soft: #5a5247; /* secondary text (≥6:1) */
-  --hairline: #e5d8bf;
-  --marigold: #d9a441; /* marigold accents and petals */
-  --henna: #6f7d32; /* henna-leaf linework in the Mehndi chapter */
-  --henna-ink: #3d5120; /* small Mehndi accent text (≥6:1 even on the deepest green) */
-  --mehndi-wash: #f1f2de;
-  --mehndi-deep: #d7dfb3; /* soft henna green */
-  --saffron: #e9a93b;
-  --rose: #c9806f; /* dusty rose, petals only */
+  --gold-ink: #7a5a26; /* small gold text on paper (≥5:1) */
+  --charcoal: #232232;
+  --ink-soft: #55515f; /* secondary text (≥6:1) */
+  --hairline: #e6d7cf;
+  --mauve: #8e6a78; /* carved-stone shadows */
+  --marigold: #d9a441;
+  --henna: #6f7d5f; /* Mehndi linework (sage family) */
+  --henna-ink: #44523c; /* small Mehndi accent text (≥6:1 on sage tints) */
+  --mehndi-wash: #f1f2ea;
+  --mehndi-deep: #dde2d3;
+  --saffron: #e3b95f;
+  --rose: #c9806f;
 
-  /* Royal purple chapters and soft lavender/blush tints. */
-  --plum: #2f1a3d;
-  --plum-deep: #1f1029;
-  --plum-mid: #4a2a5e;
-  --lavender: #efe7f5;
-  --lilac: #d6c4e6; /* text on plum (≥10:1) */
-  --blush: #e9a7b4;
-  --gold-light: #e2c487; /* gold text on plum (≥8:1) */
-
-  /* Richer gold for linework, glints and foil accents. */
-  --gold-rich: #b58a45;
+  /* Gold for linework, glints and foil accents. */
+  --gold-rich: var(--antique-brass);
   --gold-deep: #5f4520;
-  --gold-glow: rgb(214 176 104 / 0.3);
+  --gold-glow: rgb(233 207 131 / 0.28);
   --gold-foil: linear-gradient(
     115deg,
-    #6b4e22 0%,
-    #a07a3c 28%,
-    #d2b06c 46%,
-    #9a7438 64%,
-    #6b4e22 100%
+    #7a5a26 0%,
+    #a97a2b 28%,
+    #e9cf83 46%,
+    #a97a2b 64%,
+    #7a5a26 100%
   );
 
   --serif:
@@ -48,6 +68,7 @@
   --sans:
     var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
+  --script: var(--font-great-vibes), 'Great Vibes', 'Snell Roundhand', cursive;
   --arabic: var(--font-amiri), 'Geeza Pro', 'Noto Naskh Arabic', 'Arabic Typesetting', serif;
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
@@ -72,6 +93,8 @@
 /* Expose the palette and fonts to Tailwind utilities (bg-ivory, font-serif, …). */
 @theme inline {
   --color-ivory: var(--ivory);
+  --color-paper: var(--paper);
+  --color-midnight: var(--midnight);
   --color-beige: var(--beige);
   --color-champagne: var(--champagne);
   --color-gold: var(--gold);

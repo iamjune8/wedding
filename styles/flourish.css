@@ -3,36 +3,6 @@
  * Everything here is static; the motion that brings it to life lives in motion-rich.css.
  */
 @layer components {
-  /* ── Opening: a warm halo around the arch ───────────────────────────── */
-  .hero__glow {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background:
-      radial-gradient(ellipse 60% 48% at 50% 36%, var(--gold-glow), transparent 72%),
-      radial-gradient(ellipse 130% 55% at 50% 112%, rgb(233 169 59 / 0.14), transparent 62%);
-  }
-
-  .arch--hero,
-  .arch--mini {
-    --arch-fill: #fdf9f0;
-  }
-
-  .arch--window {
-    --arch-fill: #fdf6e6;
-  }
-
-  .hero__pattern {
-    opacity: 0.32;
-  }
-
-  @media (min-width: 768px) {
-    .hero__pattern {
-      opacity: 0.38;
-    }
-  }
-
   /* ── Sparkles ───────────────────────────────────────────────────────── */
   .sparkles {
     position: relative;
@@ -258,7 +228,7 @@
     fill: #fffaf0;
   }
 
-  .petal--lilac .petal__body {
+  .petal--blush-light .petal__body {
     fill: #c6a4e0;
   }
 
@@ -308,30 +278,5 @@
     .hero__glow {
       display: none;
     }
-  }
-}
-
-/* ── Arch inlay and depth (appended) ──────────────────────────────────── */
-@layer components {
-  .arch__beads {
-    stroke: var(--gold-rich);
-    stroke-width: 2.2px;
-    stroke-linecap: round;
-    stroke-dasharray: 0 7px;
-    opacity: 0.75;
-  }
-
-  .arch--mini .arch__beads {
-    stroke-dasharray: 0 6px;
-    stroke-width: 1.8px;
-  }
-
-  /* The opening window warms gently towards the bottom. */
-  .arch--hero .arch__jambs {
-    background-image: linear-gradient(180deg, transparent 0%, rgb(246 228 190 / 0.55) 100%);
-  }
-
-  .hero__sparkles .sparkle {
-    fill: #c79a4f;
   }
 }

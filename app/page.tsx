@@ -1,8 +1,8 @@
+import { FloralDefs } from '@/components/flora/FloralDefs';
 import { ClosingMessage } from '@/components/ClosingMessage';
 import { CountdownSection } from '@/components/countdown/CountdownSection';
 import { EventDetails } from '@/components/event/EventDetails';
 import { MehndiSection } from '@/components/event/MehndiSection';
-import { Envelope } from '@/components/hero/Envelope';
 import { IntroController } from '@/components/hero/IntroController';
 import { InvitationHero } from '@/components/hero/InvitationHero';
 import { InvitationMessage } from '@/components/InvitationMessage';
@@ -32,17 +32,12 @@ export default function InvitationPage() {
       <a className="skip-link" href={`#${nikah.id}`}>
         Skip to the event details
       </a>
-      <Envelope
-        brideFirstName={couple.bride.firstName}
-        groomFirstName={couple.groom.firstName}
-        dateLabel={nikah.dateLabel}
-      />
+      <FloralDefs />
       <main id="main">
         <InvitationHero
           copy={copy}
           brideName={couple.bride.fullName}
           groomName={couple.groom.fullName}
-          initials={[couple.bride.firstName.charAt(0), couple.groom.firstName.charAt(0)]}
           nikah={{ ...nikah, venueName: nikah.venue?.name ?? null }}
         />
         <InvitationMessage paragraphs={copy.message} />

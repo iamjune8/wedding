@@ -3,7 +3,7 @@
   .rsvp-section {
     background-image:
       var(--paper-grain),
-      linear-gradient(180deg, var(--mehndi-wash) 0%, #f8f1ec 28%, var(--lavender) 100%);
+      linear-gradient(180deg, var(--mehndi-wash) 0%, #f8f1ec 28%, var(--blush-wash) 100%);
     background-size:
       180px 180px,
       auto;
@@ -29,7 +29,7 @@
     width: 1.1rem;
     height: 1.1rem;
     color: var(--gold-rich);
-    background: var(--lavender);
+    background: var(--blush-wash);
     border-radius: 50%;
   }
 
@@ -74,7 +74,7 @@
     font-size: clamp(2.6rem, 2rem + 3vw, 3.6rem);
     line-height: 1.05;
     letter-spacing: 0.28em;
-    color: var(--plum-mid);
+    color: var(--indigo);
   }
 
   .rsvp-card__title::after {
@@ -126,7 +126,7 @@
   }
 
   .rsvp-field__input:focus {
-    border-bottom-color: var(--plum-mid);
+    border-bottom-color: var(--indigo);
   }
 
   .rsvp-field__input[aria-invalid='true'] {
@@ -214,7 +214,7 @@
     height: 1.35rem;
     margin-left: -0.675rem;
     border-radius: 50%;
-    background: var(--plum-mid);
+    background: var(--indigo);
     color: var(--gold-light);
     opacity: 0;
     transform: scale(0.4);
@@ -292,7 +292,7 @@
     font-style: italic;
     font-size: clamp(1.7rem, 1.4rem + 1.4vw, 2.2rem);
     line-height: 1.2;
-    color: var(--plum-mid);
+    color: var(--indigo);
   }
 
   .rsvp-thanks__message {

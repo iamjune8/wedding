@@ -13,14 +13,14 @@ export function HeroNames({ brideName, groomName }: HeroNamesProps) {
   return (
     <h1 id="couple-names" className="names">
       <span className="names__line intro-mask">
-        <span style={introDelay(1300)}>{brideName}</span>
+        <span style={introDelay(4750)}>{brideName}</span>
       </span>{' '}
-      <span className="names__amp intro-fade" style={introDelay(1750)} aria-hidden="true">
+      <span className="names__amp intro-fade" style={introDelay(5050)} aria-hidden="true">
         &amp;
       </span>
       <span className="sr-only">and</span>{' '}
       <span className="names__line intro-mask">
-        <span style={introDelay(1950)}>{groomName}</span>
+        <span style={introDelay(5150)}>{groomName}</span>
       </span>
     </h1>
   );

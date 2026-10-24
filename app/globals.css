@@ -2,14 +2,13 @@
 @import '../styles/tokens.css';
 @import '../styles/base.css';
 @import '../styles/ornaments.css';
+@import '../styles/mughal.css';
 @import '../styles/motion.css';
 @import '../styles/actions.css';
 @import '../styles/countdown.css';
 @import '../styles/sections.css';
-@import '../styles/hero.css';
 @import '../styles/flourish.css';
 @import '../styles/royal.css';
-@import '../styles/hero-ornaments.css';
-@import '../styles/envelope.css';
 @import '../styles/rsvp.css';
 @import '../styles/motion-rich.css';
+@import '../styles/palace.css';

@@ -73,21 +73,54 @@ test.describe('layout', () => {
 });
 
 test.describe('motion and resilience', () => {
-  test('the envelope opens by itself, then clears completely', async ({ page }) => {
+  test('the opening plays its scenes and settles into the full invitation', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/');
-    const envelope = page.locator('.envelope');
-    await expect(envelope).toBeVisible();
-    await expect(envelope).toBeHidden({ timeout: 6000 });
-    expect(await envelope.evaluate((element) => getComputedStyle(element).pointerEvents)).toBe(
-      'none',
-    );
+    const couple = page.locator('.gate-scene__couple');
+    const nikah = page.locator('.nikah-script');
+    // Scene 1 starts in the dark: the couple only arrives in scene 4.
+    expect(
+      Number(await couple.evaluate((element) => getComputedStyle(element).opacity)),
+    ).toBeLessThan(1);
+    await expect
+      .poll(() => nikah.evaluate((element) => getComputedStyle(element).opacity), { timeout: 6000 })
+      .toBe('1');
+    await expect
+      .poll(() => couple.evaluate((element) => getComputedStyle(element).opacity), {
+        timeout: 9000,
+      })
+      .toBe('1');
+    await expect(page.getByRole('button', { name: 'Replay invitation' })).toBeVisible({
+      timeout: 10_000,
+    });
   });
 
-  test('a tap opens the envelope straight away', async ({ page }) => {
+  test('replaying the opening leaves the countdown running untouched', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('.envelope')).toBeVisible();
     await page.getByRole('button', { name: 'Skip intro' }).click();
-    await expect(page.locator('.envelope')).toBeHidden({ timeout: 1500 });
+    const replay = page.getByRole('button', { name: 'Replay invitation' });
+    await expect(replay).toBeVisible({ timeout: 3000 });
+    const days = page
+      .getByRole('region', { name: 'Counting down to the Nikah' })
+      .locator('.countdown__unit')
+      .first();
+    const before = await days.textContent();
+    await replay.click();
+    await expect(page.getByRole('button', { name: 'Skip intro' })).toBeVisible();
+    expect(await page.evaluate(() => window.scrollY)).toBe(0);
+    // The opening starts again from the dark…
+    expect(
+      Number(
+        await page
+          .locator('.nikah-script')
+          .evaluate((element) => getComputedStyle(element).opacity),
+      ),
+    ).toBeLessThan(1);
+    // …while the countdown keeps its value (no reset, no duplicate timer).
+    expect(await days.textContent()).toBe(before);
+    await expect(
+      page.getByRole('region', { name: 'Counting down to the Nikah' }).locator('.countdown'),
+    ).toHaveCount(1);
   });
 
   test('the opening can be skipped at once', async ({ page }) => {
@@ -107,10 +140,11 @@ test.describe('motion and resilience', () => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
     await expect(page.getByRole('button', { name: 'Skip intro' })).toHaveCount(0);
-    await expect(page.locator('.envelope')).toBeHidden();
-    // (The background pattern is intentionally faint, so it is not part of this check.)
+    await expect(page.getByRole('button', { name: 'Replay invitation' })).toHaveCount(0);
     const opacities = await page
-      .locator('.intro-step, .intro-fade:not(.hero__pattern), [data-reveal]')
+      .locator(
+        '.intro-step, .intro-fade, .intro-write, .intro-rise, .intro-bloom, .intro-drop, [data-reveal]',
+      )
       .evaluateAll((elements) => elements.map((element) => getComputedStyle(element).opacity));
     expect(opacities.every((value) => value === '1')).toBe(true);
     expect(
@@ -125,7 +159,7 @@ test.describe('motion and resilience', () => {
     const context = await browser.newContext({ javaScriptEnabled: false });
     const page = await context.newPage();
     await page.goto('/');
-    await page.waitForTimeout(7500); // the CSS-only envelope and opening finish on their own
+    await page.waitForTimeout(8500); // the CSS-only opening finishes on its own
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     const hidden = await page
       .locator('[data-reveal]')

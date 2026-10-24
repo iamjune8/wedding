@@ -21,7 +21,7 @@
     position: absolute;
     top: max(0.5rem, env(safe-area-inset-top));
     right: max(0.5rem, env(safe-area-inset-right));
-    z-index: 50; /* above the opening envelope */
+    z-index: 50; /* above the opening scene */
     min-height: 2.75rem;
     padding: 0.5rem 0.875rem;
     border: 0;

@@ -93,40 +93,25 @@
 @media (prefers-reduced-motion: no-preference) {
   /* ── Opening sequence ─────────────────────────────────────────────────── */
   html:not([data-intro='skip']) .intro-step {
-    animation: rise-in 1100ms var(--ease-out-soft)
-      calc(var(--intro-delay, 0ms) + var(--envelope-time, 0ms)) both;
+    animation: rise-in 1100ms var(--ease-out-soft) var(--intro-delay, 0ms) both;
   }
 
   html:not([data-intro='skip']) .intro-fade {
-    animation: fade-in 1400ms var(--ease-out-soft)
-      calc(var(--intro-delay, 0ms) + var(--envelope-time, 0ms)) both;
+    animation: fade-in 1400ms var(--ease-out-soft) var(--intro-delay, 0ms) both;
   }
 
   html:not([data-intro='skip']) .intro-mask > span {
     animation:
-      mask-rise 1500ms var(--ease-out-soft)
-        calc(var(--intro-delay, 0ms) + var(--envelope-time, 0ms)) both,
-      name-glint 9s ease-in-out calc(4200ms + var(--envelope-time, 0ms)) infinite;
-  }
-
-  html:not([data-intro='skip']) .intro-arch .arch__jambs {
-    transform-origin: 50% 100%;
-    animation: rise-from-base 1000ms var(--ease-in-out-soft) var(--envelope-time, 0ms) both;
-  }
-
-  html:not([data-intro='skip']) .intro-arch .arch__crown {
-    animation: crown-draw 1200ms var(--ease-in-out-soft) calc(450ms + var(--envelope-time, 0ms))
-      both;
+      mask-rise 1500ms var(--ease-out-soft) var(--intro-delay, 0ms) both,
+      name-glint 9s ease-in-out 8000ms infinite;
   }
 
   html:not([data-intro='skip']) .intro-divider .ornament-divider__line {
-    animation: extend 1200ms var(--ease-out-soft)
-      calc(var(--intro-delay, 0ms) + var(--envelope-time, 0ms)) both;
+    animation: extend 1200ms var(--ease-out-soft) var(--intro-delay, 0ms) both;
   }
 
   html:not([data-intro='skip']) .intro-divider .ornament-divider__star {
-    animation: fade-in 900ms var(--ease-out-soft)
-      calc(var(--intro-delay, 0ms) + var(--envelope-time, 0ms)) both;
+    animation: fade-in 900ms var(--ease-out-soft) var(--intro-delay, 0ms) both;
   }
 
   .skip-intro {
@@ -168,33 +153,24 @@
     transform: none;
   }
 
-  html[data-reveal-ready] [data-reveal='arch'] .arch__jambs {
-    transform-origin: 50% 100%;
-    transition: transform 1000ms var(--ease-in-out-soft) var(--reveal-delay, 0ms);
-  }
-
-  html[data-reveal-ready] [data-reveal='arch'] .arch__crown {
+  html[data-reveal-ready] [data-reveal='arch'] .mughal__frame {
     clip-path: inset(-6% -6% -6% -6%);
     transition: clip-path 1200ms var(--ease-in-out-soft) calc(var(--reveal-delay, 0ms) + 500ms);
   }
 
-  html[data-reveal-ready] [data-reveal='arch'] .arch__content {
+  html[data-reveal-ready] [data-reveal='arch'] .mughal__content {
     transition:
       opacity 1000ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + 650ms),
       transform 1200ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + 650ms);
   }
 
-  html[data-reveal-ready] [data-reveal='arch']:not([data-revealed]) .arch__jambs {
-    transform: scaleY(0);
-  }
-
-  html[data-reveal-ready] [data-reveal='arch']:not([data-revealed]) .arch__crown {
+  html[data-reveal-ready] [data-reveal='arch']:not([data-revealed]) .mughal__frame {
     clip-path: inset(100% -6% -6% -6%);
   }
 
   html[data-reveal-ready]
     [data-reveal='arch']:not([data-revealed]):not(:focus-within)
-    .arch__content {
+    .mughal__content {
     opacity: 0;
     transform: translate3d(0, 0.75rem, 0);
   }
@@ -212,7 +188,7 @@
 /* Desktop only: the opening drifts gently upward as the guest scrolls on (no JS involved). */
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
-    .hero > .arch {
+    .hero__stage {
       animation: hero-drift linear both;
       animation-timeline: scroll(root block);
       animation-range: 0 90vh;
@@ -225,10 +201,13 @@
   [data-reveal],
   [data-reveal] *,
   .intro-step,
-  .intro-fade:not(.hero__pattern),
+  .intro-fade,
   .intro-mask > span,
-  .arch__crown,
-  .arch__jambs {
+  .intro-write,
+  .intro-drop,
+  .intro-rise,
+  .intro-bloom,
+  .mughal__frame {
     opacity: 1 !important;
     transform: none !important;
     clip-path: none !important;
