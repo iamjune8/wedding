@@ -15,6 +15,11 @@ export function CountdownSection({ event }: CountdownSectionProps) {
         <h2 id="countdown-title" className="section-subtitle" data-reveal>
           {event.countdown.heading}
         </h2>
+        {event.countdown.line ? (
+          <p className="countdown-section__line" data-reveal style={revealDelay(60)}>
+            {event.countdown.line}
+          </p>
+        ) : null}
         <p className="countdown-section__when" data-reveal style={revealDelay(120)}>
           <time dateTime={event.startIsoWithOffset}>{event.dateLabel}</time>
           <span aria-hidden="true"> · </span>

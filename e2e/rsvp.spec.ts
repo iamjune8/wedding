@@ -9,7 +9,7 @@ test.describe('RSVP', () => {
       await route.fulfill({ json: { success: true } });
     });
     await openStill(page);
-    const rsvp = page.getByRole('region', { name: 'RSVP' });
+    const rsvp = page.getByRole('region', { name: 'Will You Celebrate With Us?' });
     await rsvp.getByLabel('Your name').fill('Ayesha Khan');
     await rsvp.getByRole('radio', { name: /joyfully attending/i }).check();
     await rsvp.getByRole('button', { name: /send my reply/i }).click();
@@ -20,7 +20,7 @@ test.describe('RSVP', () => {
   test('explains politely while the Google Sheet is not connected', async ({ page }) => {
     // The test server has no sheet configured, so the real endpoint answers "not configured".
     await openStill(page);
-    const rsvp = page.getByRole('region', { name: 'RSVP' });
+    const rsvp = page.getByRole('region', { name: 'Will You Celebrate With Us?' });
     await rsvp.getByLabel('Your name').fill('Ayesha');
     await rsvp.getByRole('radio', { name: /regretfully unable/i }).check();
     await rsvp.getByRole('button', { name: /send my reply/i }).click();

@@ -74,7 +74,7 @@ test.describe('Add to Calendar', () => {
     page,
   }) => {
     await openStill(page);
-    const nikah = page.getByRole('region', { name: 'Nikah Ceremony' });
+    const nikah = page.getByRole('region', { name: 'The Day Our Forever Begins' });
     await nikah.getByText('Add to Calendar').click();
 
     const apple = nikah.getByRole('link', { name: /apple calendar/i });
@@ -97,7 +97,7 @@ test.describe('Add to Calendar', () => {
     page,
   }) => {
     await openStill(page);
-    const mehndi = page.getByRole('region', { name: 'Mehndi Ceremony' });
+    const mehndi = page.getByRole('region', { name: 'A Little Colour, A Lot of Love' });
     await mehndi.getByText('Add to Calendar').click();
     const url = new URL(
       (await mehndi.getByRole('link', { name: /google calendar/i }).getAttribute('href')) ?? '',
@@ -113,7 +113,7 @@ test.describe('Add to Calendar', () => {
   }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop-chromium', 'Download behaviour is desktop-only');
     await openStill(page);
-    const nikah = page.getByRole('region', { name: 'Nikah Ceremony' });
+    const nikah = page.getByRole('region', { name: 'The Day Our Forever Begins' });
     await nikah.getByText('Add to Calendar').click();
     const [download] = await Promise.all([
       page.waitForEvent('download'),

@@ -47,16 +47,11 @@ export function fastForwardIntro(): void {
 export function replayIntro(): void {
   const html = document.documentElement;
   window.scrollTo({ top: 0, behavior: 'auto' });
-  if (html.dataset.intro === 'skip') {
-    // The opening was never played on this visit: enabling it starts every scene afresh.
-    html.dataset.intro = 'replay';
-    return;
-  }
+  // Switching the opening off and on again makes the browser create every scene's animation
+  // afresh (more reliable in Safari than restarting the old ones).
+  html.dataset.intro = 'skip';
+  void html.offsetWidth; // apply the "off" state before turning it back on
   html.dataset.intro = 'replay';
-  openingAnimations().forEach((animation) => {
-    animation.cancel();
-    animation.play();
-  });
 }
 
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -32,9 +32,11 @@ export function MehndiSection({ event, calendarNote, pendingMessage }: MehndiSec
           <Rosette />
         </div>
         <header className="mehndi-layout__intro" data-reveal style={revealDelay(100)}>
+          <p className="event-kicker">{event.title}</p>
           <h2 id={`${event.id}-title`} className="section-title">
-            {event.title}
+            {event.heading}
           </h2>
+          <p className="event-intro">{event.intro}</p>
           {event.subtitle ? <p className="event-subtitle">{event.subtitle}</p> : null}
           <p className="event-date">
             <time dateTime={event.startIsoWithOffset}>{event.dateLabel}</time>

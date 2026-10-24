@@ -31,11 +31,11 @@ describe('Invitation page', () => {
     const hero = section(/nida khatib and junaid shaikh/i);
     for (const text of [
       'Bismillahir Rahmanir Rahim',
-      'Together with our families',
-      'Cordially invite you to celebrate their Nikah',
+      'Two Hearts, One Promise',
+      'A journey of love, faith, and forever begins here.',
       'Friday, 30 April 2027',
       'After Asr Namaaz · 5:30 PM IST',
-      'Discover the celebration',
+      'Begin our story',
     ]) {
       expect(within(hero).getByText(text)).toBeInTheDocument();
     }
@@ -45,18 +45,18 @@ describe('Invitation page', () => {
     render(<InvitationPage />);
     const headings = screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent);
     expect(headings).toEqual([
-      'Invitation',
-      'Counting down to the Nikah',
-      'Nikah Ceremony',
-      'Mehndi Ceremony',
-      'RSVP',
+      'Our Forever Begins In',
+      'The Day Our Forever Begins',
+      'A Little Colour, A Lot of Love',
+      'Will You Celebrate With Us?',
+      'May Allah Bless Our Union',
     ]);
-    expect(screen.getByRole('contentinfo')).toHaveTextContent('Keep us in your duas.');
+    expect(screen.getByRole('contentinfo')).toHaveTextContent('Please remember us in your duas.');
   });
 
   it('gives the Nikah directions, calendar and share actions', () => {
     render(<InvitationPage />);
-    const nikah = section(/nikah ceremony/i);
+    const nikah = section(/the day our forever begins/i);
     expect(within(nikah).getByText('Seawood Jama Masjid')).toBeInTheDocument();
     expect(within(nikah).getByText('5:30 PM IST · After Asr Namaaz')).toBeInTheDocument();
 
@@ -79,7 +79,7 @@ describe('Invitation page', () => {
 
   it('shows the Mehndi at our residence, with no invented address or directions', () => {
     render(<InvitationPage />);
-    const mehndi = section(/mehndi ceremony/i);
+    const mehndi = section(/a little colour/i);
     expect(within(mehndi).getByText('Henna evening')).toBeInTheDocument();
     expect(within(mehndi).getByText('Thursday, 29 April 2027')).toBeInTheDocument();
     expect(within(mehndi).getByText('4:00 PM IST')).toBeInTheDocument();
@@ -104,9 +104,8 @@ describe('Invitation page', () => {
   it('closes with the dua and the couple’s names', () => {
     render(<InvitationPage />);
     const footer = screen.getByRole('contentinfo');
-    expect(footer).toHaveTextContent(
-      'May Allah bless this beautiful journey with love, barakah, understanding, and lifelong happiness.',
-    );
+    expect(footer).toHaveTextContent('May Allah Bless Our Union');
+    expect(footer).toHaveTextContent(/barakah and peace.*patience.*love and companionship/);
     expect(footer).toHaveTextContent(/Nida Khatib.*Junaid Shaikh/);
   });
 });

@@ -41,7 +41,7 @@ describe('MehndiSection', () => {
       address: 'Example Road, Seawoods, Navi Mumbai, Maharashtra, India',
       shortAddress: 'Example Road, Navi Mumbai',
     });
-    const region = screen.getByRole('region', { name: /mehndi ceremony/i });
+    const region = screen.getByRole('region', { name: /a little colour/i });
     expect(within(region).getByText('Example Hall')).toBeInTheDocument();
     expect(
       within(region).queryByText('Venue details will be announced soon.'),

@@ -50,7 +50,7 @@ test.describe('layout', () => {
     await page.setViewportSize({ width: 320, height: 640 });
     await openWithoutIntro(page);
     const tops = await page
-      .getByRole('region', { name: 'Counting down to the Nikah' })
+      .getByRole('region', { name: 'Our Forever Begins In' })
       .locator('.countdown__unit')
       .evaluateAll((units) => units.map((unit) => Math.round(unit.getBoundingClientRect().top)));
     expect(new Set(tops).size).toBe(1);
@@ -101,7 +101,7 @@ test.describe('motion and resilience', () => {
     const replay = page.getByRole('button', { name: 'Replay invitation' });
     await expect(replay).toBeVisible({ timeout: 3000 });
     const days = page
-      .getByRole('region', { name: 'Counting down to the Nikah' })
+      .getByRole('region', { name: 'Our Forever Begins In' })
       .locator('.countdown__unit')
       .first();
     const before = await days.textContent();
@@ -119,7 +119,7 @@ test.describe('motion and resilience', () => {
     // …while the countdown keeps its value (no reset, no duplicate timer).
     expect(await days.textContent()).toBe(before);
     await expect(
-      page.getByRole('region', { name: 'Counting down to the Nikah' }).locator('.countdown'),
+      page.getByRole('region', { name: 'Our Forever Begins In' }).locator('.countdown'),
     ).toHaveCount(1);
   });
 
@@ -128,7 +128,7 @@ test.describe('motion and resilience', () => {
     const skip = page.getByRole('button', { name: 'Skip intro' });
     await skip.click();
     await expect(skip).toHaveCount(0);
-    const scrollCue = page.getByRole('link', { name: 'Discover the celebration' });
+    const scrollCue = page.getByRole('link', { name: 'Begin our story' });
     await expect
       .poll(() => scrollCue.evaluate((element) => getComputedStyle(element).opacity), {
         timeout: 2000,
@@ -169,7 +169,7 @@ test.describe('motion and resilience', () => {
       );
     expect(hidden).toBe(0);
 
-    const nikah = page.getByRole('region', { name: 'Nikah Ceremony' });
+    const nikah = page.getByRole('region', { name: 'The Day Our Forever Begins' });
     await expect(nikah.getByRole('link', { name: /get directions/i })).toBeVisible();
     await nikah.getByText('Add to Calendar').click();
     await expect(nikah.getByRole('link', { name: /apple calendar/i })).toBeVisible();
@@ -190,7 +190,9 @@ test.describe('keyboard', () => {
     await expect(skipLink).toBeInViewport();
     await page.keyboard.press('Enter');
     await expect(page).toHaveURL(/#nikah$/);
-    await expect(page.getByRole('heading', { name: 'Nikah Ceremony' })).toBeInViewport();
+    await expect(
+      page.getByRole('heading', { name: 'The Day Our Forever Begins' }),
+    ).toBeInViewport();
   });
 
   test('focus is always visible and the calendar menu opens from the keyboard', async ({

@@ -24,9 +24,9 @@ async function readTimer(page: Page, sectionName: string) {
 test.describe('countdowns', () => {
   test('match the real time remaining (computed, not hard-coded)', async ({ page }) => {
     await openWithoutIntro(page);
-    const region = page.getByRole('region', { name: 'Counting down to the Nikah' });
+    const region = page.getByRole('region', { name: 'Our Forever Begins In' });
     await expect(region.getByRole('timer')).toHaveAttribute('aria-busy', 'false');
-    const shown = await readTimer(page, 'Counting down to the Nikah');
+    const shown = await readTimer(page, 'Our Forever Begins In');
     const browserNow = await page.evaluate(() => Date.now());
     const shownSeconds =
       ((shown.days * 24 + shown.hours) * 60 + shown.minutes) * 60 + shown.seconds;
@@ -49,7 +49,7 @@ test.describe('countdowns', () => {
     const page = await context.newPage();
     await openAt(page, '2027-04-29T11:59:59Z');
     await expect
-      .poll(() => readTimer(page, 'Counting down to the Nikah'))
+      .poll(() => readTimer(page, 'Our Forever Begins In'))
       .toEqual({
         days: 1,
         hours: 0,
@@ -61,9 +61,9 @@ test.describe('countdowns', () => {
 
   test('reach zero at 17:30 IST on 30 April and show the event-day message', async ({ page }) => {
     await openAt(page, '2027-04-30T11:59:57Z');
-    const region = page.getByRole('region', { name: 'Counting down to the Nikah' });
+    const region = page.getByRole('region', { name: 'Our Forever Begins In' });
     await expect
-      .poll(() => readTimer(page, 'Counting down to the Nikah'))
+      .poll(() => readTimer(page, 'Our Forever Begins In'))
       .toEqual({
         days: 0,
         hours: 0,
@@ -71,15 +71,17 @@ test.describe('countdowns', () => {
         seconds: 2,
       });
     await page.clock.runFor(2500);
-    await expect(region.getByText('The blessed day is here')).toBeAttached();
+    await expect(
+      region.getByText('Alhamdulillah, the day has arrived. Today, our forever begins.'),
+    ).toBeAttached();
     await expect(region.getByRole('timer')).toHaveCount(0);
   });
 
   test('count the Mehndi separately, reaching zero at 16:00 IST on 29 April', async ({ page }) => {
     await openAt(page, '2027-04-29T10:29:57Z');
-    const mehndi = page.getByRole('region', { name: 'Mehndi Ceremony' });
+    const mehndi = page.getByRole('region', { name: 'A Little Colour, A Lot of Love' });
     await expect
-      .poll(() => readTimer(page, 'Mehndi Ceremony'))
+      .poll(() => readTimer(page, 'A Little Colour, A Lot of Love'))
       .toEqual({
         days: 0,
         hours: 0,
@@ -88,7 +90,7 @@ test.describe('countdowns', () => {
       });
     // At the same moment the Nikah is still 1 day and 1½ hours away.
     await expect
-      .poll(() => readTimer(page, 'Counting down to the Nikah'))
+      .poll(() => readTimer(page, 'Our Forever Begins In'))
       .toEqual({
         days: 1,
         hours: 1,
@@ -96,7 +98,9 @@ test.describe('countdowns', () => {
         seconds: 2,
       });
     await page.clock.runFor(2500);
-    await expect(mehndi.getByText('The Mehndi celebration is here')).toBeAttached();
+    await expect(
+      mehndi.getByText('The henna evening has begun. Come and celebrate with us.'),
+    ).toBeAttached();
   });
 
   test('settle into a thank-you once the day has passed', async ({ page }) => {

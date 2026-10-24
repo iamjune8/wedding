@@ -25,7 +25,7 @@ const EXPECTED_MESSAGE = [
 test.describe('sharing', () => {
   test('WhatsApp receives the full message and the public link', async ({ page }) => {
     await openStill(page);
-    const nikah = page.getByRole('region', { name: 'Nikah Ceremony' });
+    const nikah = page.getByRole('region', { name: 'The Day Our Forever Begins' });
     await nikah.getByText('Share Invitation').click();
     const whatsapp = nikah.getByRole('link', { name: /share on whatsapp/i });
     await expect(whatsapp).toBeVisible();
@@ -46,7 +46,7 @@ test.describe('sharing', () => {
       });
     });
     await openStill(page);
-    const nikah = page.getByRole('region', { name: 'Nikah Ceremony' });
+    const nikah = page.getByRole('region', { name: 'The Day Our Forever Begins' });
     await nikah.getByText('Share Invitation').click();
     await nikah.getByRole('button', { name: /more ways to share/i }).click();
     const calls = await page.evaluate(
@@ -67,7 +67,7 @@ test.describe('sharing', () => {
       Object.defineProperty(navigator, 'share', { configurable: true, value: undefined });
     });
     await openStill(page);
-    const nikah = page.getByRole('region', { name: 'Nikah Ceremony' });
+    const nikah = page.getByRole('region', { name: 'The Day Our Forever Begins' });
     await nikah.getByText('Share Invitation').click();
     await nikah.getByRole('button', { name: /copy invitation link/i }).click();
     await expect(nikah.getByRole('status')).toHaveText('Invitation link copied.');

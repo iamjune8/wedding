@@ -20,9 +20,11 @@ export function EventDetails({ event, calendarNote, pendingMessage, share }: Eve
     <section id={event.id} className="section venue-section" aria-labelledby={`${event.id}-title`}>
       <div className="venue-layout">
         <header className="venue-layout__intro" data-reveal>
+          <p className="event-kicker">{event.title}</p>
           <h2 id={`${event.id}-title`} className="section-title">
-            {event.title}
+            {event.heading}
           </h2>
+          <p className="event-intro">{event.intro}</p>
           <p className="event-date">
             <time dateTime={event.startIsoWithOffset}>{event.dateLabel}</time>
           </p>

@@ -35,16 +35,39 @@ export const rawWeddingConfig = {
     // Al-Fatihah 1:1 in Uthmani orthography: بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
     bismillahArabic: 'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ',
     bismillah: 'Bismillahir Rahmanir Rahim',
-    families: 'Together with our families',
-    inviteLine: 'Cordially invite you to celebrate their Nikah',
-    scrollCue: 'Discover the celebration',
-    message: [
-      'With the blessings of Allah and the love and duas of our families, we warmly invite you to join us as Nida Khatib and Junaid Shaikh begin their journey together in Nikah.',
-      'Your presence and duas will make this blessed occasion even more special.',
-    ],
+    /* The site reads as one story, chapter by chapter. */
+    heroTitle: 'Two Hearts, One Promise',
+    heroLine: 'A journey of love, faith, and forever begins here.',
+    scrollCue: 'Begin our story',
+    letter: {
+      kicker: 'A letter for you',
+      openHint: 'Tap to open your invitation',
+      greeting: 'Assalamu Alaikum',
+      heading: 'A Sacred Promise',
+      message: [
+        'With the blessings of Allah, Nida Khatib and Junaid Shaikh will be joined in Nikah: two lives, and two families, brought together in one promise.',
+        'A promise built on kindness and patience, held by faith, and filled with love and mercy.',
+      ],
+      storyHeading: 'Written by Qadr, Celebrated with Love',
+      story: [
+        'Long before we knew it, every step of our path was written. We are grateful for each one that led us here.',
+        'Now we begin a shared journey, side by side, in mutual respect, faith, and companionship.',
+      ],
+    },
+    presence: {
+      heading: 'Your Presence Is Our Blessing',
+      text: 'Come and witness our Nikah, and share the duas that will carry us through the years ahead.',
+    },
+    rsvp: {
+      kicker: 'Kindly reply',
+      heading: 'Will You Celebrate With Us?',
+      intro:
+        'Please let us know if you can join us, so we may welcome you with the care you deserve.',
+    },
+    closingHeading: 'May Allah Bless Our Union',
     closing: [
-      'May Allah bless this beautiful journey with love, barakah, understanding, and lifelong happiness.',
-      'Keep us in your duas.',
+      'May He fill our home with barakah and peace, grant us patience in every season, and keep love and companionship between us, always.',
+      'Please remember us in your duas.',
     ],
     venuePending: 'Venue details will be announced soon.',
     calendarNote:
@@ -55,6 +78,9 @@ export const rawWeddingConfig = {
       id: 'nikah',
       title: 'Nikah Ceremony',
       shortTitle: 'Nikah',
+      heading: 'The Day Our Forever Begins',
+      intro:
+        "With Allah's blessings, and surrounded by family and friends, we invite you to witness our Nikah and to keep us in your duas.",
       subtitle: null,
       date: '2027-04-30',
       startTime: '17:30',
@@ -69,8 +95,9 @@ export const rawWeddingConfig = {
       },
       calendar: { fileName: 'nida-junaid-nikah.ics', sequence: 0, reminderMinutesBefore: 1440 },
       countdown: {
-        heading: 'Counting down to the Nikah',
-        reachedMessage: 'The blessed day is here',
+        heading: 'Our Forever Begins In',
+        line: 'Every passing moment brings us closer to a day we will cherish for a lifetime.',
+        reachedMessage: 'Alhamdulillah, the day has arrived. Today, our forever begins.',
         pastMessage: 'Alhamdulillah. Thank you for your duas.',
       },
     },
@@ -78,6 +105,9 @@ export const rawWeddingConfig = {
       id: 'mehndi',
       title: 'Mehndi Ceremony',
       shortTitle: 'Mehndi',
+      heading: 'A Little Colour, A Lot of Love',
+      intro:
+        'An evening of henna and colour, cherished traditions, laughter, and family: the warm beginning of our celebrations.',
       subtitle: 'Henna evening',
       date: '2027-04-29',
       startTime: '16:00',
@@ -89,8 +119,9 @@ export const rawWeddingConfig = {
       venue: null, // See the note at the top of this file.
       calendar: { fileName: 'nida-junaid-mehndi.ics', sequence: 0, reminderMinutesBefore: 1440 },
       countdown: {
-        heading: 'Counting down to the Mehndi',
-        reachedMessage: 'The Mehndi celebration is here',
+        heading: 'Until the Colours Begin',
+        line: null,
+        reachedMessage: 'The henna evening has begun. Come and celebrate with us.',
         pastMessage: 'Alhamdulillah. Thank you for celebrating with us.',
       },
     },
@@ -127,6 +158,9 @@ const eventSchema = z.strictObject({
   id: z.string().regex(/^[a-z][a-z0-9-]*$/, 'Use lowercase letters, numbers and dashes'),
   title: text,
   shortTitle: text,
+  /** The chapter heading shown on the page (the title stays in calendars and sharing). */
+  heading: text,
+  intro: text,
   subtitle: text.nullable(),
   date: isoDate,
   startTime: time24,
@@ -144,6 +178,7 @@ const eventSchema = z.strictObject({
   }),
   countdown: z.strictObject({
     heading: text,
+    line: text.nullable(),
     reachedMessage: text,
     pastMessage: text,
   }),
@@ -166,10 +201,21 @@ const weddingConfigSchema = z
     copy: z.strictObject({
       bismillahArabic: text,
       bismillah: text,
-      families: text,
-      inviteLine: text,
+      heroTitle: text,
+      heroLine: text,
       scrollCue: text,
-      message: z.array(text).min(1),
+      letter: z.strictObject({
+        kicker: text,
+        openHint: text,
+        greeting: text,
+        heading: text,
+        message: z.array(text).min(1),
+        storyHeading: text,
+        story: z.array(text).min(1),
+      }),
+      presence: z.strictObject({ heading: text, text }),
+      rsvp: z.strictObject({ kicker: text, heading: text, intro: text }),
+      closingHeading: text,
       closing: z.array(text).min(1),
       venuePending: text,
       calendarNote: text,

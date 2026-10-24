@@ -11,7 +11,7 @@ const props = {
   targetMs: NIKAH,
   dayEndMs: NIKAH_DAY_END,
   label: 'Time remaining until the Nikah',
-  reachedMessage: 'The blessed day is here',
+  reachedMessage: 'Alhamdulillah, the day has arrived. Today, our forever begins.',
   pastMessage: 'Alhamdulillah. Thank you for your duas.',
 };
 
@@ -60,7 +60,9 @@ describe('Countdown', () => {
     act(() => {
       vi.advanceTimersByTime(1000);
     });
-    expect(screen.getByText('The blessed day is here')).toBeInTheDocument();
+    expect(
+      screen.getByText('Alhamdulillah, the day has arrived. Today, our forever begins.'),
+    ).toBeInTheDocument();
     expect(screen.queryByRole('timer')).not.toBeInTheDocument();
   });
 

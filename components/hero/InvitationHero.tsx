@@ -28,8 +28,8 @@ const CORNER = cornerLayout(9);
 interface InvitationHeroProps {
   readonly copy: {
     readonly bismillah: string;
-    readonly families: string;
-    readonly inviteLine: string;
+    readonly heroTitle: string;
+    readonly heroLine: string;
     readonly scrollCue: string;
   };
   readonly brideName: string;
@@ -120,12 +120,12 @@ export function InvitationHero({ copy, brideName, groomName, nikah }: Invitation
         <GateScene />
 
         <div className="hero__details">
-          <p className="families intro-step" style={introDelay(4600)}>
-            {copy.families}
+          <p className="families hero-title intro-step" style={introDelay(4600)}>
+            {copy.heroTitle}
           </p>
           <HeroNames brideName={brideName} groomName={groomName} />
           <p className="invite-line intro-step" style={introDelay(5450)}>
-            {copy.inviteLine}
+            {copy.heroLine}
           </p>
           <OrnamentDivider className="hero__divider intro-divider" style={introDelay(5650)} />
           <HeroDate

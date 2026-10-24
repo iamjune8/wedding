@@ -18,13 +18,14 @@ const CLOSING_SPARKLES: readonly SparkleSpot[] = [
 ];
 
 interface ClosingMessageProps {
+  readonly heading: string;
   readonly lines: readonly string[];
   readonly brideName: string;
   readonly groomName: string;
 }
 
 /** Section F: the closing dua and an understated return of the couple's names. */
-export function ClosingMessage({ lines, brideName, groomName }: ClosingMessageProps) {
+export function ClosingMessage({ heading, lines, brideName, groomName }: ClosingMessageProps) {
   const [dua, ...requests] = lines;
 
   return (
@@ -34,6 +35,9 @@ export function ClosingMessage({ lines, brideName, groomName }: ClosingMessagePr
         <div data-reveal="ornament">
           <StarMotif className="closing__star" />
         </div>
+        <h2 className="closing__heading" data-reveal style={revealDelay(40)}>
+          {heading}
+        </h2>
         {dua ? (
           <p className="closing__dua" data-reveal style={revealDelay(80)}>
             {dua}

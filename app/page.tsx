@@ -40,7 +40,11 @@ export default function InvitationPage() {
           groomName={couple.groom.fullName}
           nikah={{ ...nikah, venueName: nikah.venue?.name ?? null }}
         />
-        <InvitationMessage paragraphs={copy.message} />
+        <InvitationMessage
+          letter={copy.letter}
+          initials={[couple.bride.firstName.charAt(0), couple.groom.firstName.charAt(0)]}
+          signature={`${couple.bride.firstName} & ${couple.groom.firstName}`}
+        />
         <CountdownSection event={nikah} />
         <EventDetails
           event={nikah}
@@ -53,9 +57,10 @@ export default function InvitationPage() {
           calendarNote={copy.calendarNote}
           pendingMessage={copy.venuePending}
         />
-        <RsvpSection />
+        <RsvpSection presence={copy.presence} copy={copy.rsvp} />
       </main>
       <ClosingMessage
+        heading={copy.closingHeading}
         lines={copy.closing}
         brideName={couple.bride.fullName}
         groomName={couple.groom.fullName}

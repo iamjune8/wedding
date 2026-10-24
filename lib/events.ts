@@ -17,6 +17,8 @@ export interface EventView {
   readonly id: string;
   readonly title: string;
   readonly shortTitle: string;
+  readonly heading: string;
+  readonly intro: string;
   readonly dateLabel: string;
   readonly dateParts: DateParts;
   readonly timeLabel: string;
@@ -146,6 +148,8 @@ export function buildEventView(
     id: event.id,
     title: event.title,
     shortTitle: event.shortTitle,
+    heading: event.heading,
+    intro: event.intro,
     dateLabel: formatLongDate(event.date),
     dateParts: getDateParts(event.date),
     timeLabel: timeLabelOf(event, config),

@@ -18,13 +18,13 @@ test.describe('the invitation page', () => {
     const hero = page.getByRole('region', { name: 'Nida Khatib and Junaid Shaikh' });
     for (const text of [
       'Bismillahir Rahmanir Rahim',
-      'Together with our families',
+      'Two Hearts, One Promise',
       'Nida Khatib',
       'Junaid Shaikh',
-      'Cordially invite you to celebrate their Nikah',
+      'A journey of love, faith, and forever begins here.',
       'Friday, 30 April 2027',
       'After Asr Namaaz · 5:30 PM IST',
-      'Discover the celebration',
+      'Begin our story',
     ]) {
       await expect(hero.getByText(text, { exact: true })).toBeVisible({ timeout: 10_000 });
     }
@@ -37,27 +37,30 @@ test.describe('the invitation page', () => {
 
     const headings = await page.getByRole('heading', { level: 2 }).allTextContents();
     expect(headings).toEqual([
-      'Invitation',
-      'Counting down to the Nikah',
-      'Nikah Ceremony',
-      'Mehndi Ceremony',
-      'RSVP',
+      'Our Forever Begins In',
+      'The Day Our Forever Begins',
+      'A Little Colour, A Lot of Love',
+      'Will You Celebrate With Us?',
+      'May Allah Bless Our Union',
     ]);
-    await expect(page.getByRole('contentinfo')).toContainText('Keep us in your duas.');
+    await expect(page.getByRole('contentinfo')).toContainText('Please remember us in your duas.');
   });
 
   test('the discover cue moves on to the invitation message', async ({ page }) => {
     await openWithoutIntro(page);
-    await page.getByRole('link', { name: 'Discover the celebration' }).click();
+    await page.getByRole('link', { name: 'Begin our story' }).click();
     await expect(page).toHaveURL(/#invitation$/);
-    await expect(
-      page.getByText(/With the blessings of Allah and the love and duas/),
-    ).toBeInViewport();
+    const envelope = page.getByRole('button', { name: 'Tap to open your invitation' });
+    await expect(envelope).toBeInViewport();
+    await envelope.click();
+    const letter = page.getByText(/With the blessings of Allah, Nida Khatib and Junaid Shaikh/);
+    await expect(letter).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('#invitation-letter')).toBeFocused();
   });
 
   test('offers safe, correctly encoded Google Maps directions for the Nikah', async ({ page }) => {
     await openWithoutIntro(page);
-    const nikah = page.getByRole('region', { name: 'Nikah Ceremony' });
+    const nikah = page.getByRole('region', { name: 'The Day Our Forever Begins' });
     const directions = nikah.getByRole('link', { name: /get directions/i });
     await expect(directions).toHaveAttribute('target', '_blank');
     await expect(directions).toHaveAttribute('rel', 'noopener noreferrer');
@@ -72,7 +75,7 @@ test.describe('the invitation page', () => {
 
   test('holds the Mehndi at our residence, with no directions', async ({ page }) => {
     await openWithoutIntro(page);
-    const mehndi = page.getByRole('region', { name: 'Mehndi Ceremony' });
+    const mehndi = page.getByRole('region', { name: 'A Little Colour, A Lot of Love' });
     await expect(mehndi.getByText('Thursday, 29 April 2027')).toBeAttached();
     await expect(mehndi.getByText('4:00 PM IST', { exact: true })).toBeAttached();
     await expect(mehndi.getByText('At our residence', { exact: true })).toBeAttached();
