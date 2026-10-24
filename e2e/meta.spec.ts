@@ -21,6 +21,19 @@ test.describe('link previews and metadata', () => {
     expect(await page.locator('html').getAttribute('lang')).toBe('en-IN');
   });
 
+  test('stays in its light design when the phone is in dark mode', async ({ browser }) => {
+    // Android Chrome and Samsung Internet auto-darken pages unless they declare "only light".
+    const context = await browser.newContext({ colorScheme: 'dark' });
+    const page = await context.newPage();
+    await page.goto('/');
+    expect(
+      await page.locator('meta[name="color-scheme"]').getAttribute('content'),
+    ).toBe('only light');
+    const scheme = await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme);
+    expect(scheme).toMatch(/^(only light|light only)$/); // browsers normalise the word order
+    await context.close();
+  });
+
   test('serves a 1200×630 preview image and icons', async ({ request }) => {
     const preview = await request.get('/opengraph-image');
     expect(preview.headers()['content-type']).toBe('image/png');

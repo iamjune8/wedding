@@ -37,7 +37,8 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: '#fbf8f1',
-  colorScheme: 'light',
+  // "only light" stops Android Chrome / Samsung Internet from auto-darkening the design.
+  colorScheme: 'only light',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

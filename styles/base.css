@@ -1,6 +1,6 @@
 @layer base {
   html {
-    color-scheme: light;
+    color-scheme: only light;
     background-color: var(--ivory);
     color: var(--charcoal);
     -webkit-text-size-adjust: 100%;
