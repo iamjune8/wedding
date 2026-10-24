@@ -5,8 +5,9 @@
  * then follow "RSVP: connect your Google Sheet" in README.md. It appends one row per reply to
  * a tab called "RSVPs" (created automatically): time received (IST), name, attending.
  *
- * Only requests carrying the secret stored in Script Properties (RSVP_SECRET) are accepted,
- * so nobody can write to your sheet just by finding this address.
+ * The web app's address stays private (it is only stored in Vercel's server settings). For extra
+ * protection you can also set a Script Property RSVP_SECRET; then only requests carrying the
+ * same secret (Vercel variable RSVP_SHEET_SECRET) are accepted.
  */
 
 var SHEET_NAME = 'RSVPs';
@@ -16,7 +17,8 @@ function doPost(e) {
   try {
     var data = JSON.parse((e && e.postData && e.postData.contents) || '{}');
     var expected = PropertiesService.getScriptProperties().getProperty('RSVP_SECRET');
-    if (!expected || data.secret !== expected) {
+    // Optional: if an RSVP_SECRET script property is set, requests must carry it.
+    if (expected && data.secret !== expected) {
       return reply({ ok: false, error: 'unauthorized' });
     }
 

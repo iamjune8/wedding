@@ -99,32 +99,23 @@ politely tells guests that replies are not open yet. Setup takes about 5 minutes
    "Nida & Juned RSVPs".
 2. In the sheet, open **Extensions → Apps Script**. Delete the sample code, paste in everything
    from [`google-apps-script/rsvp.gs`](google-apps-script/rsvp.gs), and click **Save**.
-3. Make a secret password (any long random text). On a Mac you can run:
-
-```bash
-openssl rand -hex 24
-```
-
-4. In Apps Script, open **Project Settings** (the gear), scroll to **Script Properties**, and add
-   a property named `RSVP_SECRET` with that password as its value.
-5. Click **Deploy → New deployment**, choose the type **Web app**, set **Execute as: Me** and
+3. Click **Deploy → New deployment**, choose the type **Web app**, set **Execute as: Me** and
    **Who has access: Anyone**, then **Deploy**. Google asks you to authorise the script: choose
    your account, then **Advanced → Go to (project name)**. This warning appears because the
    script is your own, not a published app.
-6. Copy the **Web app URL** (it ends in `/exec`).
-7. In Vercel, open your project → **Settings → Environment Variables** and add:
-   - `RSVP_SHEET_WEBHOOK_URL` = the Web app URL
-   - `RSVP_SHEET_SECRET` = the same secret password as in step 4
-
-   Then redeploy (**Deployments → … → Redeploy**).
-
-8. Send a test reply on the live site. A new **RSVPs** tab appears in your sheet with the time
+4. Copy the **Web app URL** (it ends in `/exec`). Treat it like a password: don't share it.
+5. In Vercel, open your project → **Settings → Environment Variables**, add
+   `RSVP_SHEET_WEBHOOK_URL` with the Web app URL as its value, then redeploy
+   (**Deployments → … → Redeploy**).
+6. Send a test reply on the live site. A new **RSVPs** tab appears in your sheet with the time
    (IST), the name and whether they are attending.
 
 Notes:
 
-- The secret means nobody can add rows by finding the script's address. Never put it in the
-  code; it only lives in Vercel and in the script's properties.
+- The script's address is only stored in Vercel's server settings, so guests never see it.
+- Optional extra protection: make a long random password (`openssl rand -hex 24`), add it as a
+  Script Property `RSVP_SECRET` in Apps Script (**Project Settings → Script Properties**) and as
+  the Vercel variable `RSVP_SHEET_SECRET`, then redeploy. Requests without it are then refused.
 - If a guest uses **Change my reply**, a new row is added. The latest row for a name is their
   current answer.
 - If you edit the script later, use **Deploy → Manage deployments → Edit → New version** so the

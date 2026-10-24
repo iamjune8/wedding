@@ -92,6 +92,16 @@ describe('POST /api/rsvp', () => {
     expect(statuses[6]).toBe(429);
   });
 
+  it('works without a shared secret (the private script link alone protects the sheet)', async () => {
+    vi.stubEnv('RSVP_SHEET_SECRET', '');
+    const fetchMock = vi.fn().mockResolvedValue(Response.json({ ok: true }));
+    vi.stubGlobal('fetch', fetchMock);
+    const response = await POST(jsonRequest({ name: 'Ayesha', attending: 'no' }));
+    expect(response.status).toBe(200);
+    const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(JSON.parse(String(init.body))).toEqual({ name: 'Ayesha', attending: 'no' });
+  });
+
   it('says so clearly when the sheet has not been set up yet', async () => {
     vi.stubEnv('RSVP_SHEET_WEBHOOK_URL', '');
     const response = await POST(jsonRequest({ name: 'Ayesha', attending: 'yes' }));

@@ -32,13 +32,21 @@ function readBody(text: string, kind: BodyKind): unknown {
 }
 
 /** Sends the reply to the Google Apps Script web app that appends it to the sheet. */
-async function saveToSheet(reply: RsvpReply, url: string, secret: string): Promise<boolean> {
+async function saveToSheet(
+  reply: RsvpReply,
+  url: string,
+  secret: string | undefined,
+): Promise<boolean> {
   try {
     const response = await fetch(url, {
       method: 'POST',
       // text/plain avoids a CORS pre-flight that Apps Script cannot answer.
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ secret, name: toSheetCell(reply.name), attending: reply.attending }),
+      body: JSON.stringify({
+        ...(secret ? { secret } : {}),
+        name: toSheetCell(reply.name),
+        attending: reply.attending,
+      }),
       redirect: 'follow',
       signal: AbortSignal.timeout(SHEET_TIMEOUT_MS),
     });
@@ -75,9 +83,10 @@ export async function POST(request: Request) {
     return failure(kind, 429, 'too-many', 'Too many replies at once. Please try again shortly.');
   }
 
+  // The script's address is private (server-only). The shared secret is optional extra protection.
   const url = process.env.RSVP_SHEET_WEBHOOK_URL?.trim();
-  const secret = process.env.RSVP_SHEET_SECRET?.trim();
-  if (!url || !secret) {
+  const secret = process.env.RSVP_SHEET_SECRET?.trim() || undefined;
+  if (!url) {
     return failure(kind, 503, 'not-configured', 'Replies are not open just yet. Please try later.');
   }
 
