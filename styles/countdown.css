@@ -71,15 +71,15 @@
     color: var(--gold-ink);
   }
 
-  .countdown--haldi {
-    --countdown-rule: var(--marigold);
+  .countdown--mehndi {
+    --countdown-rule: var(--henna);
   }
 
-  .countdown--haldi .countdown__value {
+  .countdown--mehndi .countdown__value {
     font-size: clamp(2.4rem, 1.7rem + 3.6vw, 4rem);
   }
 
-  .countdown--haldi .countdown__message {
-    color: var(--turmeric-ink);
+  .countdown--mehndi .countdown__message {
+    color: var(--henna-ink);
   }
 }

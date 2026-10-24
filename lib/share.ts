@@ -9,12 +9,13 @@ export interface ShareEventSummary {
   readonly timeLabel: string;
   readonly timingNote?: string | null;
   readonly venue: ShareVenue | null;
+  readonly hostedAt?: string | null;
 }
 
 export interface InvitationMessageInput {
   readonly coupleNames: string;
   readonly nikah: ShareEventSummary;
-  readonly haldi: ShareEventSummary;
+  readonly mehndi: ShareEventSummary;
 }
 
 const withFullStop = (text: string) => `${text.replace(/[.\s]+$/, '')}.`;
@@ -26,14 +27,14 @@ const timeLine = (event: ShareEventSummary) =>
 export function buildInvitationMessage({
   coupleNames,
   nikah,
-  haldi,
+  mehndi,
 }: InvitationMessageInput): string {
   const nikahVenue = nikah.venue
     ? ['Venue:', nikah.venue.name, withFullStop(nikah.venue.shortAddress)]
     : ['Venue to be announced.'];
-  const haldiVenue = haldi.venue
-    ? [`Venue: ${haldi.venue.name}, ${withFullStop(haldi.venue.shortAddress)}`]
-    : ['Venue to be announced.'];
+  const mehndiVenue = mehndi.venue
+    ? [`Venue: ${mehndi.venue.name}, ${withFullStop(mehndi.venue.shortAddress)}`]
+    : [mehndi.hostedAt ? withFullStop(mehndi.hostedAt) : 'Venue to be announced.'];
 
   return [
     'Assalamu Alaikum,',
@@ -46,10 +47,10 @@ export function buildInvitationMessage({
     '',
     ...nikahVenue,
     '',
-    `${haldi.label}:`,
-    haldi.dateLabel,
-    timeLine(haldi),
-    ...haldiVenue,
+    `${mehndi.label}:`,
+    mehndi.dateLabel,
+    timeLine(mehndi),
+    ...mehndiVenue,
     '',
     'We would be honoured by your presence and duas.',
   ].join('\n');

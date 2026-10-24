@@ -20,10 +20,10 @@ const files = [
       'Seawood Jama Masjid, Plot No. 144, Sector New 50, Seawoods, Nerul, Navi Mumbai, Maharashtra, India',
   },
   {
-    file: 'nida-junaid-haldi.ics',
-    summary: 'Haldi Ceremony — Nida Khatib & Junaid Shaikh',
-    start: '2027-04-28T10:30:00.000Z',
-    location: 'Venue to be announced',
+    file: 'nida-junaid-mehndi.ics',
+    summary: 'Mehndi Ceremony — Nida Khatib & Junaid Shaikh',
+    start: '2027-04-29T10:30:00.000Z',
+    location: 'At our residence',
   },
 ] as const;
 
@@ -58,10 +58,10 @@ test.describe('calendar files', () => {
   }
 
   test('the two files describe different events', async ({ request }) => {
-    const [nikah, haldi] = await Promise.all(
+    const [nikah, mehndi] = await Promise.all(
       files.map(async ({ file }) => parse(await (await request.get(`/calendar/${file}`)).text())),
     );
-    expect(nikah?.event.uid).not.toBe(haldi?.event.uid);
+    expect(nikah?.event.uid).not.toBe(mehndi?.event.uid);
   });
 
   test('unknown calendar files return 404', async ({ request }) => {
@@ -93,18 +93,19 @@ test.describe('Add to Calendar', () => {
     await expect(google).toHaveAttribute('rel', 'noopener noreferrer');
   });
 
-  test('the Haldi Google Calendar link uses the Haldi time and marks the venue', async ({
+  test('the Mehndi Google Calendar link uses the Mehndi time and the home venue', async ({
     page,
   }) => {
     await openStill(page);
-    const haldi = page.getByRole('region', { name: 'Haldi Ceremony' });
-    await haldi.getByText('Add to Calendar').click();
+    const mehndi = page.getByRole('region', { name: 'Mehndi Ceremony' });
+    await mehndi.getByText('Add to Calendar').click();
     const url = new URL(
-      (await haldi.getByRole('link', { name: /google calendar/i }).getAttribute('href')) ?? '',
+      (await mehndi.getByRole('link', { name: /google calendar/i }).getAttribute('href')) ?? '',
     );
-    expect(url.searchParams.get('dates')).toBe('20270428T103000Z/20270428T113000Z');
-    expect(url.searchParams.get('location')).toBe('Venue to be announced');
-    expect(url.searchParams.get('details')).toContain('not yet confirmed');
+    expect(url.searchParams.get('dates')).toBe('20270429T103000Z/20270429T113000Z');
+    expect(url.searchParams.get('location')).toBe('At our residence');
+    expect(url.searchParams.get('details')).toContain('At our residence');
+    expect(url.searchParams.get('details')).not.toContain('not yet confirmed');
   });
 
   test('desktop browsers save the .ics file with its meaningful name', async ({

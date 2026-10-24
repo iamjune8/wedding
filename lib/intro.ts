@@ -10,6 +10,6 @@ export const INTRO_DURATION_MS = ENVELOPE_MS + 4600;
 
 /**
  * Runs in <head> before first paint. Skips the opening sequence when the guest has already
- * seen it this session or arrived on a deep link (e.g. /#haldi). Must stay dependency-free.
+ * seen it this session or arrived on a deep link (e.g. /#mehndi). Must stay dependency-free.
  */
 export const INTRO_HEAD_SCRIPT = `(function(){try{var d=document.documentElement;if((location.hash&&location.hash.length>1)||sessionStorage.getItem('${INTRO_STORAGE_KEY}')==='1'){d.setAttribute('data-intro','skip')}}catch(e){}})();`;

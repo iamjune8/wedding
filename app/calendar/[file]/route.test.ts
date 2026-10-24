@@ -14,7 +14,7 @@ describe('calendar file route', () => {
   it('pre-renders exactly the two event files', () => {
     expect(generateStaticParams()).toEqual([
       { file: 'nida-junaid-nikah.ics' },
-      { file: 'nida-junaid-haldi.ics' },
+      { file: 'nida-junaid-mehndi.ics' },
     ]);
   });
 

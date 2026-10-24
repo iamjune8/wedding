@@ -10,7 +10,7 @@ export interface CountdownProps {
   readonly label: string;
   readonly reachedMessage: string;
   readonly pastMessage: string;
-  readonly tone?: 'nikah' | 'haldi';
+  readonly tone?: 'nikah' | 'mehndi';
 }
 
 interface Unit {

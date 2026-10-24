@@ -41,14 +41,14 @@ describe('Invitation page', () => {
     }
   });
 
-  it('presents the chapters in order, with the Haldi as the final event', () => {
+  it('presents the chapters in order, with the Mehndi as the final event', () => {
     render(<InvitationPage />);
     const headings = screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent);
     expect(headings).toEqual([
       'Invitation',
       'Counting down to the Nikah',
       'Nikah Ceremony',
-      'Haldi Ceremony',
+      'Mehndi Ceremony',
       'RSVP',
     ]);
     expect(screen.getByRole('contentinfo')).toHaveTextContent('Keep us in your duas.');
@@ -77,17 +77,19 @@ describe('Invitation page', () => {
     expect(within(nikah).getByRole('link', { name: /share on whatsapp/i })).toBeInTheDocument();
   });
 
-  it('shows the confirmed Haldi date and time but no invented venue or directions', () => {
+  it('shows the Mehndi at our residence, with no invented address or directions', () => {
     render(<InvitationPage />);
-    const haldi = section(/haldi ceremony/i);
-    expect(within(haldi).getByText('Wednesday, 28 April 2027')).toBeInTheDocument();
-    expect(within(haldi).getByText('4:00 PM IST')).toBeInTheDocument();
-    expect(within(haldi).getAllByText('To be announced')).toHaveLength(2);
-    expect(within(haldi).getByText('Venue details will be announced soon.')).toBeInTheDocument();
-    expect(within(haldi).queryByRole('link', { name: /directions/i })).not.toBeInTheDocument();
-    expect(within(haldi).getByRole('link', { name: /apple calendar/i })).toHaveAttribute(
+    const mehndi = section(/mehndi ceremony/i);
+    expect(within(mehndi).getByText('Henna evening')).toBeInTheDocument();
+    expect(within(mehndi).getByText('Thursday, 29 April 2027')).toBeInTheDocument();
+    expect(within(mehndi).getByText('4:00 PM IST')).toBeInTheDocument();
+    expect(within(mehndi).getByText('At our residence')).toBeInTheDocument();
+    expect(within(mehndi).queryByText('To be announced')).not.toBeInTheDocument();
+    expect(mehndi.querySelector('address')).toBeNull();
+    expect(within(mehndi).queryByRole('link', { name: /directions/i })).not.toBeInTheDocument();
+    expect(within(mehndi).getByRole('link', { name: /apple calendar/i })).toHaveAttribute(
       'href',
-      '/calendar/nida-junaid-haldi.ics',
+      '/calendar/nida-junaid-mehndi.ics',
     );
   });
 

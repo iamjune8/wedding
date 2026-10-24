@@ -1,7 +1,7 @@
 import { ClosingMessage } from '@/components/ClosingMessage';
 import { CountdownSection } from '@/components/countdown/CountdownSection';
 import { EventDetails } from '@/components/event/EventDetails';
-import { HaldiSection } from '@/components/event/HaldiSection';
+import { MehndiSection } from '@/components/event/MehndiSection';
 import { Envelope } from '@/components/hero/Envelope';
 import { IntroController } from '@/components/hero/IntroController';
 import { InvitationHero } from '@/components/hero/InvitationHero';
@@ -19,12 +19,12 @@ export const dynamic = 'force-static';
 
 export default function InvitationPage() {
   const siteUrl = resolveSiteUrl(process.env);
-  const { nikah, haldi } = buildEventViews(weddingConfig, siteUrl);
+  const { nikah, mehndi } = buildEventViews(weddingConfig, siteUrl);
   const { copy, couple, site } = weddingConfig;
   const shareMessage = buildInvitationMessage({
     coupleNames: coupleNames(weddingConfig),
     nikah: toShareSummary(nikah),
-    haldi: toShareSummary(haldi),
+    mehndi: toShareSummary(mehndi),
   });
 
   return (
@@ -42,7 +42,8 @@ export default function InvitationPage() {
           copy={copy}
           brideName={couple.bride.fullName}
           groomName={couple.groom.fullName}
-          nikah={nikah}
+          initials={[couple.bride.firstName.charAt(0), couple.groom.firstName.charAt(0)]}
+          nikah={{ ...nikah, venueName: nikah.venue?.name ?? null }}
         />
         <InvitationMessage paragraphs={copy.message} />
         <CountdownSection event={nikah} />
@@ -52,8 +53,8 @@ export default function InvitationPage() {
           pendingMessage={copy.venuePending}
           share={<ShareActions message={shareMessage} siteUrl={siteUrl} shareTitle={site.title} />}
         />
-        <HaldiSection
-          event={haldi}
+        <MehndiSection
+          event={mehndi}
           calendarNote={copy.calendarNote}
           pendingMessage={copy.venuePending}
         />

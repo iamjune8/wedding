@@ -49,3 +49,18 @@ export function formatTime12h(time: string): string {
   const hour12 = hour % 12 === 0 ? 12 : hour % 12;
   return `${hour12}:${String(minute).padStart(2, '0')} ${period}`;
 }
+
+export interface DateParts {
+  readonly weekday: string;
+  readonly day: number;
+  readonly month: string;
+  readonly year: number;
+}
+
+/** "2027-04-30" → { weekday: 'Friday', day: 30, month: 'April', year: 2027 }, for the hero date. */
+export function getDateParts(date: string): DateParts {
+  const { year, month, day } = parseIsoDate(date);
+  const monthName = MONTHS[month - 1];
+  if (!monthName) throw new RangeError(`Could not determine the month of ${date}`);
+  return { weekday: getWeekdayName(date), day, month: monthName, year };
+}

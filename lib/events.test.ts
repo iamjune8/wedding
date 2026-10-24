@@ -5,7 +5,7 @@ import { weddingConfig } from './wedding-config';
 const SITE = 'https://nida-junaid.example';
 
 describe('buildEventViews', () => {
-  const { nikah, haldi } = buildEventViews(weddingConfig, SITE);
+  const { nikah, mehndi } = buildEventViews(weddingConfig, SITE);
 
   it('derives the Nikah display details and instants', () => {
     expect(nikah.title).toBe('Nikah Ceremony');
@@ -17,19 +17,19 @@ describe('buildEventViews', () => {
     expect(nikah.dayEndsAtMs).toBe(Date.parse('2027-04-30T18:30:00Z'));
   });
 
-  it('derives the Haldi display details and instants', () => {
-    expect(haldi.title).toBe('Haldi Ceremony');
-    expect(haldi.dateLabel).toBe('Wednesday, 28 April 2027');
-    expect(haldi.timeLabel).toBe('4:00 PM IST');
-    expect(haldi.timingNote).toBeNull();
-    expect(haldi.startIsoWithOffset).toBe('2027-04-28T16:00:00+05:30');
-    expect(haldi.startsAtMs).toBe(Date.parse('2027-04-28T10:30:00Z'));
-    expect(haldi.dayEndsAtMs).toBe(Date.parse('2027-04-28T18:30:00Z'));
+  it('derives the Mehndi display details and instants', () => {
+    expect(mehndi.title).toBe('Mehndi Ceremony');
+    expect(mehndi.dateLabel).toBe('Thursday, 29 April 2027');
+    expect(mehndi.timeLabel).toBe('4:00 PM IST');
+    expect(mehndi.timingNote).toBeNull();
+    expect(mehndi.startIsoWithOffset).toBe('2027-04-29T16:00:00+05:30');
+    expect(mehndi.startsAtMs).toBe(Date.parse('2027-04-29T10:30:00Z'));
+    expect(mehndi.dayEndsAtMs).toBe(Date.parse('2027-04-29T18:30:00Z'));
   });
 
   it('keeps the two events distinct and in the right order', () => {
-    expect(haldi.startsAtMs).toBeLessThan(nikah.startsAtMs);
-    expect(nikah.startsAtMs - haldi.startsAtMs).toBe((2 * 24 + 1.5) * 60 * 60 * 1000);
+    expect(mehndi.startsAtMs).toBeLessThan(nikah.startsAtMs);
+    expect(nikah.startsAtMs - mehndi.startsAtMs).toBe((24 + 1.5) * 60 * 60 * 1000);
   });
 
   it('links Nikah directions and calendar actions', () => {
@@ -40,19 +40,19 @@ describe('buildEventViews', () => {
     );
   });
 
-  it('offers no directions while the Haldi venue is unconfirmed', () => {
-    expect(haldi.venue).toBeNull();
-    expect(haldi.directionsUrl).toBeNull();
-    expect(haldi.calendar.path).toBe('/calendar/nida-junaid-haldi.ics');
-    expect(new URL(haldi.calendar.googleUrl).searchParams.get('dates')).toBe(
-      '20270428T103000Z/20270428T113000Z',
+  it('offers no directions while the Mehndi venue is unconfirmed', () => {
+    expect(mehndi.venue).toBeNull();
+    expect(mehndi.directionsUrl).toBeNull();
+    expect(mehndi.calendar.path).toBe('/calendar/nida-junaid-mehndi.ics');
+    expect(new URL(mehndi.calendar.googleUrl).searchParams.get('dates')).toBe(
+      '20270429T103000Z/20270429T113000Z',
     );
   });
 
-  it('generates Haldi directions automatically once a venue is configured', () => {
+  it('generates Mehndi directions automatically once a venue is configured', () => {
     const view = buildEventView(
       {
-        ...weddingConfig.events.haldi,
+        ...weddingConfig.events.mehndi,
         venue: { name: 'Example Hall', address: 'Example Road, Mumbai', shortAddress: 'Mumbai' },
       },
       weddingConfig,
@@ -81,12 +81,20 @@ describe('buildCalendarInput', () => {
     expect(input.endLocal).toEqual({ date: '2027-04-30', time: '18:30' });
   });
 
-  it('clearly marks the Haldi venue as not yet confirmed', () => {
-    const input = buildCalendarInput(weddingConfig.events.haldi, weddingConfig, null);
-    expect(input.title).toBe('Haldi Ceremony — Nida Khatib & Junaid Shaikh');
-    expect(input.location).toBe('Venue to be announced');
-    expect(input.description).toContain('To be announced (not yet confirmed)');
+  it('places the Mehndi at the family home without inventing an address', () => {
+    const input = buildCalendarInput(weddingConfig.events.mehndi, weddingConfig, null);
+    expect(input.title).toBe('Mehndi Ceremony — Nida Khatib & Junaid Shaikh');
+    expect(input.location).toBe('At our residence');
+    expect(input.description).toContain('At our residence');
+    expect(input.description).not.toContain('To be announced');
     expect(input.description).not.toContain('Invitation:');
     expect(input.url).toBeUndefined();
+  });
+
+  it('still marks a venue as to be announced when neither a venue nor a home is given', () => {
+    const event = { ...weddingConfig.events.mehndi, hostedAt: null };
+    const input = buildCalendarInput(event, weddingConfig, null);
+    expect(input.location).toBe('Venue to be announced');
+    expect(input.description).toContain('To be announced (not yet confirmed)');
   });
 });

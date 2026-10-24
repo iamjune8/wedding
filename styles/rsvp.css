@@ -1,9 +1,9 @@
 @layer components {
-  /* ── Section: saffron of the Haldi melting into lavender ─────────────── */
+  /* ── Section: henna green of the Mehndi melting into lavender ─────────────── */
   .rsvp-section {
     background-image:
       var(--paper-grain),
-      linear-gradient(180deg, var(--haldi-wash) 0%, #f8f1ec 28%, var(--lavender) 100%);
+      linear-gradient(180deg, var(--mehndi-wash) 0%, #f8f1ec 28%, var(--lavender) 100%);
     background-size:
       180px 180px,
       auto;

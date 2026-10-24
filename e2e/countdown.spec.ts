@@ -75,28 +75,28 @@ test.describe('countdowns', () => {
     await expect(region.getByRole('timer')).toHaveCount(0);
   });
 
-  test('count the Haldi separately, reaching zero at 16:00 IST on 28 April', async ({ page }) => {
-    await openAt(page, '2027-04-28T10:29:57Z');
-    const haldi = page.getByRole('region', { name: 'Haldi Ceremony' });
+  test('count the Mehndi separately, reaching zero at 16:00 IST on 29 April', async ({ page }) => {
+    await openAt(page, '2027-04-29T10:29:57Z');
+    const mehndi = page.getByRole('region', { name: 'Mehndi Ceremony' });
     await expect
-      .poll(() => readTimer(page, 'Haldi Ceremony'))
+      .poll(() => readTimer(page, 'Mehndi Ceremony'))
       .toEqual({
         days: 0,
         hours: 0,
         minutes: 0,
         seconds: 2,
       });
-    // At the same moment the Nikah is still 2 days and 1½ hours away.
+    // At the same moment the Nikah is still 1 day and 1½ hours away.
     await expect
       .poll(() => readTimer(page, 'Counting down to the Nikah'))
       .toEqual({
-        days: 2,
+        days: 1,
         hours: 1,
         minutes: 30,
         seconds: 2,
       });
     await page.clock.runFor(2500);
-    await expect(haldi.getByText('The Haldi celebration is here')).toBeAttached();
+    await expect(mehndi.getByText('The Mehndi celebration is here')).toBeAttached();
   });
 
   test('settle into a thank-you once the day has passed', async ({ page }) => {

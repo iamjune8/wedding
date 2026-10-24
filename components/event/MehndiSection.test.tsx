@@ -3,31 +3,45 @@ import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { buildEventView } from '@/lib/events';
 import { weddingConfig } from '@/lib/wedding-config';
-import { HaldiSection } from './HaldiSection';
+import { MehndiSection } from './MehndiSection';
 
-const renderHaldi = (venue: (typeof weddingConfig)['events']['haldi']['venue']) =>
+type MehndiConfig = (typeof weddingConfig)['events']['mehndi'];
+
+const renderMehndi = (venue: MehndiConfig['venue'], hostedAt: MehndiConfig['hostedAt'] = null) =>
   render(
-    <HaldiSection
-      event={buildEventView({ ...weddingConfig.events.haldi, venue }, weddingConfig, null)}
+    <MehndiSection
+      event={buildEventView(
+        { ...weddingConfig.events.mehndi, venue, hostedAt },
+        weddingConfig,
+        null,
+      )}
       calendarNote="Reminders depend on your calendar app."
       pendingMessage="Venue details will be announced soon."
     />,
   );
 
-describe('HaldiSection', () => {
+describe('MehndiSection', () => {
+  it('shows "At our residence" for a home event, with no address or directions', () => {
+    renderMehndi(null, 'At our residence');
+    expect(screen.getByText('At our residence')).toBeInTheDocument();
+    expect(screen.queryByText('To be announced')).not.toBeInTheDocument();
+    expect(document.querySelector('address')).toBeNull();
+    expect(screen.queryByRole('link', { name: /get directions/i })).not.toBeInTheDocument();
+  });
+
   it('marks the venue as to be announced while it is unconfirmed', () => {
-    renderHaldi(null);
+    renderMehndi(null);
     expect(screen.getByText('Venue details will be announced soon.')).toBeInTheDocument();
     expect(screen.queryByRole('link', { name: /get directions/i })).not.toBeInTheDocument();
   });
 
   it('shows the venue and directions automatically once a venue is configured', () => {
-    renderHaldi({
+    renderMehndi({
       name: 'Example Hall',
       address: 'Example Road, Seawoods, Navi Mumbai, Maharashtra, India',
       shortAddress: 'Example Road, Navi Mumbai',
     });
-    const region = screen.getByRole('region', { name: /haldi ceremony/i });
+    const region = screen.getByRole('region', { name: /mehndi ceremony/i });
     expect(within(region).getByText('Example Hall')).toBeInTheDocument();
     expect(
       within(region).queryByText('Venue details will be announced soon.'),
@@ -40,7 +54,7 @@ describe('HaldiSection', () => {
   });
 
   it('keeps address parts intact so lines only break between them', () => {
-    renderHaldi({
+    renderMehndi({
       name: 'Example Hall',
       address: 'Plot No. 9, Sector New 50, Navi Mumbai',
       shortAddress: 'Navi Mumbai',

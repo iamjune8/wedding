@@ -1,4 +1,4 @@
-/** A sixteen-petal geometric rosette in marigold and rose: the Haldi chapter's ornament. Its petals
+/** A sixteen-petal geometric rosette in marigold and rose: the Mehndi chapter's ornament. Its petals
  * draw themselves when it scrolls into view (pathLength lets CSS animate every petal alike). */
 
 const LONG_PETAL = 'M0 -15C6.5 -26 6.5 -40 0 -54C-6.5 -40 -6.5 -26 0 -15Z';

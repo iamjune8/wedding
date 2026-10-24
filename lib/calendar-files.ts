@@ -3,7 +3,7 @@ import { buildIcsCalendar } from './calendar';
 import { buildCalendarInput } from './events';
 import { weddingConfig } from './wedding-config';
 
-const calendarEvents = () => [weddingConfig.events.nikah, weddingConfig.events.haldi] as const;
+const calendarEvents = () => [weddingConfig.events.nikah, weddingConfig.events.mehndi] as const;
 
 export function listCalendarFileNames(): string[] {
   return calendarEvents().map((event) => event.calendar.fileName);

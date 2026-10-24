@@ -5,9 +5,9 @@ import { weddingConfig } from './wedding-config';
 describe('buildMetadata', () => {
   it('uses the agreed title and description', () => {
     const metadata = buildMetadata(weddingConfig, null);
-    expect(metadata.title).toBe('Nida & Junaid | Nikah & Haldi Invitation');
+    expect(metadata.title).toBe('Nida & Junaid | Nikah & Mehndi Invitation');
     expect(metadata.description).toBe(
-      'You are warmly invited to the Nikah of Nida Khatib and Junaid Shaikh on Friday, 30 April 2027, and their Haldi celebration on Wednesday, 28 April 2027.',
+      'You are warmly invited to the Nikah of Nida Khatib and Junaid Shaikh on Friday, 30 April 2027, and their Mehndi (henna) evening on Thursday, 29 April 2027.',
     );
   });
 

@@ -40,7 +40,7 @@ test.describe('the invitation page', () => {
       'Invitation',
       'Counting down to the Nikah',
       'Nikah Ceremony',
-      'Haldi Ceremony',
+      'Mehndi Ceremony',
       'RSVP',
     ]);
     await expect(page.getByRole('contentinfo')).toContainText('Keep us in your duas.');
@@ -70,14 +70,14 @@ test.describe('the invitation page', () => {
     );
   });
 
-  test('keeps the Haldi venue as to be announced, with no directions', async ({ page }) => {
+  test('holds the Mehndi at our residence, with no directions', async ({ page }) => {
     await openWithoutIntro(page);
-    const haldi = page.getByRole('region', { name: 'Haldi Ceremony' });
-    await expect(haldi.getByText('Wednesday, 28 April 2027')).toBeAttached();
-    await expect(haldi.getByText('4:00 PM IST', { exact: true })).toBeAttached();
-    await expect(haldi.getByText('To be announced')).toHaveCount(2);
-    await expect(haldi.getByText('Venue details will be announced soon.')).toBeAttached();
-    await expect(haldi.getByRole('link', { name: /directions/i })).toHaveCount(0);
+    const mehndi = page.getByRole('region', { name: 'Mehndi Ceremony' });
+    await expect(mehndi.getByText('Thursday, 29 April 2027')).toBeAttached();
+    await expect(mehndi.getByText('4:00 PM IST', { exact: true })).toBeAttached();
+    await expect(mehndi.getByText('At our residence', { exact: true })).toBeAttached();
+    await expect(mehndi.getByText('To be announced')).toHaveCount(0);
+    await expect(mehndi.getByRole('link', { name: /directions/i })).toHaveCount(0);
   });
 
   test('never links to localhost', async ({ page }) => {

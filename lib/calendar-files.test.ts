@@ -5,7 +5,7 @@ const generatedAt = new Date('2026-10-24T00:00:00Z');
 
 describe('calendar files', () => {
   it('publishes one file per event with meaningful names', () => {
-    expect(listCalendarFileNames()).toEqual(['nida-junaid-nikah.ics', 'nida-junaid-haldi.ics']);
+    expect(listCalendarFileNames()).toEqual(['nida-junaid-nikah.ics', 'nida-junaid-mehndi.ics']);
   });
 
   it('renders the Nikah file', () => {
@@ -18,10 +18,10 @@ describe('calendar files', () => {
     expect(ics).toContain('UID:nikah@nida-junaid.invitation');
   });
 
-  it('renders the Haldi file', () => {
-    const ics = renderCalendarFile('nida-junaid-haldi.ics', null, generatedAt);
-    expect(ics).toContain('DTSTART;TZID=Asia/Kolkata:20270428T160000');
-    expect(ics).toContain('LOCATION:Venue to be announced');
+  it('renders the Mehndi file', () => {
+    const ics = renderCalendarFile('nida-junaid-mehndi.ics', null, generatedAt);
+    expect(ics).toContain('DTSTART;TZID=Asia/Kolkata:20270429T160000');
+    expect(ics).toContain('LOCATION:At our residence');
   });
 
   it('returns null for unknown files', () => {

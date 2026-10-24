@@ -17,11 +17,12 @@ const nikah: ShareEventSummary = {
   },
 };
 
-const haldi: ShareEventSummary = {
-  label: 'Haldi',
-  dateLabel: 'Wednesday, 28 April 2027',
+const mehndi: ShareEventSummary = {
+  label: 'Mehndi',
+  dateLabel: 'Thursday, 29 April 2027',
   timeLabel: '4:00 PM IST',
   venue: null,
+  hostedAt: 'At our residence',
 };
 
 const expectedMessage = [
@@ -37,10 +38,10 @@ const expectedMessage = [
   'Seawood Jama Masjid',
   'Plot No. 144, Sector New 50, Seawoods, Nerul, Navi Mumbai.',
   '',
-  'Haldi:',
-  'Wednesday, 28 April 2027',
+  'Mehndi:',
+  'Thursday, 29 April 2027',
   '4:00 PM IST',
-  'Venue to be announced.',
+  'At our residence.',
   '',
   'We would be honoured by your presence and duas.',
 ].join('\n');
@@ -48,20 +49,29 @@ const expectedMessage = [
 describe('buildInvitationMessage', () => {
   it('produces the agreed invitation wording', () => {
     expect(
-      buildInvitationMessage({ coupleNames: 'Nida Khatib & Junaid Shaikh', nikah, haldi }),
+      buildInvitationMessage({ coupleNames: 'Nida Khatib & Junaid Shaikh', nikah, mehndi }),
     ).toBe(expectedMessage);
   });
 
-  it('includes the Haldi venue automatically once it is confirmed', () => {
+  it('includes the Mehndi venue automatically once it is confirmed', () => {
     const message = buildInvitationMessage({
       coupleNames: 'Nida Khatib & Junaid Shaikh',
       nikah,
-      haldi: { ...haldi, venue: { name: 'Example Hall', shortAddress: 'Example Road, Mumbai' } },
+      mehndi: { ...mehndi, venue: { name: 'Example Hall', shortAddress: 'Example Road, Mumbai' } },
     });
     expect(message).toContain(
-      'Haldi:\nWednesday, 28 April 2027\n4:00 PM IST\nVenue: Example Hall, Example Road, Mumbai.',
+      'Mehndi:\nThursday, 29 April 2027\n4:00 PM IST\nVenue: Example Hall, Example Road, Mumbai.',
     );
-    expect(message).not.toContain('Venue to be announced');
+    expect(message).not.toContain('At our residence');
+  });
+
+  it('says the venue is to be announced when neither a venue nor a home is given', () => {
+    const message = buildInvitationMessage({
+      coupleNames: 'Nida Khatib & Junaid Shaikh',
+      nikah,
+      mehndi: { ...mehndi, hostedAt: null },
+    });
+    expect(message).toContain('4:00 PM IST\nVenue to be announced.');
   });
 });
 

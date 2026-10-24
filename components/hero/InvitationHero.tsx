@@ -1,8 +1,13 @@
+import type { DateParts } from '@/lib/format';
 import { introDelay } from '@/lib/style';
 import { ArchFrame } from '../ornaments/ArchFrame';
+import { JasmineStrands } from '../ornaments/JasmineStrands';
+import { Lantern } from '../ornaments/Lantern';
+import { Monogram } from '../ornaments/Monogram';
 import { OrnamentDivider } from '../ornaments/OrnamentDivider';
 import { Petals } from '../ornaments/Petals';
 import { Sparkles, type SparkleSpot } from '../ornaments/Sparkles';
+import { HeroDate } from './HeroDate';
 import { HeroNames } from './HeroNames';
 
 /** Glints around the crown of the arch and beside the names. */
@@ -27,8 +32,12 @@ interface InvitationHeroProps {
   };
   readonly brideName: string;
   readonly groomName: string;
+  /** Initials for the monogram seal, e.g. ['N', 'J']. */
+  readonly initials: readonly [string, string];
   readonly nikah: {
     readonly dateLabel: string;
+    readonly dateParts: DateParts;
+    readonly venueName: string | null;
     readonly timeLabel: string;
     readonly timingNote: string | null;
     readonly startIsoWithOffset: string;
@@ -39,17 +48,39 @@ interface InvitationHeroProps {
  * Section A. Everything is server-rendered and readable without JavaScript; the opening
  * sequence is pure CSS (see styles/motion.css) and can be skipped at any moment.
  */
-export function InvitationHero({ copy, brideName, groomName, nikah }: InvitationHeroProps) {
+export function InvitationHero({
+  copy,
+  brideName,
+  groomName,
+  initials,
+  nikah,
+}: InvitationHeroProps) {
   const timeLine = nikah.timingNote ? `${nikah.timingNote} · ${nikah.timeLabel}` : nikah.timeLabel;
 
   return (
     <section className="hero" aria-labelledby="couple-names" data-intro-root data-play-in-view>
       <div className="hero__pattern intro-fade" style={introDelay(0)} aria-hidden="true" />
       <div className="hero__glow" aria-hidden="true" />
+      <div className="hero__hangings intro-fade" style={introDelay(150)}>
+        <JasmineStrands side="start" />
+        <JasmineStrands side="end" />
+        <Lantern side="start" drop={2.2} delay={0} />
+        <Lantern side="end" drop={3.6} delay={1.7} />
+      </div>
       <ArchFrame
         variant="hero"
         className="intro-arch"
-        decoration={<Sparkles spots={HERO_SPARKLES} className="hero__sparkles" />}
+        decoration={
+          <>
+            <Sparkles spots={HERO_SPARKLES} className="hero__sparkles" />
+            <Monogram
+              first={initials[0]}
+              second={initials[1]}
+              className="hero__monogram intro-fade"
+              style={introDelay(200)}
+            />
+          </>
+        }
       >
         <p
           className="basmala intro-step"
@@ -71,12 +102,21 @@ export function InvitationHero({ copy, brideName, groomName, nikah }: Invitation
           {copy.inviteLine}
         </p>
         <OrnamentDivider className="hero__divider intro-divider" style={introDelay(2650)} />
-        <p className="hero-date intro-step" style={introDelay(2850)}>
-          <time dateTime={nikah.startIsoWithOffset}>{nikah.dateLabel}</time>
-        </p>
+        <HeroDate
+          className="intro-step"
+          style={introDelay(2850)}
+          dateLabel={nikah.dateLabel}
+          dateParts={nikah.dateParts}
+          startIsoWithOffset={nikah.startIsoWithOffset}
+        />
         <p className="hero-time intro-step" style={introDelay(3050)}>
           {timeLine}
         </p>
+        {nikah.venueName ? (
+          <p className="hero-venue intro-step" style={introDelay(3200)}>
+            {nikah.venueName}
+          </p>
+        ) : null}
         <a href="#invitation" className="scroll-cue intro-step" style={introDelay(3450)}>
           <span>{copy.scrollCue}</span>
           <span className="scroll-cue__line" aria-hidden="true">

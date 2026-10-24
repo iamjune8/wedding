@@ -1,5 +1,5 @@
 import { buildGoogleCalendarUrl, type CalendarEventInput } from './calendar';
-import { formatLongDate, formatTime12h } from './format';
+import { type DateParts, formatLongDate, formatTime12h, getDateParts } from './format';
 import { buildDirectionsUrl } from './maps';
 import type { ShareEventSummary } from './share';
 import {
@@ -18,14 +18,17 @@ export interface EventView {
   readonly title: string;
   readonly shortTitle: string;
   readonly dateLabel: string;
+  readonly dateParts: DateParts;
   readonly timeLabel: string;
   readonly timingNote: string | null;
+  readonly subtitle: string | null;
   /** e.g. "2027-04-30T17:30:00+05:30", for <time dateTime>. */
   readonly startIsoWithOffset: string;
   readonly startsAtMs: number;
   /** Midnight at the end of the event's local day; the countdown's "today" state ends here. */
   readonly dayEndsAtMs: number;
   readonly venue: Venue | null;
+  readonly hostedAt: string | null;
   readonly directionsUrl: string | null;
   readonly calendar: {
     readonly fileName: string;
@@ -69,10 +72,12 @@ function buildCalendarDescription(
   const timingLine = event.timingNote ? `${timeLabel} · ${event.timingNote}` : timeLabel;
   const venueLines = event.venue
     ? [event.venue.name, event.venue.address]
-    : [
-        'Venue: To be announced (not yet confirmed).',
-        'Please check the invitation for the venue once it is announced.',
-      ];
+    : event.hostedAt
+      ? [event.hostedAt]
+      : [
+          'Venue: To be announced (not yet confirmed).',
+          'Please check the invitation for the venue once it is announced.',
+        ];
   const linkLines = siteUrl ? ['', `Invitation: ${siteUrl}`] : [];
   return [
     `You are warmly invited to the ${event.title} of ${coupleNames(config)}.`,
@@ -95,6 +100,11 @@ function buildCalendarReminder(
   return { minutesBefore, description: `Reminder: ${calendarTitle(event, config)} — ${when}` };
 }
 
+const locationOf = (event: WeddingEvent) =>
+  event.venue
+    ? `${event.venue.name}, ${event.venue.address}`
+    : (event.hostedAt ?? 'Venue to be announced');
+
 export function buildCalendarInput(
   event: WeddingEvent,
   config: WeddingConfig,
@@ -110,7 +120,7 @@ export function buildCalendarInput(
     sequence: event.calendar.sequence,
     title: calendarTitle(event, config),
     description: buildCalendarDescription(event, config, siteUrl),
-    location: event.venue ? `${event.venue.name}, ${event.venue.address}` : 'Venue to be announced',
+    location: locationOf(event),
     url: siteUrl ?? undefined,
     timeZone: config.timeZone,
     timeZoneLabel: config.timeZoneLabel,
@@ -137,12 +147,15 @@ export function buildEventView(
     title: event.title,
     shortTitle: event.shortTitle,
     dateLabel: formatLongDate(event.date),
+    dateParts: getDateParts(event.date),
     timeLabel: timeLabelOf(event, config),
     timingNote: event.timingNote,
+    subtitle: event.subtitle,
     startIsoWithOffset: `${event.date}T${event.startTime}:00${formatUtcOffset(offset)}`,
     startsAtMs: startUtc.getTime(),
     dayEndsAtMs: dayEndUtc.getTime(),
     venue: event.venue,
+    hostedAt: event.hostedAt,
     directionsUrl: buildDirectionsUrl(event.venue),
     calendar: {
       fileName: event.calendar.fileName,
@@ -161,12 +174,13 @@ export function toShareSummary(view: EventView): ShareEventSummary {
     timeLabel: view.timeLabel,
     timingNote: view.timingNote,
     venue: view.venue ? { name: view.venue.name, shortAddress: view.venue.shortAddress } : null,
+    hostedAt: view.hostedAt,
   };
 }
 
 export function buildEventViews(config: WeddingConfig, siteUrl: string | null) {
   return {
     nikah: buildEventView(config.events.nikah, config, siteUrl),
-    haldi: buildEventView(config.events.haldi, config, siteUrl),
+    mehndi: buildEventView(config.events.mehndi, config, siteUrl),
   } as const;
 }

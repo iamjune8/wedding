@@ -5,9 +5,9 @@ import { ARCH_CROWN, ARCH_CROWN_INNER, ARCH_FINIAL, OG } from '@/lib/og/palette'
 import { weddingConfig } from '@/lib/wedding-config';
 
 const { couple } = weddingConfig;
-const { nikah, haldi } = buildEventViews(weddingConfig, null);
+const { nikah, mehndi } = buildEventViews(weddingConfig, null);
 
-export const alt = `${couple.bride.fullName} and ${couple.groom.fullName}: Nikah on ${nikah.dateLabel}, Haldi on ${haldi.dateLabel}`;
+export const alt = `${couple.bride.fullName} and ${couple.groom.fullName}: Nikah on ${nikah.dateLabel}, Mehndi on ${mehndi.dateLabel}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -76,7 +76,7 @@ function EventRow() {
     <div style={{ display: 'flex', alignItems: 'stretch', marginTop: 38 }}>
       <EventColumn label={nikah.shortTitle} date={nikah.dateLabel} time={nikahTime} />
       <div style={{ width: 1, background: OG.champagne, margin: '6px 28px' }} />
-      <EventColumn label={haldi.shortTitle} date={haldi.dateLabel} time={haldi.timeLabel} />
+      <EventColumn label={mehndi.shortTitle} date={mehndi.dateLabel} time={mehndi.timeLabel} />
     </div>
   );
 }

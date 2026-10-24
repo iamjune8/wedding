@@ -4,13 +4,15 @@ import { SITE_URL } from './helpers';
 test.describe('link previews and metadata', () => {
   test('uses the public address for previews and keeps search engines out', async ({ page }) => {
     await page.goto('/');
-    await expect(page).toHaveTitle('Nida & Junaid | Nikah & Haldi Invitation');
+    await expect(page).toHaveTitle('Nida & Junaid | Nikah & Mehndi Invitation');
 
     const meta = (selector: string) => page.locator(selector).getAttribute('content');
     expect(await meta('meta[name="description"]')).toBe(
-      'You are warmly invited to the Nikah of Nida Khatib and Junaid Shaikh on Friday, 30 April 2027, and their Haldi celebration on Wednesday, 28 April 2027.',
+      'You are warmly invited to the Nikah of Nida Khatib and Junaid Shaikh on Friday, 30 April 2027, and their Mehndi (henna) evening on Thursday, 29 April 2027.',
     );
-    expect(await meta('meta[property="og:title"]')).toBe('Nida & Junaid | Nikah & Haldi Invitation');
+    expect(await meta('meta[property="og:title"]')).toBe(
+      'Nida & Junaid | Nikah & Mehndi Invitation',
+    );
     expect(await meta('meta[property="og:url"]')).toBe(SITE_URL);
     expect(await meta('meta[property="og:image"]')).toMatch(
       new RegExp(`^${SITE_URL}/opengraph-image`),
@@ -26,10 +28,12 @@ test.describe('link previews and metadata', () => {
     const context = await browser.newContext({ colorScheme: 'dark' });
     const page = await context.newPage();
     await page.goto('/');
-    expect(
-      await page.locator('meta[name="color-scheme"]').getAttribute('content'),
-    ).toBe('only light');
-    const scheme = await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme);
+    expect(await page.locator('meta[name="color-scheme"]').getAttribute('content')).toBe(
+      'only light',
+    );
+    const scheme = await page.evaluate(
+      () => getComputedStyle(document.documentElement).colorScheme,
+    );
     expect(scheme).toMatch(/^(only light|light only)$/); // browsers normalise the word order
     await context.close();
   });

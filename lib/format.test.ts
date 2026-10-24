@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatLongDate, formatTime12h, getWeekdayName } from './format';
+import { formatLongDate, formatTime12h, getDateParts, getWeekdayName } from './format';
 import { zonedDateTimeToUtc } from './time';
 
 describe('formatLongDate', () => {
@@ -7,8 +7,8 @@ describe('formatLongDate', () => {
     expect(formatLongDate('2027-04-30')).toBe('Friday, 30 April 2027');
   });
 
-  it('formats the Haldi date with its weekday', () => {
-    expect(formatLongDate('2027-04-28')).toBe('Wednesday, 28 April 2027');
+  it('formats the Mehndi date with its weekday', () => {
+    expect(formatLongDate('2027-04-29')).toBe('Thursday, 29 April 2027');
   });
 
   it('agrees with the platform calendar in India Standard Time', () => {
@@ -50,5 +50,20 @@ describe('formatTime12h', () => {
     ['09:07', '9:07 AM'],
   ])('formats %s as %s', (input, expected) => {
     expect(formatTime12h(input)).toBe(expected);
+  });
+});
+
+describe('getDateParts', () => {
+  it('splits a date into the pieces of a printed invitation date line', () => {
+    expect(getDateParts('2027-04-30')).toEqual({
+      weekday: 'Friday',
+      day: 30,
+      month: 'April',
+      year: 2027,
+    });
+  });
+
+  it('rejects impossible dates', () => {
+    expect(() => getDateParts('2027-02-30')).toThrow();
   });
 });

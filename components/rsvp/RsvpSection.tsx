@@ -2,7 +2,7 @@ import { revealDelay } from '@/lib/style';
 import { StarMotif } from '../ornaments/StarMotif';
 import { RsvpForm } from './RsvpForm';
 
-/** The reply card, between the Haldi (the last event) and the closing dua. */
+/** The reply card, between the Mehndi (the last event) and the closing dua. */
 export function RsvpSection() {
   return (
     <section id="rsvp" className="section rsvp-section" aria-labelledby="rsvp-title">

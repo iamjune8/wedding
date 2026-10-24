@@ -24,17 +24,17 @@ const nikahInput: CalendarEventInput = {
   },
 };
 
-const haldiInput: CalendarEventInput = {
+const mehndiInput: CalendarEventInput = {
   ...nikahInput,
-  uid: 'haldi-2027-04-28@nida-junaid.invitation',
-  title: 'Haldi Ceremony — Nida Khatib & Junaid Shaikh',
+  uid: 'mehndi-2027-04-29@nida-junaid.invitation',
+  title: 'Mehndi Ceremony — Nida Khatib & Junaid Shaikh',
   description: 'Venue: To be announced (not yet confirmed).',
   location: 'Venue to be announced',
-  startLocal: { date: '2027-04-28', time: '16:00' },
-  endLocal: { date: '2027-04-28', time: '17:00' },
-  startUtc: new Date('2027-04-28T10:30:00Z'),
-  endUtc: new Date('2027-04-28T11:30:00Z'),
-  reminder: { minutesBefore: 1440, description: 'Haldi Ceremony is tomorrow at 4:00 PM IST' },
+  startLocal: { date: '2027-04-29', time: '16:00' },
+  endLocal: { date: '2027-04-29', time: '17:00' },
+  startUtc: new Date('2027-04-29T10:30:00Z'),
+  endUtc: new Date('2027-04-29T11:30:00Z'),
+  reminder: { minutesBefore: 1440, description: 'Mehndi Ceremony is tomorrow at 4:00 PM IST' },
 };
 
 const generatedAt = new Date('2026-10-24T08:15:30Z');
@@ -122,13 +122,13 @@ describe('buildIcsCalendar', () => {
     expect(minimal).not.toContain('URL:');
   });
 
-  it('marks the Haldi venue as unconfirmed and keeps its own identity and time', () => {
-    const haldi = buildIcsCalendar(haldiInput, generatedAt);
-    const { event } = parseEvent(haldi);
+  it('marks the Mehndi venue as unconfirmed and keeps its own identity and time', () => {
+    const mehndi = buildIcsCalendar(mehndiInput, generatedAt);
+    const { event } = parseEvent(mehndi);
     expect(event.location).toBe('Venue to be announced');
     expect(event.description).toContain('not yet confirmed');
     expect(event.uid).not.toBe('nikah-2027-04-30@nida-junaid.invitation');
-    expect(event.startDate.toJSDate().toISOString()).toBe('2027-04-28T10:30:00.000Z');
+    expect(event.startDate.toJSDate().toISOString()).toBe('2027-04-29T10:30:00.000Z');
   });
 
   it('rejects an end time before the start time', () => {
@@ -157,9 +157,9 @@ describe('buildGoogleCalendarUrl', () => {
     expect(raw.split('?')[1]?.split('&')).toHaveLength(6);
   });
 
-  it('uses the Haldi date and time for the Haldi link', () => {
-    const url = new URL(buildGoogleCalendarUrl(haldiInput));
-    expect(url.searchParams.get('dates')).toBe('20270428T103000Z/20270428T113000Z');
+  it('uses the Mehndi date and time for the Mehndi link', () => {
+    const url = new URL(buildGoogleCalendarUrl(mehndiInput));
+    expect(url.searchParams.get('dates')).toBe('20270429T103000Z/20270429T113000Z');
     expect(url.searchParams.get('location')).toBe('Venue to be announced');
   });
 });

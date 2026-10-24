@@ -14,10 +14,10 @@ const EXPECTED_MESSAGE = [
   'Seawood Jama Masjid',
   'Plot No. 144, Sector New 50, Seawoods, Nerul, Navi Mumbai.',
   '',
-  'Haldi:',
-  'Wednesday, 28 April 2027',
+  'Mehndi:',
+  'Thursday, 29 April 2027',
   '4:00 PM IST',
-  'Venue to be announced.',
+  'At our residence.',
   '',
   'We would be honoured by your presence and duas.',
 ].join('\n');
@@ -53,7 +53,7 @@ test.describe('sharing', () => {
       () => (window as unknown as { __shareCalls: unknown[] }).__shareCalls,
     );
     expect(calls).toEqual([
-      { title: 'Nida & Junaid | Nikah & Haldi Invitation', text: EXPECTED_MESSAGE, url: SITE_URL },
+      { title: 'Nida & Junaid | Nikah & Mehndi Invitation', text: EXPECTED_MESSAGE, url: SITE_URL },
     ]);
   });
 

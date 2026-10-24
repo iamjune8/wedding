@@ -4,10 +4,21 @@ import type { Venue } from '@/lib/wedding-config';
 interface VenueBlockProps {
   readonly venue: Venue | null;
   readonly pendingMessage: string;
+  /** A place given without an address, e.g. "At our residence". */
+  readonly hostedAt?: string | null;
 }
 
 /** Shows a confirmed venue, or an honest "to be announced" state. Never invents details. */
-export function VenueBlock({ venue, pendingMessage }: VenueBlockProps) {
+export function VenueBlock({ venue, pendingMessage, hostedAt = null }: VenueBlockProps) {
+  if (!venue && hostedAt) {
+    return (
+      <div className="venue venue--home">
+        <p className="venue__eyebrow">Venue</p>
+        <p className="venue__name">{hostedAt}</p>
+      </div>
+    );
+  }
+
   if (!venue) {
     return (
       <div className="venue venue--pending">

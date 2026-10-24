@@ -1,19 +1,19 @@
-# Nida & Junaid · Nikah & Haldi invitation
+# Nida & Junaid · Nikah & Mehndi invitation
 
-A digital wedding invitation for the Nikah of **Nida Khatib & Junaid Shaikh**, with their Haldi
+A digital wedding invitation for the Nikah of **Nida Khatib & Junaid Shaikh**, with their Mehndi
 celebration. Built with Next.js 16, React 19, TypeScript and Tailwind CSS 4. The site is fully
 static: no database, no login, no paid services and no secrets.
 
-| Event | Date                     | Time (IST)                | Venue                                                                          |
-| ----- | ------------------------ | ------------------------- | ------------------------------------------------------------------------------ |
-| Nikah | Friday, 30 April 2027    | 5:30 PM, after Asr Namaaz | Seawood Jama Masjid, Plot No. 144, Sector New 50, Seawoods, Nerul, Navi Mumbai |
-| Haldi | Wednesday, 28 April 2027 | 4:00 PM                   | To be announced                                                                |
+| Event  | Date                    | Time (IST)                | Venue                                                                          |
+| ------ | ----------------------- | ------------------------- | ------------------------------------------------------------------------------ |
+| Nikah  | Friday, 30 April 2027   | 5:30 PM, after Asr Namaaz | Seawood Jama Masjid, Plot No. 144, Sector New 50, Seawoods, Nerul, Navi Mumbai |
+| Mehndi | Thursday, 29 April 2027 | 4:00 PM                   | At our residence                                                               |
 
 ## What guests get
 
 - An opening envelope with a wax seal that opens into a gold Mughal-style arch, with the
   Bismillah, the couple's names and the Nikah date (skippable, and skipped on a repeat visit).
-- Live countdowns to the Nikah and the Haldi, calculated from the exact moment in India Standard
+- Live countdowns to the Nikah and the Mehndi, calculated from the exact moment in India Standard
   Time, so they are right on any phone in any country.
 - Google Maps directions to the masjid (opens the Maps app on phones).
 - "Add to Calendar" for each event: an `.ics` file for Apple Calendar and most calendar apps,
@@ -59,7 +59,7 @@ npx playwright install chromium webkit
 The end-to-end tests build the site into `.next-e2e/` with a placeholder address
 (`https://nida-junaid.example`) so they never overwrite your normal build.
 
-## Change event details or announce the Haldi venue
+## Change event details or add the Mehndi address
 
 Every detail lives in one file: [`lib/wedding-config.ts`](lib/wedding-config.ts). The page,
 countdowns, calendar files, Google Calendar links, directions and WhatsApp message are all
@@ -67,7 +67,8 @@ generated from it. The file is validated when the site builds, so a typo (for ex
 `2027-04-31` or `4:00 PM` instead of `16:00`) stops the build with a clear message instead of
 publishing a broken invitation.
 
-To announce the Haldi venue, replace `venue: null` in the `haldi` event with:
+The Mehndi is hosted at home, so the page shows `hostedAt` ("At our residence") with no
+address or directions. To publish the full address, replace `venue: null` in the `mehndi` event with:
 
 ```ts
 venue: {
@@ -77,9 +78,9 @@ venue: {
 },
 ```
 
-Then increase the Haldi's `calendar.sequence` from `0` to `1`. Guests who download the calendar
+Then increase the Mehndi's `calendar.sequence` from `0` to `1`. Guests who download the calendar
 file again will get the venue on their existing entry. After you save, a **Get Directions**
-button appears for the Haldi automatically, and the share message and calendar files include the
+button appears for the Mehndi automatically, and the share message and calendar files include the
 venue. Publish the change as described in [Updating the live site](#updating-the-live-site).
 
 Other notes:
@@ -143,7 +144,7 @@ git add .
 ```
 
 ```bash
-git commit -m "feat: Nikah and Haldi invitation website"
+git commit -m "feat: Nikah and Mehndi invitation website"
 ```
 
 ```bash
@@ -210,7 +211,7 @@ git add lib/wedding-config.ts
 ```
 
 ```bash
-git commit -m "feat: announce Haldi venue"
+git commit -m "feat: announce Mehndi venue"
 ```
 
 ```bash
@@ -248,7 +249,7 @@ e2e/                    Playwright end-to-end tests
 ```
 
 - **Time zones:** event times are converted from Asia/Kolkata to exact UTC instants
-  (`lib/time.ts`). Nikah: 2027-04-30 12:00 UTC. Haldi: 2027-04-28 10:30 UTC.
+  (`lib/time.ts`). Nikah: 2027-04-30 12:00 UTC. Mehndi: 2027-04-29 10:30 UTC.
 - **Motion:** the opening is pure CSS and the scroll reveals use IntersectionObserver. Nothing
   hijacks scrolling or loops, and visitors who prefer reduced motion get a still page. If
   JavaScript fails, everything stays visible.

@@ -211,36 +211,58 @@
     color: var(--gold-ink);
   }
 
-  /* ── E. Haldi ────────────────────────────────────────────────────────── */
-  .haldi-section {
+  /* ── E. Mehndi ────────────────────────────────────────────────────────── */
+  .mehndi-section {
     background-image:
       var(--paper-grain),
       linear-gradient(
         180deg,
         var(--ivory) 0%,
-        var(--haldi-wash) 16%,
-        var(--haldi-deep) 58%,
-        var(--haldi-wash) 100%
+        var(--mehndi-wash) 16%,
+        var(--mehndi-deep) 58%,
+        var(--mehndi-wash) 100%
       );
     background-size:
       180px 180px,
       auto;
   }
 
-  .haldi-section .event-time,
-  .haldi-section .venue__note {
-    color: var(--turmeric-ink);
+  .mehndi-section .event-time,
+  .mehndi-section .venue__note {
+    color: var(--henna-ink);
   }
 
-  .haldi-section .venue__fact {
+  .mehndi-section .venue__fact {
     border-bottom-color: rgb(217 164 65 / 0.35);
   }
 
-  .haldi-section .btn-secondary {
-    border-color: var(--turmeric-ink);
+  .mehndi-section .btn-secondary {
+    border-color: var(--henna-ink);
   }
 
-  .haldi-layout {
+  .event-subtitle {
+    margin-top: 0.35rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.15rem, 1rem + 0.6vw, 1.4rem);
+    color: var(--henna-ink);
+  }
+
+  .venue--home {
+    display: grid;
+    justify-items: center;
+    gap: 0.35rem;
+  }
+
+  .venue__eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--henna-ink);
+  }
+
+  .mehndi-layout {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -249,21 +271,21 @@
     text-align: center;
   }
 
-  .haldi-layout__ornament {
+  .mehndi-layout__ornament {
     margin-bottom: 2.25rem;
   }
 
-  .haldi-layout__venue {
+  .mehndi-layout__venue {
     width: 100%;
     margin-top: 2.25rem;
   }
 
-  .haldi-layout__countdown {
+  .mehndi-layout__countdown {
     width: 100%;
     margin-top: clamp(3.25rem, 2.5rem + 3vw, 4.75rem);
   }
 
-  .haldi-layout__countdown-title {
+  .mehndi-layout__countdown-title {
     margin-bottom: 1.75rem;
     padding-bottom: 0.08em;
     font-family: var(--serif);
@@ -273,7 +295,7 @@
     color: var(--charcoal);
   }
 
-  .haldi-layout__actions {
+  .mehndi-layout__actions {
     width: 100%;
     margin-top: clamp(2.75rem, 2rem + 2vw, 3.75rem);
   }
@@ -285,7 +307,7 @@
     overflow: hidden;
     padding: calc(var(--section-space) * 0.9) var(--gutter) calc(var(--section-space) * 0.85);
     background-image:
-      var(--paper-grain), linear-gradient(180deg, var(--haldi-wash) 0%, var(--ivory) 48%);
+      var(--paper-grain), linear-gradient(180deg, var(--mehndi-wash) 0%, var(--ivory) 48%);
     background-size:
       180px 180px,
       auto;

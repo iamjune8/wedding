@@ -23,9 +23,9 @@ describe('zonedDateTimeToUtc', () => {
     );
   });
 
-  it('resolves the Haldi start (28 Apr 2027, 16:00 IST) to 10:30 UTC', () => {
-    expect(zonedDateTimeToUtc('2027-04-28', '16:00', 'Asia/Kolkata').toISOString()).toBe(
-      '2027-04-28T10:30:00.000Z',
+  it('resolves the Mehndi start (29 Apr 2027, 16:00 IST) to 10:30 UTC', () => {
+    expect(zonedDateTimeToUtc('2027-04-29', '16:00', 'Asia/Kolkata').toISOString()).toBe(
+      '2027-04-29T10:30:00.000Z',
     );
   });
 

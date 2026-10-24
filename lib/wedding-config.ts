@@ -5,7 +5,8 @@ import { isValidTimeZone, parseIsoDate, zonedDateTimeToUtc } from './time';
 /* ──────────────────────────────────────────────────────────────────────────────────────────
  * ALL WEDDING DETAILS LIVE HERE.
  *
- * To announce the Haldi venue later, replace `venue: null` in the Haldi event with:
+ * The Mehndi is hosted at home (`hostedAt`). To publish the home address later, replace
+ * `venue: null` in the Mehndi event with:
  *   venue: {
  *     name: 'Venue name',
  *     address: 'Full address, City, State, India',   // used for directions + calendars
@@ -22,9 +23,9 @@ export const rawWeddingConfig = {
   timeZone: 'Asia/Kolkata',
   timeZoneLabel: 'IST',
   site: {
-    title: 'Nida & Junaid | Nikah & Haldi Invitation',
+    title: 'Nida & Junaid | Nikah & Mehndi Invitation',
     description:
-      'You are warmly invited to the Nikah of Nida Khatib and Junaid Shaikh on Friday, 30 April 2027, and their Haldi celebration on Wednesday, 28 April 2027.',
+      'You are warmly invited to the Nikah of Nida Khatib and Junaid Shaikh on Friday, 30 April 2027, and their Mehndi (henna) evening on Thursday, 29 April 2027.',
     // Keeps the invitation out of search results; link previews on WhatsApp still work.
     allowSearchIndexing: false,
     // Stable identifier suffix for calendar entries (not a real web address).
@@ -54,11 +55,13 @@ export const rawWeddingConfig = {
       id: 'nikah',
       title: 'Nikah Ceremony',
       shortTitle: 'Nikah',
+      subtitle: null,
       date: '2027-04-30',
       startTime: '17:30',
       // No end time was provided, so calendar entries assume 60 minutes.
       durationMinutes: 60,
       timingNote: 'After Asr Namaaz',
+      hostedAt: null,
       venue: {
         name: 'Seawood Jama Masjid',
         address: 'Plot No. 144, Sector New 50, Seawoods, Nerul, Navi Mumbai, Maharashtra, India',
@@ -71,20 +74,23 @@ export const rawWeddingConfig = {
         pastMessage: 'Alhamdulillah. Thank you for your duas.',
       },
     },
-    haldi: {
-      id: 'haldi',
-      title: 'Haldi Ceremony',
-      shortTitle: 'Haldi',
-      date: '2027-04-28',
+    mehndi: {
+      id: 'mehndi',
+      title: 'Mehndi Ceremony',
+      shortTitle: 'Mehndi',
+      subtitle: 'Henna evening',
+      date: '2027-04-29',
       startTime: '16:00',
       // No end time was provided, so calendar entries assume 60 minutes.
       durationMinutes: 60,
       timingNote: null,
-      venue: null, // To be announced — see the note at the top of this file.
-      calendar: { fileName: 'nida-junaid-haldi.ics', sequence: 0, reminderMinutesBefore: 1440 },
+      // No address was given, so the page says "At our residence" and offers no directions.
+      hostedAt: 'At our residence',
+      venue: null, // See the note at the top of this file.
+      calendar: { fileName: 'nida-junaid-mehndi.ics', sequence: 0, reminderMinutesBefore: 1440 },
       countdown: {
-        heading: 'Counting down to the Haldi',
-        reachedMessage: 'The Haldi celebration is here',
+        heading: 'Counting down to the Mehndi',
+        reachedMessage: 'The Mehndi celebration is here',
         pastMessage: 'Alhamdulillah. Thank you for celebrating with us.',
       },
     },
@@ -121,10 +127,13 @@ const eventSchema = z.strictObject({
   id: z.string().regex(/^[a-z][a-z0-9-]*$/, 'Use lowercase letters, numbers and dashes'),
   title: text,
   shortTitle: text,
+  subtitle: text.nullable(),
   date: isoDate,
   startTime: time24,
   durationMinutes: z.number().int().min(15, 'At least 15 minutes').max(720, 'At most 12 hours'),
   timingNote: text.nullable(),
+  /** A place shown without an address (e.g. a family home); used only when `venue` is null. */
+  hostedAt: text.nullable(),
   venue: venueSchema.nullable(),
   calendar: z.strictObject({
     fileName: z
@@ -165,7 +174,7 @@ const weddingConfigSchema = z
       venuePending: text,
       calendarNote: text,
     }),
-    events: z.strictObject({ nikah: eventSchema, haldi: eventSchema }),
+    events: z.strictObject({ nikah: eventSchema, mehndi: eventSchema }),
   })
   .superRefine((config, context) => {
     const events = Object.entries(config.events);

@@ -12,12 +12,13 @@
   --charcoal: #29251f;
   --ink-soft: #5a5247; /* secondary text (≥6:1) */
   --hairline: #e5d8bf;
-  --marigold: #d9a441; /* Haldi ornament */
-  --turmeric-ink: #74480b; /* small Haldi accent text (≥5:1 even on saffron) */
-  --haldi-wash: #fbecc8;
-  --haldi-deep: #f5d68f; /* saffron */
+  --marigold: #d9a441; /* marigold accents and petals */
+  --henna: #6f7d32; /* henna-leaf linework in the Mehndi chapter */
+  --henna-ink: #3d5120; /* small Mehndi accent text (≥6:1 even on the deepest green) */
+  --mehndi-wash: #f1f2de;
+  --mehndi-deep: #d7dfb3; /* soft henna green */
   --saffron: #e9a93b;
-  --rose: #c9806f; /* dusty rose, Haldi petals only */
+  --rose: #c9806f; /* dusty rose, petals only */
 
   /* Royal purple chapters and soft lavender/blush tints. */
   --plum: #2f1a3d;

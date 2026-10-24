@@ -36,17 +36,17 @@ describe('weddingConfig (confirmed details)', () => {
     expect(nikah.calendar.fileName).toBe('nida-junaid-nikah.ics');
   });
 
-  it('holds the confirmed Haldi date and time with the venue still to be announced', () => {
-    const { haldi } = weddingConfig.events;
-    expect(haldi.date).toBe('2027-04-28');
-    expect(haldi.startTime).toBe('16:00');
-    expect(haldi.venue).toBeNull();
-    expect(haldi.calendar.fileName).toBe('nida-junaid-haldi.ics');
+  it('holds the confirmed Mehndi date and time with the venue still to be announced', () => {
+    const { mehndi } = weddingConfig.events;
+    expect(mehndi.date).toBe('2027-04-29');
+    expect(mehndi.startTime).toBe('16:00');
+    expect(mehndi.venue).toBeNull();
+    expect(mehndi.calendar.fileName).toBe('nida-junaid-mehndi.ics');
   });
 
   it('defaults calendar entries to 60 minutes because no end time was provided', () => {
     expect(weddingConfig.events.nikah.durationMinutes).toBe(60);
-    expect(weddingConfig.events.haldi.durationMinutes).toBe(60);
+    expect(weddingConfig.events.mehndi.durationMinutes).toBe(60);
   });
 });
 
@@ -55,25 +55,25 @@ describe('parseWeddingConfig', () => {
     expect(() => parseWeddingConfig(rawWeddingConfig)).not.toThrow();
   });
 
-  it('accepts a confirmed Haldi venue later on', () => {
-    const updated = withOverride(['events', 'haldi', 'venue'], {
+  it('accepts a confirmed Mehndi venue later on', () => {
+    const updated = withOverride(['events', 'mehndi', 'venue'], {
       name: 'Example Hall',
       address: 'Example Road, Navi Mumbai, Maharashtra, India',
       shortAddress: 'Example Road, Navi Mumbai',
     });
-    expect(parseWeddingConfig(updated).events.haldi.venue?.name).toBe('Example Hall');
+    expect(parseWeddingConfig(updated).events.mehndi.venue?.name).toBe('Example Hall');
   });
 
   it.each([
     [['events', 'nikah', 'date'], '2027-02-30', 'events.nikah.date'],
     [['events', 'nikah', 'date'], '30/04/2027', 'events.nikah.date'],
-    [['events', 'haldi', 'startTime'], '4:00 PM', 'events.haldi.startTime'],
+    [['events', 'mehndi', 'startTime'], '4:00 PM', 'events.mehndi.startTime'],
     [['timeZone'], 'India/Mumbai', 'timeZone'],
     [['events', 'nikah', 'durationMinutes'], 0, 'events.nikah.durationMinutes'],
     [
-      ['events', 'haldi', 'calendar', 'fileName'],
-      'Haldi Invite.ics',
-      'events.haldi.calendar.fileName',
+      ['events', 'mehndi', 'calendar', 'fileName'],
+      'Mehndi Invite.ics',
+      'events.mehndi.calendar.fileName',
     ],
     [['couple', 'bride', 'fullName'], '   ', 'couple.bride.fullName'],
   ] as const)('rejects an invalid %j with a readable message', (path, value, label) => {
@@ -81,16 +81,19 @@ describe('parseWeddingConfig', () => {
   });
 
   it('rejects two events that would share a calendar file', () => {
-    const clash = withOverride(['events', 'haldi', 'calendar', 'fileName'], 'nida-junaid-nikah.ics');
+    const clash = withOverride(
+      ['events', 'mehndi', 'calendar', 'fileName'],
+      'nida-junaid-nikah.ics',
+    );
     expect(() => parseWeddingConfig(clash)).toThrow(/unique/i);
   });
 
   it('rejects an empty venue name once a venue is set', () => {
-    const blank = withOverride(['events', 'haldi', 'venue'], {
+    const blank = withOverride(['events', 'mehndi', 'venue'], {
       name: '',
       address: 'Somewhere',
       shortAddress: 'Somewhere',
     });
-    expect(() => parseWeddingConfig(blank)).toThrow('events.haldi.venue.name');
+    expect(() => parseWeddingConfig(blank)).toThrow('events.mehndi.venue.name');
   });
 });

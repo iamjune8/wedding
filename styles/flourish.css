@@ -1,5 +1,5 @@
 /*
- * Colour and gilding: warm glows, gold-foil accents and the saffron Haldi chapter.
+ * Colour and gilding: warm glows, gold-foil accents and the henna-green Mehndi chapter.
  * Everything here is static; the motion that brings it to life lives in motion-rich.css.
  */
 @layer components {
@@ -154,19 +154,19 @@
     }
   }
 
-  /* ── Haldi: saffron, marigold and rose ──────────────────────────────── */
-  .haldi-section {
+  /* ── Mehndi: henna green, marigold and rose ──────────────────────────────── */
+  .mehndi-section {
     isolation: isolate;
     overflow: hidden;
     background-image:
       var(--paper-grain),
-      radial-gradient(ellipse 55% 30% at 50% 22%, rgb(255 236 176 / 0.7), transparent 70%),
+      radial-gradient(ellipse 55% 30% at 50% 22%, rgb(252 250 232 / 0.75), transparent 70%),
       linear-gradient(
         180deg,
         var(--ivory) 0%,
-        var(--haldi-wash) 14%,
-        var(--haldi-deep) 55%,
-        var(--haldi-wash) 100%
+        var(--mehndi-wash) 14%,
+        var(--mehndi-deep) 55%,
+        var(--mehndi-wash) 100%
       );
     background-size:
       180px 180px,
@@ -174,25 +174,25 @@
       auto;
   }
 
-  .haldi-layout {
+  .mehndi-layout {
     position: relative;
     z-index: 1;
   }
 
-  .haldi-section .venue__fact {
+  .mehndi-section .venue__fact {
     border-bottom-color: rgb(181 138 69 / 0.45);
   }
 
-  .haldi-section .section-title::after {
-    background: linear-gradient(90deg, transparent, var(--saffron), transparent);
+  .mehndi-section .section-title::after {
+    background: linear-gradient(90deg, transparent, var(--henna), transparent);
   }
 
-  .haldi-section .countdown {
-    --countdown-rule: var(--saffron);
+  .mehndi-section .countdown {
+    --countdown-rule: var(--henna);
   }
 
   .rosette__petals path {
-    stroke: var(--saffron);
+    stroke: var(--henna);
     stroke-width: 1.15;
     vector-effect: none;
   }
@@ -267,7 +267,7 @@
     background-image:
       var(--paper-grain),
       radial-gradient(ellipse 50% 35% at 50% 78%, var(--gold-glow), transparent 70%),
-      linear-gradient(180deg, var(--haldi-wash) 0%, var(--ivory) 48%);
+      linear-gradient(180deg, var(--mehndi-wash) 0%, var(--ivory) 48%);
     background-size:
       180px 180px,
       auto,
